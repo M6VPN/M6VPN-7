@@ -42,6 +42,28 @@ body {
 	line-height: 1.45;
 }
 
+body,
+body font,
+body center,
+body form,
+body label,
+body div,
+body p,
+body span,
+body td,
+body th {
+	color: var(--text) !important;
+}
+
+body[background],
+body[style*="background-image"],
+body[style*="background:"] {
+	background:
+		linear-gradient(rgba(5, 8, 7, 0.92), rgba(5, 8, 7, 0.98)),
+		repeating-linear-gradient(0deg, rgba(57, 255, 136, 0.035), rgba(57, 255, 136, 0.035) 1px, transparent 1px, transparent 4px),
+		#050807 !important;
+}
+
 body::before {
 	display: block;
 	max-width: 1120px;
@@ -89,27 +111,51 @@ table {
 	border-collapse: collapse;
 	border-color: var(--line) !important;
 	background: rgba(11, 18, 16, 0.94) !important;
-	color: var(--text);
+	color: var(--text) !important;
 	box-shadow: 0 10px 28px var(--shadow);
 }
 
 table[align="center"],
 table[bgcolor="white"],
+table[bgcolor="#ffffff"],
+table[bgcolor="#FFFFFF"],
+table[bgcolor="#ffffcc"],
+table[bgcolor="#FFFFCC"],
 .bpq-nav {
 	max-width: 100%;
 	border: 1px solid var(--line) !important;
 	background: rgba(11, 18, 16, 0.96) !important;
 }
 
+table[style*="background-color: white"],
+table[style*="background-color: #ffffff"],
+table[style*="background-color: #FFFFFF"],
+table[style*="background-color: #ffffcc"],
+table[style*="background-color: #FFFFCC"],
+td[style*="background-color: white"],
+td[style*="background-color: #ffffff"],
+td[style*="background-color: #FFFFFF"],
+td[style*="background-color: #ffffcc"],
+td[style*="background-color: #FFFFCC"],
+div[style*="background-color: white"],
+div[style*="background-color: #ffffff"],
+div[style*="background-color: #FFFFFF"],
+span[style*="background-color: white"],
+span[style*="background-color: #ffffff"],
+span[style*="background-color: #FFFFFF"] {
+	background-color: rgba(11, 18, 16, 0.94) !important;
+}
+
 td,
 th {
 	border-color: rgba(57, 255, 136, 0.22) !important;
+	color: var(--text) !important;
 	padding: 5px 7px;
 	vertical-align: top;
 }
 
 th {
-	color: var(--amber);
+	color: var(--amber) !important;
 	font-weight: 700;
 	text-transform: uppercase;
 }
@@ -191,7 +237,8 @@ pre,
 textarea,
 input,
 select,
-button {
+button,
+iframe {
 	font-family: var(--mono);
 	font-size: 13px;
 }
@@ -208,9 +255,15 @@ select {
 	max-width: 100%;
 	border: 1px solid rgba(57, 255, 136, 0.35);
 	border-radius: 4px;
-	background: #07100d;
-	color: var(--text);
+	background: #07100d !important;
+	color: var(--text) !important;
 	outline: none;
+}
+
+input::placeholder,
+textarea::placeholder {
+	color: var(--muted);
+	opacity: 1;
 }
 
 input {
@@ -234,8 +287,8 @@ input[type="button"],
 button {
 	border: 1px solid var(--line-hot);
 	border-radius: 4px;
-	background: rgba(57, 255, 136, 0.12);
-	color: var(--green);
+	background: rgba(57, 255, 136, 0.12) !important;
+	color: var(--green) !important;
 	cursor: pointer;
 	font-weight: 700;
 	text-transform: uppercase;
@@ -245,8 +298,8 @@ input[type="submit"]:hover,
 input[type="button"]:hover,
 button:hover {
 	border-color: var(--amber);
-	background: rgba(255, 200, 87, 0.12);
-	color: var(--amber);
+	background: rgba(255, 200, 87, 0.12) !important;
+	color: var(--amber) !important;
 }
 
 input:focus,

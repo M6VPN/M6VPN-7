@@ -10,8 +10,8 @@ import sys
 from datetime import datetime
 
 
-STYLE_BODY = b'body{background:#050807;color:#d9ffe8;}'
-STYLE_TABLE = b'table{background:#0b1210;color:#d9ffe8;}'
+STYLE_BODY = b'*{color:#d9ffe8}body{background:#050807}'
+STYLE_TABLE = b'td,th{color:#d9ffe8}table{background:#0b1210}'
 
 
 def add_rule(rules: list[dict[str, object]], name: str, find: bytes, replace: bytes):
@@ -74,10 +74,14 @@ def build_default_rules() -> list[dict[str, object]]:
 
 	rules = []
 
-	add_rule(rules, 'double-quoted body background', b'background="/background.jpg"', b'style="background:#050807"')
-	add_rule(rules, 'single-quoted body background', b"background='/background.jpg'", b"style='background:#050807'")
-	add_rule(rules, 'unquoted body background', b'background=/background.jpg', b'style=background:#050807')
-	add_rule(rules, 'aprs clouds background', b'background="Images/clouds.jpg"', b'style="background:#050807"')
+	add_rule(rules, 'double-quoted body background', b'background="/background.jpg"', b'bgcolor=#050807 text=#d9ffe8')
+	add_rule(rules, 'single-quoted body background', b"background='/background.jpg'", b'bgcolor=#050807 text=#d9ffe8')
+	add_rule(rules, 'unquoted body background', b'background=/background.jpg', b'bgcolor=#050807 text=#fff')
+	add_rule(rules, 'aprs clouds background', b'background="Images/clouds.jpg"', b'bgcolor=#050807 text=#d9ffe8')
+	add_rule(rules, 'upgrade old double body style', b'style="background:#050807"  ', b'bgcolor=#050807 text=#d9ffe8')
+	add_rule(rules, 'upgrade old single body style', b"style='background:#050807'  ", b'bgcolor=#050807 text=#d9ffe8')
+	add_rule(rules, 'upgrade old unquoted body style', b'style=background:#050807  ', b'bgcolor=#050807 text=#fff')
+	add_rule(rules, 'upgrade old aprs body style', b'style="background:#050807"    ', b'bgcolor=#050807 text=#d9ffe8')
 
 	add_rule(rules, 'table white unquoted', b'bgcolor=white', b'bgcolor=black')
 	add_rule(rules, 'table white double quoted', b'bgcolor="white"', b'bgcolor="black"')
@@ -93,6 +97,8 @@ def build_default_rules() -> list[dict[str, object]]:
 
 	add_rule(rules, 'button active css body', b'input.btn:active {background:black;color:white;} ', STYLE_BODY)
 	add_rule(rules, 'submit active css table', b'submit.btn:active {background:black;color:white;} ', STYLE_TABLE)
+	add_rule(rules, 'upgrade old button css body', b'body{background:#050807;color:#d9ffe8;}          ', STYLE_BODY)
+	add_rule(rules, 'upgrade old submit css table', b'table{background:#0b1210;color:#d9ffe8;}          ', STYLE_TABLE)
 	add_rule(rules, 'webproc drop button border', b'.dropbtn {position: relative; border: 1px solid black;padding:1px;}', b'.dropbtn {position: relative; border: 1px solid #3f8;padding:1px;}')
 	add_rule(rules, 'webproc dropdown background', b'background-color: #f1f1f1', b'background-color: #101a17')
 	add_rule(rules, 'webproc dropdown background short', b'background-color: #ccc', b'background-color: #111')
