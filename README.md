@@ -11,7 +11,7 @@ The repo holds Raspberry Pi home-directory files, LinBPQ and Dire Wolf configura
 - [BPQ Applications](#bpq-applications)
 - [Install Script](#install-script)
 - [LinBPQ Web Design](#linbpq-web-design)
-- [LinBPQ HTML Source Patch](#linbpq-html-source-patch)
+- [LinBPQ Source Patch](#linbpq-source-patch)
 - [Compiled Binary HTML Patcher](#compiled-binary-html-patcher)
 - [Systemd Units](#systemd-units)
 - [Notes](#notes)
@@ -42,6 +42,7 @@ The repo holds Raspberry Pi home-directory files, LinBPQ and Dire Wolf configura
 | `pi/direwolf.ic2350.conf`             | Dire Wolf TNC configuration                                |
 | `pi/linbpq/bpq32.cfg`                 | LinBPQ configuration for M6VPN-7 and M6VPN-1               |
 | `pi/linbpq/HTML/`                     | Web BBS templates, shared CSS, JavaScript, and web assets  |
+| `images/`                             | Screenshots used by project documentation                  |
 | `systemd/`                            | Service, socket, and timer units for the live node         |
 | `patches/linbpq-html-design.patch`    | Patch that applies the M6VPN web design to LinBPQ source   |
 | `tools/linbpq-html-binary-patcher.py` | Binary patcher for hard-coded LinBPQ web HTML/CSS strings  |
@@ -114,11 +115,19 @@ The M6VPN web design lives in `pi/linbpq/HTML/`.
 
 Recent LinBPQ builds only use a few template files for the first page layout, and keep much of the web BBS interface hard-coded in C. The CSS and JavaScript files are still useful because LinBPQ can serve files from the `HTML` directory directly.
 
-## LinBPQ HTML Source Patch
+## LinBPQ Source Patch
 
-`patches/linbpq-html-design.patch` applies the M6VPN web design to an upstream LinBPQ source checkout. It adds the complete `pi/linbpq/HTML/` design set and patches LinBPQ C source files that emit hard-coded HTML so they load `/m6vpn.css` and `/m6vpn-ui.js`.
+[patches/linbpq-html-design.patch](patches/linbpq-html-design.patch) applies the M6VPN web design to an upstream LinBPQ source checkout. It adds the complete `pi/linbpq/HTML/` design set and patches LinBPQ C source files that emit hard-coded HTML so they load `/m6vpn.css` and `/m6vpn-ui.js`.
 
 This is useful when maintaining a fork of LinBPQ or when rebuilding LinBPQ with the M6VPN web design included in the source tree. The source changes cover BBS, WebMail, chat, APRS, node pages, and modem/status pages that render HTML directly from C strings.
+
+### Screenshots
+
+![LinBPQ M6VPN web UI screenshot 1](images/linbpq1.jpg)
+
+![LinBPQ M6VPN web UI screenshot 2](images/linbpq2.jpg)
+
+![LinBPQ M6VPN web UI screenshot 3](images/linbpq3.jpg)
 
 Apply it from the root of this repo:
 
