@@ -305,11 +305,50 @@ select:focus {
 	color: var(--muted);
 }
 
+.m6vpn-kicker {
+	margin: 0 0 8px !important;
+	color: var(--amber) !important;
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.m6vpn-node {
+	display: grid;
+	min-height: calc(100vh - 36px);
+	place-items: start center;
+}
+
+.m6vpn-node-shell {
+	width: min(980px, 100%);
+}
+
+.m6vpn-status {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	padding: 12px 18px 0;
+}
+
+.m6vpn-status span {
+	padding: 5px 8px;
+	border: 1px solid rgba(57, 255, 136, 0.25);
+	border-radius: 4px;
+	background: rgba(5, 8, 7, 0.8);
+	color: var(--amber);
+	font-size: 12px;
+	font-weight: 700;
+}
+
 .m6vpn-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
 	gap: 10px;
 	padding: 18px;
+}
+
+.m6vpn-node-grid {
+	grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
 }
 
 .m6vpn-link {
