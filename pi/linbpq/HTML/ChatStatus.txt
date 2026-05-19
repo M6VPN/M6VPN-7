@@ -1,6 +1,9 @@
+<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
+<!-- M6VPN-7/pi/linbpq/HTML/ChatStatus.txt -->
 <!-- Version 1 13/3/2014 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head>
+<link rel="stylesheet" href="/m6vpn.css">
 <style type="text/css"> 
 #outer {width:720px;height:700px;position:absolute;border:0px solid;font-family: monospace;}
 #streams {width:360px;position:absolute;height:300px;left:2px;border:2px solid;overflow: auto}
@@ -54,6 +57,7 @@ function condRefresh()
 window.setInterval(condRefresh, 10000);
 
 </script>
+<script src="/m6vpn-ui.js"></script>
 </head><body onload="initialize()" onresize="initialize()" style="background-image: url(/background.jpg);">
 <h3 align="center">BPQ32 Chat Server %s</h3>
 

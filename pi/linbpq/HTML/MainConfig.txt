@@ -1,6 +1,9 @@
+<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
+<!-- M6VPN-7/pi/linbpq/HTML/MainConfig.txt -->
 <!-- Version 7 2/1/2017 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html><head><title>Main Configuration</title>
+<html><head>
+<link rel="stylesheet" href="/m6vpn.css"><title>Main Configuration</title>
 
 <script type="text/javascript"> 
  
@@ -17,6 +20,7 @@ function initialize()
 	Main.style.left = fromleft + "px";
 }
 </script>
+<script src="/m6vpn-ui.js"></script>
 </head><body style="background-image: url(/background.jpg);" onload="initialize()" onresize="initialize()">
 <h3 align="center">BPQ32 BBS %s</h3>
 

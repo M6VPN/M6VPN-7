@@ -1,6 +1,9 @@
+<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
+<!-- M6VPN-7/pi/linbpq/HTML/WP.txt -->
 <!-- Version 1 13/3/2014 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head>
+<link rel="stylesheet" href="/m6vpn.css">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <style type="text/css"> 
 
@@ -88,6 +91,7 @@ function GetData()
 }
  
 </script>
+<script src="/m6vpn-ui.js"></script>
 </head><body background=/background.jpg onload="initialize()">
 <h3 align="center">BPQ32 BBS %s</h3>
 

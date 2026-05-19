@@ -1,16 +1,19 @@
-<!-- Version 2 17/10/2018 -->
+// M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com)
+// M6VPN-7/pi/linbpq/HTML/webscript.js
+// Version 2 17/10/2018
 var Main
 var fromleft;
 
 function initialize(mainoffset)
 {
 	var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0];
-	x=w.innerWidth; //||e.clientWidth||g.clientWidth;
-	y=w.innerHeight; //||e.clientHeight||g.clientHeight; 
+	x=w.innerWidth||e.clientWidth||g.clientWidth;
+	y=w.innerHeight||e.clientHeight||g.clientHeight;
 	Main = document.getElementById("main");
-	w = x;	
+	if (!Main) {return;}
+	w = x;
 	if (w > 920) {w = 920;}
- 	fromleft = (x / 2) - (x - 150)/2;
+	fromleft = (x / 2) - (x - 150)/2;
 	if (fromleft < 0) {fromleft = 0;}
 	Main.style.left = fromleft + "px";
 	Main.style.width = x - 150 + "px";

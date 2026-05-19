@@ -1,0 +1,374 @@
+/* M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) */
+/* M6VPN-7/pi/linbpq/HTML/m6vpn.css */
+
+:root {
+	--bg: #050807;
+	--panel: #0b1210;
+	--panel-2: #101a17;
+	--line: #21483d;
+	--line-hot: #39ff88;
+	--text: #d9ffe8;
+	--muted: #86a898;
+	--green: #39ff88;
+	--amber: #ffc857;
+	--cyan: #78dce8;
+	--red: #ff6b6b;
+	--shadow: rgba(0, 0, 0, 0.55);
+	--mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", "Liberation Mono", "DejaVu Sans Mono", Menlo, Consolas, monospace;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	min-height: 100%;
+	background: var(--bg);
+	color: var(--text);
+	color-scheme: dark;
+}
+
+body {
+	min-height: 100vh;
+	margin: 0;
+	padding: 18px;
+	background:
+		linear-gradient(rgba(5, 8, 7, 0.92), rgba(5, 8, 7, 0.98)),
+		repeating-linear-gradient(0deg, rgba(57, 255, 136, 0.035), rgba(57, 255, 136, 0.035) 1px, transparent 1px, transparent 4px),
+		#050807 !important;
+	color: var(--text);
+	font-family: var(--mono);
+	font-size: 14px;
+	line-height: 1.45;
+}
+
+body::before {
+	display: block;
+	max-width: 1120px;
+	margin: 0 auto 14px;
+	padding: 8px 12px;
+	border: 1px solid var(--line);
+	background: linear-gradient(90deg, rgba(57, 255, 136, 0.14), rgba(120, 220, 232, 0.08));
+	color: var(--green);
+	content: "M6VPN-7 // BPQ32 // 144.9375 MHz AX.25";
+	font-weight: 700;
+	letter-spacing: 0;
+	text-transform: uppercase;
+	box-shadow: 0 10px 30px var(--shadow);
+}
+
+h1,
+h2,
+h3 {
+	margin: 8px 0 14px;
+	color: var(--green);
+	font-family: var(--mono);
+	font-weight: 700;
+	letter-spacing: 0;
+	text-shadow: 0 0 12px rgba(57, 255, 136, 0.22);
+}
+
+h3[align="center"],
+div[style*="text-align: center"] > font,
+div[style*="text-align: center"] span[style*="font-weight: bold"] {
+	color: var(--green);
+}
+
+a {
+	color: var(--cyan);
+	text-decoration: none;
+}
+
+a:hover,
+a:focus {
+	color: var(--amber);
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+	border-color: var(--line) !important;
+	background: rgba(11, 18, 16, 0.94) !important;
+	color: var(--text);
+	box-shadow: 0 10px 28px var(--shadow);
+}
+
+table[align="center"],
+table[bgcolor="white"],
+.bpq-nav {
+	max-width: 100%;
+	border: 1px solid var(--line) !important;
+	background: rgba(11, 18, 16, 0.96) !important;
+}
+
+td,
+th {
+	border-color: rgba(57, 255, 136, 0.22) !important;
+	padding: 5px 7px;
+	vertical-align: top;
+}
+
+th {
+	color: var(--amber);
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+tr:hover > td {
+	background: rgba(57, 255, 136, 0.045);
+}
+
+body > table:first-of-type,
+body > span > table:first-of-type,
+.bpq-nav {
+	margin: 0 auto 18px;
+}
+
+body > table:first-of-type td,
+body > span > table:first-of-type td,
+.bpq-nav td {
+	border: 0 !important;
+}
+
+body > table:first-of-type a,
+body > span > table:first-of-type a,
+.bpq-nav a,
+#cssmenu a {
+	display: block;
+	padding: 7px 10px;
+	border: 1px solid rgba(57, 255, 136, 0.22);
+	background: rgba(16, 26, 23, 0.92);
+	color: var(--green);
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+body > table:first-of-type a:hover,
+body > span > table:first-of-type a:hover,
+.bpq-nav a:hover,
+#cssmenu a:hover {
+	border-color: var(--amber);
+	background: rgba(255, 200, 87, 0.12);
+	color: var(--amber);
+	text-decoration: none;
+}
+
+#main,
+#outer,
+#sidebar,
+#left,
+#common,
+#streams,
+#users,
+#links,
+#sel {
+	border-color: var(--line) !important;
+	background: rgba(11, 18, 16, 0.88) !important;
+	color: var(--text);
+	box-shadow: 0 12px 32px var(--shadow);
+}
+
+#main,
+#outer {
+	border-radius: 6px;
+}
+
+#sidebar,
+#left,
+#common,
+#streams,
+#users,
+#links,
+#sel {
+	border-radius: 4px;
+}
+
+#main {
+	padding: 10px;
+}
+
+pre,
+textarea,
+input,
+select,
+button {
+	font-family: var(--mono);
+	font-size: 13px;
+}
+
+pre {
+	margin: 0;
+	color: var(--text);
+	white-space: pre-wrap;
+}
+
+input,
+textarea,
+select {
+	max-width: 100%;
+	border: 1px solid rgba(57, 255, 136, 0.35);
+	border-radius: 4px;
+	background: #07100d;
+	color: var(--text);
+	outline: none;
+}
+
+input {
+	min-height: 25px;
+	padding: 3px 6px;
+}
+
+textarea {
+	padding: 6px;
+	line-height: 1.35;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+	min-height: auto;
+	accent-color: var(--green);
+}
+
+input[type="submit"],
+input[type="button"],
+button {
+	border: 1px solid var(--line-hot);
+	border-radius: 4px;
+	background: rgba(57, 255, 136, 0.12);
+	color: var(--green);
+	cursor: pointer;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover,
+button:hover {
+	border-color: var(--amber);
+	background: rgba(255, 200, 87, 0.12);
+	color: var(--amber);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+	border-color: var(--amber);
+	box-shadow: 0 0 0 2px rgba(255, 200, 87, 0.16);
+}
+
+#cssmenu {
+	z-index: 10;
+}
+
+#cssmenu ul {
+	border: 1px solid var(--line);
+	background: rgba(11, 18, 16, 0.96) !important;
+}
+
+#cssmenu ul ul {
+	border: 1px solid var(--line);
+	background: rgba(11, 18, 16, 0.98) !important;
+}
+
+#cssmenu .active a,
+#cssmenu li:hover > a {
+	background: rgba(255, 200, 87, 0.12) !important;
+	color: var(--amber) !important;
+}
+
+.m6vpn-entry {
+	display: grid;
+	min-height: calc(100vh - 36px);
+	place-items: center;
+}
+
+.m6vpn-shell {
+	width: min(760px, 100%);
+	border: 1px solid var(--line);
+	border-radius: 6px;
+	background: rgba(11, 18, 16, 0.94);
+	box-shadow: 0 18px 44px var(--shadow);
+}
+
+.m6vpn-shell header {
+	padding: 18px 20px 10px;
+	border-bottom: 1px solid var(--line);
+}
+
+.m6vpn-shell h1 {
+	margin: 0;
+	font-size: 24px;
+}
+
+.m6vpn-shell p {
+	margin: 6px 0 0;
+	color: var(--muted);
+}
+
+.m6vpn-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+	gap: 10px;
+	padding: 18px;
+}
+
+.m6vpn-link {
+	display: block;
+	min-height: 88px;
+	padding: 14px;
+	border: 1px solid var(--line);
+	border-radius: 6px;
+	background: rgba(16, 26, 23, 0.92);
+	color: var(--text);
+}
+
+.m6vpn-link strong {
+	display: block;
+	margin-bottom: 8px;
+	color: var(--green);
+	text-transform: uppercase;
+}
+
+.m6vpn-link span {
+	color: var(--muted);
+}
+
+.m6vpn-link:hover {
+	border-color: var(--amber);
+	color: var(--text);
+	text-decoration: none;
+}
+
+.m6vpn-link:hover strong {
+	color: var(--amber);
+}
+
+@media (max-width: 760px) {
+	body {
+		padding: 10px;
+		font-size: 13px;
+	}
+
+	body::before {
+		margin-bottom: 10px;
+		font-size: 12px;
+	}
+
+	table {
+		display: block;
+		max-width: 100%;
+		overflow-x: auto;
+	}
+
+	#main,
+	#outer,
+	#sidebar,
+	#left,
+	#common,
+	#streams,
+	#users,
+	#links,
+	#sel {
+		max-width: calc(100vw - 20px);
+	}
+}

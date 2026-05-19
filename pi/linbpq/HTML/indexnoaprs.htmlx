@@ -1,6 +1,26 @@
-<html><head><title>%s's BPQ32 Web Server</title></head><body><P align=center>
-<table border=2 cellpadding=2 cellspacing=2 bgcolor=white>
-<tr>
-<td align=center><a href=/Node/NodeMenu.html>Node Pages</a></td>
-<td align=center><a href=/WebMail/MailEntry>WebMail</a></td>
-</tr></table></body></html>
+<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
+<!-- M6VPN-7/pi/linbpq/HTML/indexnoaprs.htmlx -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>%s's BPQ32 Web Server</title>
+<link rel="stylesheet" href="/m6vpn.css">
+<script src="/m6vpn-ui.js"></script>
+</head>
+<body>
+<main class="m6vpn-entry">
+<section class="m6vpn-shell">
+<header>
+<h1>M6VPN-7 BPQ32</h1>
+<p>AX.25 packet node and M6VPN-1 BBS console</p>
+</header>
+<nav class="m6vpn-grid">
+<a class="m6vpn-link" href="/Node/NodeMenu.html"><strong>Node Pages</strong><span>Routes, ports, users, and node status</span></a>
+<a class="m6vpn-link" href="/WebMail/MailEntry"><strong>WebMail</strong><span>M6VPN-1 BBS mail interface</span></a>
+</nav>
+</section>
+</main>
+</body>
+</html>

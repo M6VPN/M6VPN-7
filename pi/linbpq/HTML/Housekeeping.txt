@@ -1,6 +1,9 @@
+<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
+<!-- M6VPN-7/pi/linbpq/HTML/Housekeeping.txt -->
 <!-- Version 2 2/1/2016 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head>
+<link rel="stylesheet" href="/m6vpn.css">
   
 <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type" />
 <title>Housekeeping</title>
@@ -21,6 +24,7 @@ function initialize()
 //	Main.style.width = (x - fromleft) + "px";
 }
 </script>
+<script src="/m6vpn-ui.js"></script>
 </head>
 <body background=/background.jpg onload="initialize()" onresize="initialize()">
 <h3 align=center>BPQ32 BBS %s</h3>

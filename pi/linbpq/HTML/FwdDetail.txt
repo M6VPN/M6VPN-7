@@ -1,3 +1,5 @@
+<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
+<!-- M6VPN-7/pi/linbpq/HTML/FwdDetail.txt -->
 <!-- Version 2 16/8/2019 -->
 <h3 align="center">Forwarding Config for %s - %d Messages Queued</h3><form style="font-family: monospace; text-align: center" method=post action=/Mail/FWD?%s>
 &nbsp;&nbsp;TO &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
