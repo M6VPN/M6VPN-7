@@ -1,0 +1,12 @@
+# M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com)
+# M6VPN-7/.gitignore
+
+.env
+.venv/
+__pycache__/
+*.pyc
+*.log
+logs/
+
+3rd/
+.gitmodules
