@@ -4,6 +4,47 @@
 var Main
 var fromleft;
 
+function addM6VPNScript(src)
+{
+	var scripts = document.getElementsByTagName('script');
+	var script;
+	var i;
+
+	for (i = 0; i < scripts.length; i += 1) {
+		if (scripts[i].getAttribute('src') === src) {return;}
+	}
+
+	script = document.createElement('script');
+	script.src = src;
+	document.head.appendChild(script);
+}
+
+function addM6VPNStyle(href)
+{
+	var links = document.getElementsByTagName('link');
+	var link;
+	var i;
+
+	for (i = 0; i < links.length; i += 1) {
+		if (links[i].getAttribute('href') === href) {return;}
+	}
+
+	link = document.createElement('link');
+	link.rel = 'stylesheet';
+	link.href = href;
+	document.head.appendChild(link);
+}
+
+function loadM6VPNAssets()
+{
+	if (!document.head) {return;}
+
+	addM6VPNStyle('/m6vpn.css');
+	addM6VPNScript('/m6vpn-ui.js');
+}
+
+loadM6VPNAssets();
+
 function initialize(mainoffset)
 {
 	var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0];
