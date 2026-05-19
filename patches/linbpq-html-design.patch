@@ -1,0 +1,2956 @@
+diff --git a/HTML/ChatConfig.txt b/HTML/ChatConfig.txt
+new file mode 100644
+index 0000000..982c4c2
+--- /dev/null
++++ b/HTML/ChatConfig.txt
+@@ -0,0 +1,82 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/ChatConfig.txt -->
++<!-- Version 2 1/3/2016 -->
++<html>
++<head>
++<link rel="stylesheet" href="/m6vpn.css">
++<title>Chat Configuration</title>
++<script type="text/javascript"> var Main
++var fromleft;
++var Pos;
++var Poptext;
++
++function initialize()
++{ var
++w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0];
++x=w.innerWidth||e.clientWidth||g.clientWidth; fromleft = (x / 2) - 310;
++if (fromleft < 0) {fromleft = 0;}
++Main = document.getElementById("main");
++Main.style.left = fromleft + "px";
++Pos = document.getElementById("pos");
++Poptext = document.getElementById("poptext");
++
++
++}
++function CheckLen()
++{
++var len = Pos.value.length + Poptext.value.length;
++if (len > 245)
++	{alert("Combinded length of Location and Popup Text must not exceed 245. Now " + len);}
++}
++ </script>
++<title></title>
++<title>ChatP</title>
++<script src="/m6vpn-ui.js"></script>
++</head>
++<body style="background-image: url(/background.jpg);"
++onload="initialize()" onresize="initialize()">
++<h3 align="center">BPQ32 Chat Node %s</h3>
++<table align="center" bgcolor="white" border="1" cellpadding="2">
++<tr>
++<td><a href="/Chat/ChatStatus?%s">Status</a></td>
++<td><a href="/Chat/ChatConf?%s">Configuration</a></td>
++<td><a href="/">Node Menu</a></td>
++</tr>
++</table>
++<br>
++<div style="text-align: center;"><font size="+1"><span
++style="font-family: monospace; font-weight: bold;">Chat Configuration</span></font></div>
++<div id="main"
++style="border: 2px solid ; overflow: auto; text-align: center; position: relative; top: 10px; height: 550px; width: 700px; left: 96.5px;">
++<form border="1" style="font-family: monospace;" method="post"
++action="/Chat/ChatConfig?%s">
++<h3>&nbsp;Chat Server  Params<span style="font-family: monospace;"></span></h3>
++<span style="font-family: monospace;"></span>Chat APPL No&nbsp;&nbsp;
++<input value="%d" size="3" name="ApplNum"><br>
++<span style="font-family: monospace;"></span>Streams &nbsp; &nbsp;
++&nbsp;&nbsp; <input value="%d" size="3" name="Streams"><br>
++&nbsp; <br>
++&nbsp;Nodes to link to:<br>
++<br>
++&nbsp;<textarea cols="20" rows="5" name="nodes">%s</textarea><br>
++<br>
++&nbsp;Map Position <input onchange=CheckLen() maxlength="80" value="%s" size="20" name="Posn" id=pos> <br>
++<br>
++&nbsp;Popup Type &nbsp;&nbsp; Hover <input %s name="PopType" value="Hover"
++type="radio">
++Click <input %s name="PopType" value="Click" type="radio"><br>
++<br>
++Map Popup Text<br>
++&nbsp;<input onchange=CheckLen() maxlength="250" value="%s" size="90" name="MapText" id=poptext>
++<br><br>Welcome Message<br>
++<textarea cols="80" rows="5" name="welcome">%s</textarea><br>
++<br>
++
++<div style="position: absolute; left: 150px; top: 470px;">
++<input name="Save" value="Save" type="submit"> 
++<input name="UpdateMap" value="Update Map" type="submit"> 
++<input name="Restart" value="Restart Links" type="submit"> 
++<input name="Cancel" value="Cancel"
++type="submit"></div>
++</form>
++</div>
+diff --git a/HTML/ChatStatus.txt b/HTML/ChatStatus.txt
+new file mode 100644
+index 0000000..f37a7c2
+--- /dev/null
++++ b/HTML/ChatStatus.txt
+@@ -0,0 +1,125 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/ChatStatus.txt -->
++<!-- Version 1 13/3/2014 -->
++<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
++<html><head>
++<link rel="stylesheet" href="/m6vpn.css">
++<style type="text/css"> 
++#outer {width:720px;height:700px;position:absolute;border:0px solid;font-family: monospace;}
++#streams {width:360px;position:absolute;height:300px;left:2px;border:2px solid;overflow: auto}
++#users {position: absolute;top:307px;left:2px;width:710px;height:350px;border:2px solid;overflow: auto;}
++#links {position: absolute;left:370px;width:341px;height:300px;border:2px solid;overflow: auto;}
++</style>
++<title>%s's Chat Server</title>
++  
++<script type="text/javascript">
++
++var Outer;
++var Selected;
++var Inpval;
++var SelectedStream = 0;
++
++function initialize()
++{
++ var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0];
++ x=w.innerWidth||e.clientWidth||g.clientWidth;
++ y=w.innerHeight||e.clientHeight||g.clientHeight;
++ fromleft = (x / 2) - 360;
++
++ if (fromleft < 0) {fromleft = 0;}
++ Outer = document.getElementById("outer");
++ Outer.style.left = fromleft + "px";
++ Inpval = document.getElementById("inpval");
++}
++ 
++function SelectRow(newRow)
++{
++ var cell=document.getElementById("cell_" + newRow);
++ var Last = Selected;
++ Selected = cell;
++ SelectedStream = newRow
++ cell.style.background="#AAF";
++ if (Last)
++  {Last.style.background="#FFF"};
++ if (cell == Last)
++ {
++  SelectedStream = 0;
++ }
++  Inpval.value = SelectedStream;
++}
++
++function condRefresh()
++{
++	if (SelectedStream == 0)
++		{location.reload(true);}
++}
++
++window.setInterval(condRefresh, 10000);
++
++</script>
++<script src="/m6vpn-ui.js"></script>
++</head><body onload="initialize()" onresize="initialize()" style="background-image: url(/background.jpg);">
++<h3 align="center">BPQ32 Chat Server %s</h3>
++
++<table align="center" bgcolor="white" border="1" cellpadding="2">
++
++  <tbody>
++    <tr>
++      <td><a href="/Chat/ChatStatus?%s">Status</a></td>
++      <td><a href="/Chat/ChatConf?%s">Configuration</a></td>
++      <td><a href="/">Node Menu</a></td>
++    </tr>
++  </tbody>
++</table>
++
++<br>
++
++<div style="left: 160px;" id="outer">
++<div id="streams">
++<form style="font-family: monospace; text-align: center;" method="post" action="/Chat/ChatDisSession?%s">
++  <table style="font-family: monospace; background-color: white; text-align: left; margin-left: auto; margin-right: auto;" tabindex="1" border="1" cellpadding="2">
++    <tbody>
++      <tr>
++        <th style="width: 120px;">User</th>
++        <th style="width: 75px;">Callsign</th>
++        <th>Stream</th>
++        <th style="width: 80px;">Topic</th>
++        <th>Queue</th>
++      </tr>
++%s
++    </tbody>
++  </table>
++ <input type="hidden" name=Stream value=99 id=inpval>
++<input align = center value=Disconnect type=submit> 
++<br>
++  </form>
++</div>
++<div id="users">
++<table style="font-family: monospace; background-color: white; text-align: left; margin-left: auto; margin-right: auto;" tabindex="1" border="1" cellpadding="2">
++  <tbody>
++    <tr>
++      <th style="width: 75px;">Callsign</th>
++      <th style="width: 75px;">Node</th>
++      <th style="width: 80px;">Name</th>
++      <th style="width: 80px;">Topic</th>
++      <th>Idle</th>
++      <th style="width: 320px;">QTH</th>
++    </tr>
++%s
++  </tbody>
++</table>
++</div>
++<div id="links">
++<table style="font-family: monospace; background-color: white; text-align: left; tabindex="1" border="1" cellpadding="2">
++  <tbody>
++    <tr>
++      <th style="width: 80px;">Callsign</th>
++      <th style="width: 75px;">State</th>
++      <th style="width: 75px;">Nodes</th>
++      <th>Users</th>
++    </tr>
++%s
++  </tbody>
++</table>
++</div>
++</div>
+diff --git a/HTML/FwdDetail.txt b/HTML/FwdDetail.txt
+new file mode 100644
+index 0000000..db78150
+--- /dev/null
++++ b/HTML/FwdDetail.txt
+@@ -0,0 +1,24 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/FwdDetail.txt -->
++<!-- Version 2 16/8/2019 -->
++<h3 align="center">Forwarding Config for %s - %d Messages Queued</h3><form style="font-family: monospace; text-align: center" method=post action=/Mail/FWD?%s>
++&nbsp;&nbsp;TO &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
++&nbsp;TIMES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; Connect Script<br>
++<textarea wrap=hard rows=8 cols=10 name=TO>%s</textarea> 
++<textarea wrap=hard rows=8 cols=10 name=AT>%s</textarea> 
++<textarea wrap=hard rows=8 cols=10 name=Times>%s</textarea> 
++<textarea wrap=hard rows=8 cols=20 name=FWD>%s</textarea><br>
++Hierarchical Routes (Flood Bulls) HR (Personals and Directed Bulls)
++<textarea wrap=hard rows=8 cols=30 name=HRB>%s</textarea> 
++<textarea wrap=hard rows=8 cols=30 name=HRP>%s</textarea>
++<br><br>
++BBS HA <input value="%s" size=50 name=BBSHA> <br>
++Enable Forwarding&nbsp;<input %sname=EnF type=checkbox> Interval <input value=%d size=3 name=Interval>(Secs)<br>
++Request Reverse&nbsp;&nbsp;&nbsp;<input %sname=EnR type=checkbox> Interval <input value=%d size=3 name=RInterval>(Secs)<br>
++Send new messages without waiting for poll timer<input %sname=NoWait type=checkbox><br>
++FBB Blocked <input %sname=Blocked type=checkbox>Max Block <input value=%d size=3 name=FBBBlock> 
++Send Personal Mail Only <input %sname=Personal type=checkbox><br>
++Allow Binary <input %sname=Bin type=checkbox> Use B1 Protocol <input %sname=B1 type=checkbox>&nbsp; Use B2 Protocol<input %sname=B2 type=checkbox><br>
++Send ctrl/Z instead of /ex in text mode forwarding <input %sname=CTRLZ type=checkbox><br>
++<br><input onclick=save(this.form) value=Update type=button> <input onclick=startf(this.form) value="Start Forwarding" type=button><br>
++</form>
+\ No newline at end of file
+diff --git a/HTML/FwdPage.txt b/HTML/FwdPage.txt
+new file mode 100644
+index 0000000..04e2e5a
+--- /dev/null
++++ b/HTML/FwdPage.txt
+@@ -0,0 +1,205 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/FwdPage.txt -->
++<!-- Version 3 16/8/2019 -->
++<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
++<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head>
++<link rel="stylesheet" href="/m6vpn.css">
++  
++  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
++
++  
++  <style type="text/css"> 
++
++#outer
++{
++width:900px;
++height:620px;
++position:absolute;
++border:0px solid;
++font-family: monospace;
++}
++#main
++{
++width:600px;
++position:absolute;
++height:610px;
++left:295px;
++border:2px solid;
++}
++#left
++{
++position: absolute;
++width:290px;
++height:510px;
++border:0px solid;
++overflow: auto;
++}
++#common
++{
++position: absolute;
++width:180px;
++height:500px;
++border:2px solid;
++overflow: auto;
++}
++#sidebar
++{
++position: absolute;
++width:95px;
++left:190px;
++height:500px;
++border:2px solid;
++overflow: auto;
++}
++
++</style>
++<title>Edit Forwarding</title>
++
++<script type="text/javascript"> 
++ 
++var Details
++var Sidebar
++var fromleft;
++var Outer;
++var Key = "%s"
++
++function initialize()
++{
++	var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0];
++	x=w.innerWidth||e.clientWidth||g.clientWidth;	y=w.innerHeight||e.clientHeight||g.clientHeight;
++	fromleft = (x / 2) - 450;
++	if (fromleft < 0) {fromleft = 0;}
++	Outer = document.getElementById("outer"); 
++	Outer.style.left = fromleft + "px";
++	Sidebar = document.getElementById("sidebar"); 
++	Details = document.getElementById("main"); 
++	Details.innerHTML = "waiting for data..."; 
++	GetData("");
++}
++
++function save(form)
++{
++	var msg
++	var fn = "FWDSave?" + Key;
++	
++	msg = 
++	form.TO.value + "|" +
++	form.AT.value + "|" +
++	form.Times.value + "|" +
++	form.FWD.value + "|" +
++	form.HRB.value + "|" +
++	form.HRP.value + "|" +
++	form.BBSHA.value + "|" +
++	form.EnF.checked + "|" +
++	form.Interval.value + "|" +
++	form.EnR.checked + "|" + 
++	form.RInterval.value + "|" +
++	form.NoWait.checked + "|" +
++	form.Blocked.checked + "|"  +
++	form.FBBBlock.value + "|"  +
++	form.Personal.checked + "|" +
++	form.Bin.checked + "|" +
++	form.B1.checked + "|" +
++	form.B2.checked + "|" +
++	form.CTRLZ.checked + "|"
++	post(fn, msg);
++}
++
++function startf(form)
++{
++	var fn = "FWDSave?" + Key;
++	post(fn, "StartForward", "");
++}
++
++function post(url, data)
++{
++	if (window.XMLHttpRequest){request=new XMLHttpRequest();}else{request=new ActiveXObject("Microsoft.XMLHTTP");}
++	request.onreadystatechange = function()
++	{if (request.readyState == 4){Details.innerHTML = request.responseText;}}
++	request.open("POST", url, true);request.send(data);
++}
++
++function GetDetails(call)
++{
++	var fn = "FwdDetails?" + Key;
++	post(fn, call);
++}
++function GetData()
++{
++	if (window.XMLHttpRequest){request=new XMLHttpRequest();}else{request=new ActiveXObject("Microsoft.XMLHTTP");}
++ 
++	request.onreadystatechange = function()
++	{
++		if (request.readyState == 4)
++		{
++			var text = request.responseText;
++			var lines = text.split("|");
++			var i = 0;
++			
++	 	    var infoArea = document.getElementById("sidebar"); 
++		    var strInfo = '<table>';
++ 						
++			while(i < lines.length - 1)
++			{	
++				var clink = '<a href=javascript:GetDetails("' + lines[i] + '")>' + lines[i] + '</a>';	
++				var tableRow = '<tr><td>' + clink + '</td></tr>\n';	 
++				strInfo += tableRow;			
++				i=i+1;
++			}
++			infoArea.innerHTML = strInfo + "</table>";
++			GetDetails(lines[0]);
++		}
++	}
++	request.open("POST","FwdList.txt?%s",true);										   
++	request.send();
++}
++ 
++  </script>
++<script src="/m6vpn-ui.js"></script>
++</head><body onload="initialize()" onresize="initialize()" style="background-image: url(/background.jpg);">
++<h3 align="center">BPQ32 BBS %s</h3>
++
++<table align="center" bgcolor="white" border="1" cellpadding="2">
++
++  <tbody>
++    <tr>
++      <td><a href="/Mail/Status?%s">Status</a></td>
++      <td><a href="/Mail/Conf?%s">Configuration</a></td>
++      <td><a href="/Mail/Users?%s">Users</a></td>
++      <td><a href="/Mail/Msgs?%s">Messages</a></td>
++      <td><a href="/Mail/FWD?%s">Forwarding</a></td>
++      <td><a href="/Mail/Wel?%s">Welcome Msgs &amp; Prompts</a></td>
++      <td><a href="/Mail/HK?%s">Housekeeping</a></td>
++      <td><a href="/Mail/WP?%s">WP Update</a></td>
++      <td><a href="/">Node Menu</a></td>
++    </tr>
++  </tbody>
++</table>
++
++<br />
++
++<div id="outer">
++<div id="left">
++<div id="common">
++<form style="font-family: monospace; text-align: center;" method=post action=/Mail/FwdCommon?%s>
++Max size to Send <input value=%d size="3" name="MaxTX"><br>
++<br>
++Max Size to Receive <input value=%d size="3" name="MaxRX"><br>
++<br>
++Max age for Bulls <input value=%d size="3" name="MaxAge"><br>
++<br>
++Warn if no route<br>
++&nbsp;for P or T <input %sname="WarnNoRoute" type="checkbox" /><br />
++  <br />
++Use Local Time&nbsp;<input %sname="LocalTime" type="checkbox" /><br />
++  <br />
++Aliases<br />
++  <br />
++  <textarea rows="8" cols="12" name="Aliases">%s</textarea><br><br>
++<input name=Submit value=Update type=submit> </form>
++</div>
++<div id="sidebar"> </div>
++</div>
++<div id="main"> </div>
++</div>
++</body></html>
+\ No newline at end of file
+diff --git a/HTML/Housekeeping.txt b/HTML/Housekeeping.txt
+new file mode 100644
+index 0000000..c09270f
+--- /dev/null
++++ b/HTML/Housekeeping.txt
+@@ -0,0 +1,169 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/Housekeeping.txt -->
++<!-- Version 2 2/1/2016 -->
++<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
++<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head>
++<link rel="stylesheet" href="/m6vpn.css">
++  
++<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type" />
++<title>Housekeeping</title>
++<script type="text/javascript"> 
++ 
++var Main
++var fromleft;
++
++function initialize()
++{	
++	var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0];
++	x=w.innerWidth||e.clientWidth||g.clientWidth;
++	fromleft = (x / 2) - 440;
++	if (fromleft < 0) {fromleft = 0;}
++	Main = document.getElementById("main"); 
++	Main.style.left = fromleft + "px";
++
++//	Main.style.width = (x - fromleft) + "px";
++}
++</script>
++<script src="/m6vpn-ui.js"></script>
++</head>
++<body background=/background.jpg onload="initialize()" onresize="initialize()">
++<h3 align=center>BPQ32 BBS %s</h3>
++<span align=center><table align=center border=1 cellpadding=2 bgcolor=white><tr>
++<td><a href=/Mail/Status?%s>Status</a></td>
++<td><a href=/Mail/Conf?%s>Configuration</a></td>
++<td><a href=/Mail/Users?%s>Users</a></td>
++<td><a href=/Mail/Msgs?%s>Messages</a></td>
++<td><a href=/Mail/FWD?%s>Forwarding</a></td>
++<td><a href=/Mail/Wel?%s>Welcome Msgs & Prompts</a></td>
++<td><a href=/Mail/HK?%s>Housekeeping</a></td>
++<td><a href=/Mail/WP?%s>WP Update</a></td>
++<td><a href=/>Node Menu</a></td></tr></table>
++<br>
++<div style="text-align: center;"><font size="+1"><span style="font-family: monospace; font-weight: bold;">Housekeeping</span></font></div>
++
++<form style="font-family: monospace; " method="post" action="/Mail/HK?%s" name="HK">
++  <div id="main" style="position: relative; top:10px; height:550px; width:940px; overflow: auto">
++  <div style="border: 2px solid ; width: 270px; height: 510px; "><div style="text-align: center;"><font size="+1"><span style="font-family: monospace; font-weight: bold;">Parameters</span></font></div><br>
++<br>
++  <table style="text-align: left; width: 264px; height: 116px;" border="0" cellpadding="2" cellspacing="2">
++    <tbody>
++      <tr>
++        <td>Maintenance Time (UTC)</td>
++        <td><input size="3" name="MTTime" value="%d" /></td>
++      </tr>
++      <tr>
++        <td>Max Message Number </td>
++        <td><input size="3" name="MAXMSG" value="%d" /></td>
++      </tr>
++      <tr>
++        <td>BID Lifetime (Days)</td>
++        <td><input size="3" name="BIDLife" value="%d"> </td>
++      </tr>
++      <tr>
++        <td>Log File Lifetime (days)</td>
++        <td><input size="3" name="LogLife" value="%d"></td>
++      </tr><tr>
++        <td>Delete Inactive Users (days)</td>
++        <td><input size="3" name="UserLife" value="%d"></td>
++      </tr>
++    </tbody>
++  </table>
++  <br />
++Delete Messages and logs<br>
++to recycle bin <input %sname="Deltobin" value="Deltobin" type="checkbox"><br>
++  <br />
++Send Non-delivery Notifications<br>
++for P and T messages <input %sname="SendND" value="SendND" type="checkbox" /><br>
++  <br />
++Supress Mailing of<br>
++Housekeeping Result <input %sname="NoMail" value="Yes" type="checkbox"><br><br>
++Generate Traffic Report<input %sname="GenTraffic" value="Yes" type="checkbox"><br><br>
++<div style="text-align: center;"><input  name=RunNow value="Run Housekeeping" type=submit></div>
++  </div>
++  <div style="border: 2px solid ; overflow: auto; position: absolute; left: 285px; width: 585px; height: 511px; top: 0px;"><div style="text-align: center;"><font size="+1"><span
++style="font-family: monospace; font-weight: bold;">Lifetimes</span></font><br>
++</div>
++
++  <div style="border: 2px solid ; overflow: auto; position: absolute; top: 20px; left: 10px; width: 180px; height: 150px;"><div style="text-align: center;"><span
++style="font-family: monospace; font-weight: bold;">Personals</span>
++</div>
++  <table style="text-align: left; width: 177px;" border="0" cellpadding="2" cellspacing="2">
++    <tbody>
++      <tr>
++        <td>Read</td>
++        <td><input size="2" name="PR" value="%d"></td>
++      </tr>
++      <tr>
++        <td>Unread </td>
++        <td><input size="2" name="PUR" value="%d"></td>
++      </tr>
++      <tr>
++        <td>Forwarded </td>
++        <td><input size="2" name="PF" value="%d"></td>
++      </tr>
++      <tr>
++        <td>Unforwarded </td>
++        <td><input size="2" name="PUF" value="%d"></td>
++      </tr>
++    </tbody>
++  </table>
++  </div>
++  <div style="border: 2px solid ; overflow: auto; position: absolute; top: 20px; left: 200px; width: 180px; height: 150px;"><div style="text-align: center;"><span
++style="font-family: monospace; font-weight: bold;">Bulletins</span>
++</div>
++  <table style="text-align: left; width: 177px;" border="0" cellpadding="2" cellspacing="2">
++    <tbody>
++      <tr>
++        <td>Forwarded</td>
++        <td><input size="2" name="BF" value="%d"></td>
++      </tr>
++      <tr>
++        <td>Unforwarded</td>
++        <td><input size="2" name="BUF" value="%d"></td>
++      </tr>
++    </tbody>
++  </table>
++  </div>
++  
++    <div style="border: 2px solid ; overflow: auto; position: absolute; top: 20px; left: 390px; width: 180px; height: 150px;"><div style="text-align: center;"><span
++style="font-family: monospace; font-weight: bold;">NTS</span>
++</div>
++  <table style="text-align: left; width: 177px;" border="0" cellpadding="2" cellspacing="2">
++    <tbody>
++      <tr>
++        <td>Delivered</td>
++        <td><input size="2" name="NTSD" value="%d"></td>
++      </tr>
++      <tr>
++        <td>Forwarded</td>
++        <td><input size="2" name="NTSF" value="%d"></td>
++      </tr>
++      <tr>
++        <td>Unforwarded</td>
++        <td><input size="2" name="NTSU" value="%d"></td>
++      </tr>
++    </tbody>
++  </table>
++  </div>
++
++  
++  
++  
++  <div style="border: 0px solid ; overflow: auto; position: absolute; top: 180px; left: 10px; width: 550px; height: 310px;">The following boxes allow you to specify different
++values for different Bulletin origins and destinations. Normally these apply to Sent Messages. To apply to unsent, check box below.<br><br>
++Specify Call, Lifetime....eg ALL, 10<br><br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
++From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
++&nbsp;&nbsp;&nbsp;
++To&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
++At<br />
++  <textarea cols="12" rows="8" name="From">%s</textarea> <textarea cols="12" rows="8" name="To">%s</textarea> <textarea cols="12" rows="8" name="At">%s</textarea> <br />
++  <br />
++&nbsp;Apply Overrides to unsent Bulls <input name="OvUnsent" %svalue="OvUnsent" type="checkbox"><br>
++  </div>
++  </div>
++  <div style="position: absolute;left: 370px;top: 520px;"><input name=Save value=Save type=submit> <input name=Cancel value=Cancel type=submit></div>
++
++  </div>
++</form>
++<br>
+diff --git a/HTML/MainConfig.txt b/HTML/MainConfig.txt
+new file mode 100644
+index 0000000..af68487
+--- /dev/null
++++ b/HTML/MainConfig.txt
+@@ -0,0 +1,96 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/MainConfig.txt -->
++<!-- Version 7 2/1/2017 -->
++<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
++<html><head>
++<link rel="stylesheet" href="/m6vpn.css"><title>Main Configuration</title>
++
++<script type="text/javascript"> 
++ 
++var Main
++var fromleft;
++
++function initialize()
++{	
++	var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0];
++	x=w.innerWidth||e.clientWidth||g.clientWidth;
++	fromleft = (x / 2) - 350;
++	if (fromleft < 0) {fromleft = 0;}
++	Main = document.getElementById("main"); 
++	Main.style.left = fromleft + "px";
++}
++</script>
++<script src="/m6vpn-ui.js"></script>
++</head><body style="background-image: url(/background.jpg);" onload="initialize()" onresize="initialize()">
++<h3 align="center">BPQ32 BBS %s</h3>
++
++<table align="center" bgcolor="white" border="1" cellpadding="2">
++<tr>
++      <td><a href="/Mail/Status?%s">Status</a></td>
++      <td><a href="/Mail/Conf?%s">Configuration</a></td>
++      <td><a href="/Mail/Users?%s">Users</a></td>
++      <td><a href="/Mail/Msgs?%s">Messages</a></td>
++      <td><a href="/Mail/FWD?%s">Forwarding</a></td>
++      <td><a href="/Mail/Wel?%s">Welcome Msgs &amp; Prompts</a></td>
++      <td><a href="/Mail/HK?%s">Housekeeping</a></td>
++      <td><a href="/Mail/WP?%s">WP Update</a></td>
++      <td><a href="/">Node Menu</a></td>
++</tr></table>
++<br>
++<div style="text-align: center;"><font size="+1"><span style="font-family: monospace; font-weight: bold;">Main Configuration</span></font></div>
++
++<div id="main" style="border: 2px solid ; overflow: auto; position: relative; top: 10px; height: 900px; width: 700px; left: 86px;">
++<form border="1" style="font-family: monospace;" method="post" action="/Mail/Config?%s">
++  <h3>&nbsp;BBS Params</h3>
++&nbsp;BBS Call&nbsp;&nbsp;<input value="%s" name="BBSCall">&nbsp;SYSOP
++Call <input value="%s" name="SYSOPCall"><br>
++&nbsp;H Route&nbsp;&nbsp; <input value="%s" name="HRoute">
++  <input %sname="BBSToSYSOP" type="checkbox"> Redirect msgs to BBS Call to SYSOP Call<br>
++  <br>
++&nbsp;BBS APPL No <input value="%d" size="3" name="ApplNum">&nbsp;&nbsp;Streams
++  <input value="%d" size="3" name="Streams"><br>
++  <br>
++  <input %sname="SysToSYSOP" type="checkbox"> Send System Msgs to
++SYSOP Call<br>
++  <input %sname="RefuseBulls" type="checkbox"> Refuse Bulls<br>
++  <input %sname="EnUI" type="checkbox"> Enable FBB UI System<br>
++&nbsp;&nbsp;&nbsp; Send Mail For Beacons every&nbsp; <input value="%d" size="3" name="UIInterval"> Minutes <input name="ConfigUI" value="Config UI Ports and Digis" type="submit"><br>
++  <input %sname="DontHold" type="checkbox"> Don't Hold Messages From New Users<br>
++  <input %sname="DontNeedName" type="checkbox"> Don't Request Name<br>
++   <input %sname="DontNeedHomeBBS" type="checkbox"> Don't Request Home BBS<br>
++   <input %sname="UserCantKillT" type="checkbox"> Allow users to kill T messages<br>
++  <input %sname="FWDtoMe" type="checkbox"> Forward Messages to BBS Call<br><br>
++&nbsp;POP3 Port&nbsp;&nbsp; <input value="%d" size="3" name="POP3Port">
++SMTP Port <input value="%d" size="3" name="SMTPPort"> NTPPort <input value="%d" size="3" name="NNTPPort">&nbsp;<input %sname="EnRemote" type="checkbox"> Enable Remote Access<br>
++&nbsp;AMPR Address <input value="%s" name="AMPRDomain"> <input %sname="SendAMPR" type="checkbox"> Send AMPR Mail to AMPR host
++
++ <h3>&nbsp;ISP Params</h3>
++  <input %sname="EnISP" type="checkbox"> Enable ISP
++Interface<br>
++&nbsp;My Domain&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<input value="%s" name="ISPDomain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
++&nbsp;SMTP Server &nbsp; &nbsp; &nbsp;&nbsp; <input value="%s" name="SMTPServer"> Port &nbsp; &nbsp; <input value="%d" size="3" name="ISPSMTPPort"> SMTP Domain &nbsp;<input value="%s" name="ISPEHLOName"><br>
++&nbsp;POP3 Server &nbsp; &nbsp;&nbsp; &nbsp; <input value="%s" name="POP3Server"> Port &nbsp; &nbsp; <input value="%d" size="3" name="ISPPOP3Port"><br>
++&nbsp;ISP Account Name &nbsp; <input value="%s" name="ISPAccount">
++Password <input value="%s" name="ISPPassword"> <br>
++&nbsp;POP3 Poll Interval <input value="%d" size="3" name="PollInterval">&nbsp;
++<input %sname="ISPAuth" type="checkbox"> SMTP Server Requires Authentication
++<h3>&nbsp;WP Params</h3>
++ <input %sname="EnWP" type="checkbox"> Send WPUpdates&nbsp;&nbsp;&nbsp; 
++ <input %sname="RejWFBulls" type="checkbox"> Reject WP Bulls&nbsp;&nbsp;&nbsp; &nbsp;
++ Type B<input %s name="Type" value="TypeB" type="radio">Type P<input %s name="Type" value="TypeP" type="radio"><br><br>
++&nbsp;WP Destinations<br>&nbsp;<textarea cols="30" rows="4" name="WPTO">%s</textarea><br>
++<h3>&nbsp;Message Filters</h3>
++&nbsp;Reject From&nbsp; Reject
++To&nbsp;&nbsp;&nbsp; Reject At&nbsp;&nbsp; Hold
++From&nbsp;&nbsp;&nbsp; Hold
++To&nbsp;&nbsp;&nbsp; Hold At<br>&nbsp;
++<textarea cols="8" rows="5" name="Rfrom">%s</textarea> 
++<textarea cols="8" rows="5" name="Rto">%s</textarea> 
++<textarea cols="8" rows="5" name="Rat">%s</textarea> 
++<textarea cols="8" rows="5" name="Hfrom">%s</textarea>
++<textarea cols="8" rows="5" name="Hto">%s</textarea> 
++<textarea cols="8" rows="5" name="Hat">%s</textarea>
++
++<div style="position: absolute; left: 290px; top: 870px;"><input name="Save" value="Save" type="submit"> <input name="Cancel" value="Cancel" type="submit"></div>
++</form>
++</div>
+diff --git a/HTML/MsgPage.txt b/HTML/MsgPage.txt
+new file mode 100644
+index 0000000..c8df958
+--- /dev/null
++++ b/HTML/MsgPage.txt
+@@ -0,0 +1,181 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/MsgPage.txt -->
++<!-- Version 2 7/5/2016 -->
++<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
++<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
++<head>
++<link rel="stylesheet" href="/m6vpn.css">
++<meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
++<link href="/menu_assets/styles.css" rel="stylesheet" type="text/css">
++<style type="text/css"> 
++
++
++#outer
++{
++width:662px;
++height:%dpx;
++position:absolute;
++top:100px;
++font-family: monospace;
++}
++#main
++{
++width:550px;
++height:%dpx;
++position:absolute;
++left:112px;
++border:2px solid;
++}
++#sidebar
++{
++position: absolute;
++width: 110px;
++top:105px;
++height: %dpx;
++border:2px solid;
++overflow: auto;
++}
++#sel
++{
++position: absolute;
++width: 110px;
++height: 103px;
++border:2px solid;
++font-family: monospace;
++}
++</style>
++
++<title>Edit Messages</title> 
++<script type="text/javascript"> 
++ 
++var Details
++var Sidebar
++var fromleft;
++var Outer;
++
++function initialize()
++{	
++	var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0];
++	x=w.innerWidth||e.clientWidth||g.clientWidth;	y=w.innerHeight||e.clientHeight||g.clientHeight;
++	fromleft = (x / 2) - 331;
++	if (fromleft < 0) {fromleft = 0;}
++	Outer = document.getElementById("outer"); 
++	Outer.style.left = fromleft + "px";
++	Sidebar = document.getElementById("sidebar"); 
++//	Sidebar.style.left = fromleft + "px";
++	Details = document.getElementById("main"); 
++	Details.innerHTML = "waiting for data..."; 
++//	Details.style.left = fromleft + 150 + "px";
++	GetData("");
++}
++function ck(cell)
++{
++	var fn = "MsgFwdUpdate?%s";
++	post(fn, cell);
++}
++
++function save(form)
++{
++	var msg
++	msg = form.From.value + "|" + form.To.value+ "|" + form.BID.value+ "|" + form.VIA.value+ "|" + form.Title.value+ "|" + form.Type.value + "|" + form.Status.value +"|"
++	var fn = "MsgSave?%s";
++	post(fn, msg);
++}
++
++function doit(param)
++{
++	var fn = "MsgAction?%s";
++	post(fn, param);
++}
++
++function dofilter(form)
++{
++	var val = form.FFrom.value + "|" + form.FTo.value + "|" + form.FVia.value+ "|" + form.FBid.value+ "|" 
++	GetData(val);
++}
++
++function editmsg(url)
++{
++var param = "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,titlebar=no,toobar=no,width=800,height=600";
++window.open(url,"_blank", param);
++}
++
++
++function post(url, data)
++{
++	if (window.XMLHttpRequest){request=new XMLHttpRequest();}else{request=new ActiveXObject("Microsoft.XMLHTTP");}
++	request.onreadystatechange = function()
++	{if (request.readyState == 4){Details.innerHTML = request.responseText;}}
++	request.open("POST", url, true);request.send(data);
++}
++function GetDetails(call)
++{
++	var fn = "MsgDetails?%s";
++	post(fn, call);
++}
++function GetData(filter)
++{
++	if (window.XMLHttpRequest){request=new XMLHttpRequest();}else{request=new ActiveXObject("Microsoft.XMLHTTP");}
++ 
++	request.onreadystatechange = function()
++	{
++		if (request.readyState == 4)
++		{
++			var text = request.responseText;
++			var lines = text.split("|");
++			var i = 0;
++			
++	 	    var infoArea = document.getElementById("sidebar"); 
++		    var strInfo = '<table>';
++ 						
++			while(i < lines.length - 1)
++			{	
++				var clink = '<a href=javascript:GetDetails("' + lines[i] + '")>' + lines[i] + '</a>';	
++				var tableRow = '<tr><td>' + clink + '</td></tr>\n';	 
++				strInfo += tableRow;			
++				i=i+1;
++			}
++			infoArea.innerHTML = strInfo + "</table>";
++			GetDetails(lines[0]);
++		}
++	}
++	request.open("POST","MsgInfo.txt?%s",true);										   
++	request.send(filter);
++}
++ 
++</script>
++<script src="/m6vpn-ui.js"></script>
++</head>
++<body background=/background.jpg onload="initialize()" onresize="initialize()">
++<h3 align=center>BPQ32 BBS %s</h3>
++<table align="center" bgcolor="white" border="1" cellpadding="2">
++  <tbody>
++    <tr>
++      <td><a href="/Mail/Status?%s">Status</a></td>
++      <td><a href="/Mail/Conf?%s">Configuration</a></td>
++      <td><a href="/Mail/Users?%s">Users</a></td>
++      <td><a href="/Mail/Msgs?%s">Messages</a></td>
++      <td><a href="/Mail/FWD?%s">Forwarding</a></td>
++      <td><a href="/Mail/Wel?%s">Welcome Msgs &amp; Prompts</a></td>
++      <td><a href="/Mail/HK?%s">Housekeeping</a></td>
++      <td><a href="/Mail/WP?%s">WP Update</a></td>
++      <td><a href="/">Node Menu</a></td>
++    </tr>
++  </tbody>
++</table>
++
++<div id="outer">
++ <div align=center style="font-family: monospace;" id="sidebar"></div>
++ <div align=center style="font-family: monospace;" id="main"></div> 
++ <div style="font-family: monospace;" id="sel">
++ <form style="font-family: monospace;"><div style="text-align: center;"><span
++style="font-family: monospace; font-weight: bold;">Filter</span></div>
++From <input style="font-family: monospace;" size="7" name="FFrom" value="" onkeyup=dofilter(this.form)><br>
++To&nbsp;&nbsp; <input  style="font-family: monospace;" size="7" name="FTo" value="" onkeyup=dofilter(this.form)<br>
++Via&nbsp; <input  style="font-family: monospace;" size="7" name="FVia" value="" onkeyup=dofilter(this.form)><br>
++BID&nbsp; <input  style="font-family: monospace;" size="7" name="FBid" value="" onkeyup=dofilter(this.form)>
++</form>
++</div>
++</div> 
++</span>
++
+diff --git a/HTML/MsgPageMenu.txt b/HTML/MsgPageMenu.txt
+new file mode 100644
+index 0000000..97334cb
+--- /dev/null
++++ b/HTML/MsgPageMenu.txt
+@@ -0,0 +1,212 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/MsgPageMenu.txt -->
++<!-- Version 1 13/3/2014 -->
++<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
++<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
++<head>
++<link rel="stylesheet" href="/m6vpn.css">
++<meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
++<link href="/menu_assets/styles.css" rel="stylesheet" type="text/css">
++<style type="text/css"> 
++
++#cssmenu ul {margin: 0; padding: 7px 6px 0; background: #505050;
++ line-height: 100%; font: normal .9em/0.0em Arial, Helvetica, sans-serif;}
++#cssmenu li {margin: 0 5px; padding: 0 0 8px; float: left; position: relative; list-style: none; }
++#cssmenu a,
++#cssmenu a:link {font-weight: bold; color: #ffffff; text-decoration: none; display: block; padding:  7px 20px; margin: 0;
++ border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;	 text-shadow: 0 1px 1px rgba(0,0,0, .3); }
++#cssmenu .active a, 
++#cssmenu li:hover > a {background: #fff url(/overlay.png) repeat-x 0 -40px; color: #000;}
++#cssmenu ul ul li:hover a,
++#cssmenu li:hover li a {border: none; color: #666;}
++#cssmenu ul ul a:hover {background: #000; color: #fff;
++  text-shadow: 0 1px 1px rgba(0,0,0, .1);}
++#cssmenu li:hover > ul {display: block;}
++#cssmenu ul ul {display: none; margin: 0; padding: 0; width: 210px; position: absolute; top: -30px; left: 0; background:
++ #fff ;}
++#cssmenu ul ul li {float: none; margin: 0; padding: 3px; }
++#cssmenu ul ul a {font-weight: normal; text-shadow: 0 1px 0 #fff; }
++#cssmenu ul:after {content: '.'; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;}
++* html #cssmenu  ul {height: 1%;}
++
++#cssmenu
++{
++position:absolute;
++//left:112px;
++font-family: monospace;
++}
++
++#outer
++{
++width:612px;
++height:520px;
++position:absolute;
++top:100px;
++font-family: monospace;
++}
++#main
++{
++width:500px;
++height:520px;
++position:absolute;
++left:112px;
++border:2px solid;
++}
++#sidebar
++{
++position: absolute;
++width: 110px;
++top:97px;
++height: 423px;
++border:2px solid;
++overflow: auto;
++}
++#sel
++{
++position: absolute;
++width: 110px;
++height: 95px;
++border:2px solid;
++font-family: monospace;
++}
++</style>
++
++<title>Edit Messages</title> 
++<script type="text/javascript"> 
++ 
++var Details
++var Sidebar
++var fromleft;
++var Outer;
++var Menu;
++
++
++function initialize()
++{	
++	var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0];
++	x=w.innerWidth||e.clientWidth||g.clientWidth;	y=w.innerHeight||e.clientHeight||g.clientHeight;
++	fromleft = (x / 2) - 306;
++	if (fromleft < 0) {fromleft = 0;}
++	Menu = document.getElementById("cssmenu"); 
++	Menu.style.left = (fromleft - 50) + "px";
++	Outer = document.getElementById("outer"); 
++	Outer.style.left = fromleft + "px";
++	Sidebar = document.getElementById("sidebar"); 
++//	Sidebar.style.left = fromleft + "px";
++	Details = document.getElementById("main"); 
++	Details.innerHTML = "waiting for data..."; 
++//	Details.style.left = fromleft + 150 + "px";
++	GetData("");
++}
++function ck(cell)
++{
++	var fn = "MsgFwdUpdate?%s";
++	post(fn, cell);
++}
++
++function save(form)
++{
++	var msg
++	msg = form.From.value + "|" + form.To.value+ "|" + form.BID.value+ "|" + form.VIA.value+ "|" + form.Title.value+ "|" + form.Type.value + "|" + form.Status.value +"|"
++	var fn = "MsgSave?%s";
++	post(fn, msg);
++}
++
++function doit(param)
++{
++	var fn = "MsgAction?%s";
++	post(fn, param);
++}
++
++function dofilter(form)
++{
++	var val = form.FFrom.value + "|" + form.FTo.value + "|" + form.FVia.value+ "|" 
++	GetData(val);
++}
++
++function editmsg(url)
++{
++var param = "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,titlebar=no,toobar=no,width=800,height=600";
++window.open(url,"_blank", param);
++}
++
++
++function post(url, data)
++{
++	if (window.XMLHttpRequest){request=new XMLHttpRequest();}else{request=new ActiveXObject("Microsoft.XMLHTTP");}
++	request.onreadystatechange = function()
++	{if (request.readyState == 4){Details.innerHTML = request.responseText;}}
++	request.open("POST", url, true);request.send(data);
++}
++function GetDetails(call)
++{
++	var fn = "MsgDetails?%s";
++	post(fn, call);
++}
++function GetData(filter)
++{
++	if (window.XMLHttpRequest){request=new XMLHttpRequest();}else{request=new ActiveXObject("Microsoft.XMLHTTP");}
++ 
++	request.onreadystatechange = function()
++	{
++		if (request.readyState == 4)
++		{
++			var text = request.responseText;
++			var lines = text.split("|");
++			var i = 0;
++			
++	 	    var infoArea = document.getElementById("sidebar"); 
++		    var strInfo = '<table>';
++ 						
++			while(i < lines.length - 1)
++			{	
++				var clink = '<a href=javascript:GetDetails("' + lines[i] + '")>' + lines[i] + '</a>';	
++				var tableRow = '<tr><td>' + clink + '</td></tr>\n';	 
++				strInfo += tableRow;			
++				i=i+1;
++			}
++			infoArea.innerHTML = strInfo + "</table>";
++			GetDetails(lines[0]);
++		}
++	}
++	request.open("POST","MsgInfo.txt?%s",true);										   
++	request.send(filter);
++}
++ 
++</script>
++<script src="/m6vpn-ui.js"></script>
++</head>
++<body background=/background.jpg onload="initialize()" onresize="initialize()">
++<h3 align=center>BPQ32 BBS %s</h3>
++<div id="cssmenu" style="width:750px; text-align: center">
++<ul>
++<li><a href="/Mail/Status?%s"><span>Status</span></a></li>
++<li class="has-sub"><a href="#"><span>Configuration</span></a>
++<ul>
++<li><a href="/Mail/Conf?%s"><span>Main Configuration</span></a></li>
++<li><a href="/Mail/Wel?%s"><span>Welcome Msgs & Prompts</span></a></li>
++<li><a href="/Mail/HK?%s"><span>Housekeeping</span></a></li>
++</ul>
++</li>
++<li><a href="/Mail/Users?%s"><span>Users</span></a></li>
++<li><a href="/Mail/Msgs?%s"><span>Messages</span></a></li>
++<li><a href="/Mail/FWD?%s"><span>Forwarding</span></a></li>
++<li><a href="/Mail/WP?%s"><span>WP Update</span></a></li>
++</ul>
++</div>
++<br>
++
++<div id="outer">
++ <div align=center style="font-family: monospace;" id="sidebar"></div>
++ <div align=center style="font-family: monospace;" id="main"></div> 
++ <div style="font-family: monospace;" id="sel">
++ <form style="font-family: monospace;"><div style="text-align: center;"><span
++style="font-family: monospace; font-weight: bold;">Filter</span></div>
++From <input style="font-family: monospace;" size="7" name="FFrom" value="" onkeyup=dofilter(this.form)><br>
++To&nbsp;&nbsp; <input  style="font-family: monospace;" size="7" name="FTo" value="" onkeyup=dofilter(this.form)<br>
++Via&nbsp; <input  style="font-family: monospace;" size="7" name="FVia" value="" onkeyup=dofilter(this.form)>
++</form>
++</div>
++</div> 
++</span>
++
+diff --git a/HTML/NodeMenu.html b/HTML/NodeMenu.html
+new file mode 100644
+index 0000000..3d934e2
+--- /dev/null
++++ b/HTML/NodeMenu.html
+@@ -0,0 +1,39 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/NodeMenu.html -->
++<!DOCTYPE html>
++<html lang="en">
++<head>
++<meta charset="UTF-8">
++<meta name="viewport" content="width=device-width, initial-scale=1.0">
++<title>BPQ32 Node ##MY_CALLSIGN##</title>
++<link rel="stylesheet" href="/m6vpn.css">
++<script src="/m6vpn-ui.js"></script>
++</head>
++<body>
++<main class="m6vpn-node">
++<section class="m6vpn-shell m6vpn-node-shell">
++<header>
++<p class="m6vpn-kicker">Node access</p>
++<h1>BPQ32 Node ##MY_CALLSIGN##</h1>
++<p>M6VPN-1 BBS, IO94EX, 144.9375 MHz FM 1200bd AX.25, #18.GBR.EURO</p>
++</header>
++<div class="m6vpn-status">
++<span>CALL ##MY_CALLSIGN##</span>
++<span>MODE AX.25</span>
++<span>NODE M6VPN-7</span>
++<span>LinBPQ M6VPN-1</span>
++</div>
++<nav class="m6vpn-grid m6vpn-node-grid" aria-label="BPQ32 node pages">
++<a class="m6vpn-link" href="/Node/Routes.html"><strong>Routes</strong><span>Known routes and quality paths</span></a>
++<a class="m6vpn-link" href="/Node/Nodes.html"><strong>Nodes</strong><span>Visible packet nodes</span></a>
++<a class="m6vpn-link" href="/Node/Ports.html"><strong>Ports</strong><span>Radio and service ports</span></a>
++<a class="m6vpn-link" href="/Node/Links.html"><strong>Links</strong><span>Current node links</span></a>
++<a class="m6vpn-link" href="/Node/Users.html"><strong>Users</strong><span>Connected stations</span></a>
++<a class="m6vpn-link" href="/Node/Stats.html"><strong>Stats</strong><span>Node counters and health</span></a>
++<a class="m6vpn-link" href="/Node/Terminal.html"><strong>Terminal</strong><span>Authenticated command session</span></a>
++<a class="m6vpn-link" href="/APRS/all.html"><strong>APRS Pages</strong><span>APRS station and RF data</span></a>
++</nav>
++</section>
++</main>
++</body>
++</html>
+diff --git a/HTML/UserDetail.txt b/HTML/UserDetail.txt
+new file mode 100644
+index 0000000..378f868
+--- /dev/null
++++ b/HTML/UserDetail.txt
+@@ -0,0 +1,136 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/UserDetail.txt -->
++<!-- Version 4 10/10/2015 -->
++<form style="font-family: monospace;" method="post" action="/Mail/UserSave?%s">
++<h3 align=center>Update User %s</h3>
++ <div style="position:absolute; left:10px;"> <table style="text-align: left; height: 156px;" cellpadding="2" cellspacing="0">
++    <tbody>
++      <tr>
++        <td style="vertical-align: middle; width: 20px;"><input %sname="BBS" type="checkbox"></td>
++        <td>BBS</td>
++        <td style="width: 20px;"><input %s name="PermitEmail" type="checkbox"></td>
++        <td style="width: 250px;">Permit Email</td>
++      </tr>
++      <tr>
++        <td style="vertical-align: middle; width: 20px;"><input %sname="PMS" type="checkbox"></td>
++        <td>PMS</td>
++        <td style="width: 20px;"><input %sname="RMSExUser" type="checkbox"></td>
++        <td>RMS Express User</td>
++      </tr>
++      <tr>
++        <td style="vertical-align: middle; width: 20px;"><input %sname="SYSOP" type="checkbox"></td>
++        <td>SYSOP</td>
++        <td style="width: 20px;"><input %s name="PollRMS" type="checkbox"></td>
++        <td>Poll RMS</td>
++      </tr>
++      <tr>
++        <td style="vertical-align: middle; width: 20px;"><input %sname="Expert" type="checkbox"></td>
++        <td>Expert</td>
++        <td colspan="2" rowspan="1">&nbsp;&nbsp;&nbsp;For SSID's&nbsp;
++<input style="width: 20px;" name="SSID1" value="%s">
++<input style="width: 20px;" name="SSID2" value="%s">
++<input style="width: 20px;" name="SSID3" value="%s">
++<input style="width: 20px;" name="SSID4" value="%s"></td>
++      </tr>
++      <tr>
++        <td style="vertical-align: top; width: 19px;"><input %sname="Excluded" type="checkbox"></td>
++        <td>Excluded</td>
++        <td style="width: 20px;"><input %sname="Hold" type="checkbox"></td>
++        <td>Hold Messages</td>
++      </tr>
++      <tr>
++        <td style="vertical-align: top; width: 19px;"><input %sname="SYSOPLM" type="checkbox"></td>
++        <td>Include SYSOP msgs in LM </td>
++        <td style="width: 20px;"><input %sname="NOWINLINK" type="checkbox"></td>
++        <td>Don't add @winlink.org</td>
++        </td>
++        <td><br>
++        </td>
++      </tr>
++     <tr>
++       <td style="width: 20px;"><input %sname="ALLOWBULLS" type="checkbox"></td>
++       <td>Allow Sending Bulls</td>
++        </td>
++		<td style="width: 20px;"><input %sname="NTSMPS" type="checkbox"></td>
++       <td>NTS MPS</td>
++        </td>
++        <td><br>
++        </td>
++      </tr>
++
++
++
++	  </tbody>
++  </table>
++  <br>
++  <br>
++  <table style="text-align: left;" border="0" cellpadding="2" cellspacing="0">
++    <tbody>
++      <tr>
++        <td>Connects In<br>
++        </td>
++        <td style="width: 60px;">%d<br>
++        </td>
++        <td>Msgs in<br>
++        </td>
++        <td style="width: 50px;">%d<br>
++        </td>
++        <td>Rejects In<br>
++        </td>
++        <td style="width: 50px;">%d<br>
++        </td>
++      </tr>
++      <tr>
++        <td>Connects Out<br>
++        </td>
++        <td>%d<br>
++        </td>
++        <td>Msgs Out<br>
++        </td>
++        <td>%d<br>
++        </td>
++        <td>Rejects Out<br>
++        </td>
++        <td>%d<br>
++        </td>
++      </tr>
++      <tr>
++        <td>Bytes In <br>
++        </td>
++        <td>%d<br>
++        </td>
++        <td>Last Connect</td>
++        <td colspan="3" rowspan="1">%s</td>
++      </tr>
++      <tr>
++        <td>Bytes Out<br>
++        </td>
++        <td>%d</td>
++        <td><br>
++        </td>
++        <td><br>
++        </td>
++        <td style="text-align: center;">Last Listed<br>
++        </td>
++        <td><input style="width: 40px;" name="LastListed" value="%d"><br>
++        </td>
++      </tr>
++    </tbody>
++  </table>
++  <br>
++  <br>
++Name &nbsp;&nbsp;&nbsp; <input style="width:200px;" name="Name" value="%s"><br>
++Password <input style="width:120px;" name="Password" value="%s">&nbsp;
++CMS Pass <input name="CMSPass" value="%s">&nbsp;
++<br>
++QTH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input style="width:260px;" name="QTH" value="%s"> ZIP <input style="width:80px;" name="ZIP" value="%s"><br>
++Home BBS <input style="width:360px;" name="HomeBBS" value="%s"><br>
++  <br>
++  <div align="center"><input onclick=save(this.form) value=Update type=button>
++  <input onclick=del(this.form) value=Delete type=button>
++  <input onclick=add(this.form) value=Add type=button>
++   <input style="width:60px; text-transform:uppercase;" name="NewCall">
++  </div>
++  </div>
++</form>
++
+diff --git a/HTML/UserPage.txt b/HTML/UserPage.txt
+new file mode 100644
+index 0000000..e59e741
+--- /dev/null
++++ b/HTML/UserPage.txt
+@@ -0,0 +1,187 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/UserPage.txt -->
++<!-- Version 4 10/10/2015 -->
++<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
++<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
++<head>
++<link rel="stylesheet" href="/m6vpn.css">
++<meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
++<style type="text/css"> 
++
++#outer{width:610px;height:530px;position:absolute;}
++#main{width:515px;position:absolute;height:530px;left:95px;border:2px solid;}
++#sidebar{position: absolute;width:90px;height:530px;border:2px solid;overflow: auto;}
++
++</style>
++
++<title>Edit Users</title> 
++<script type="text/javascript"> 
++ 
++var Details
++var Sidebar
++var fromleft;
++var Outer;
++var Key = "%s"
++
++function initialize()
++{
++	var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0];
++	x=w.innerWidth||e.clientWidth||g.clientWidth;	y=w.innerHeight||e.clientHeight||g.clientHeight;
++	fromleft = (x / 2) - 300;
++	if (fromleft < 0) {fromleft = 0;}
++	Outer = document.getElementById("outer"); 
++	Outer.style.left = fromleft + "px";
++	Sidebar = document.getElementById("sidebar"); 
++	Details = document.getElementById("main"); 
++	Details.innerHTML = "waiting for data..."; 
++	GetData("");
++}
++
++function save(form)
++{
++	var msg
++	var fn = "UserSave?" + Key;
++	
++	msg = 
++	form.BBS.checked + "|" +
++	form.PermitEmail.checked + "|" + 
++	form.PMS.checked + "|" +
++	form.RMSExUser.checked + "|" +
++	form.SYSOP.checked + "|" +
++	form.PollRMS.checked + "|" +
++	form.Expert.checked + "|" +
++	form.SSID1.value + "|" +
++	form.SSID2.value + "|" +
++	form.SSID3.value + "|" +
++	form.SSID4.value + "|" +
++	form.Excluded.checked + "|" +
++	form.Hold.checked + "|" +
++	form.SYSOPLM.checked + "|" +
++	form.NOWINLINK.checked + "|" +
++	form.ALLOWBULLS.checked + "|" +
++	form.NTSMPS.checked + "|" +
++	form.LastListed.value + "|" +
++	form.Name.value + "|" +
++	form.Password.value + "|"  +
++	form.CMSPass.value + "|"  +
++	form.QTH.value + "|" + 
++	form.ZIP.value + "|" + 
++	form.HomeBBS.value + "|"
++	post(fn, msg);
++}
++
++function del(form)
++{
++	var fn = "UserSave?" + Key;
++	xpost(fn, "Delete", "");
++}
++
++function add(form)
++{
++	var fn = "UserSave?" + Key;
++	xpost(fn, "Add=" + form.NewCall.value, form.NewCall.value);
++}
++
++function post(url, data)
++{
++	if (window.XMLHttpRequest){request=new XMLHttpRequest();}else{request=new ActiveXObject("Microsoft.XMLHTTP");}
++	request.onreadystatechange = function()
++	{if (request.readyState == 4){Details.innerHTML = request.responseText;}}
++	request.open("POST", url, true);request.send(data);
++}
++
++function xpost(url, data, call)
++{
++	if (window.XMLHttpRequest){request=new XMLHttpRequest();}else{request=new ActiveXObject("Microsoft.XMLHTTP");}
++	request.onreadystatechange = function()
++	{if (request.readyState == 4){
++	{
++			var text = request.responseText;
++			var lines = text.split("|");
++			var i = 0;
++			
++	 	    var infoArea = document.getElementById("sidebar"); 
++		    var strInfo = '<table>';
++ 						
++			while(i < lines.length - 1)
++			{	
++				var clink = '<a href=javascript:GetDetails("' + lines[i] + '")>' + lines[i] + '</a>';	
++				var tableRow = '<tr><td>' + clink + '</td></tr>\n';	 
++				strInfo += tableRow;			
++				i=i+1;
++			}
++			infoArea.innerHTML = strInfo + "</table>";
++			
++			if (call == "")
++			{
++				GetDetails(lines[0]);
++			}
++			else
++			{
++				GetDetails(call);
++			}
++	}
++	
++	
++	}}
++	request.open("POST", url, true);request.send(data);
++}
++
++
++function GetDetails(call)
++{
++	var fn = "UserDetails?" + Key;
++	post(fn, call);
++}
++function GetData()
++{
++	if (window.XMLHttpRequest){request=new XMLHttpRequest();}else{request=new ActiveXObject("Microsoft.XMLHTTP");}
++ 
++	request.onreadystatechange = function()
++	{
++		if (request.readyState == 4)
++		{
++			var text = request.responseText;
++			var lines = text.split("|");
++			var i = 0;
++			
++	 	    var infoArea = document.getElementById("sidebar"); 
++		    var strInfo = '<table>';
++ 						
++			while(i < lines.length - 1)
++			{	
++				var clink = '<a href=javascript:GetDetails("' + lines[i] + '")>' + lines[i] + '</a>';	
++				var tableRow = '<tr><td>' + clink + '</td></tr>\n';	 
++				strInfo += tableRow;			
++				i=i+1;
++			}
++			infoArea.innerHTML = strInfo + "</table>";
++			GetDetails(lines[0]);
++		}
++	}
++	request.open("POST","UserList.txt?%s",true);										   
++	request.send();
++}
++ 
++</script>
++<script src="/m6vpn-ui.js"></script>
++</head>
++<body background=/background.jpg onload="initialize()" onresize="initialize()">
++<h3 align=center>BPQ32 BBS %s</h3>
++<table align=center border=1 cellpadding=2 bgcolor=white><tr>
++<td><a href=/Mail/Status?%s>Status</a></td>
++<td><a href=/Mail/Conf?%s>Configuration</a></td>
++<td><a href=/Mail/Users?%s>Users</a></td>
++<td><a href=/Mail/Msgs?%s>Messages</a></td>
++<td><a href=/Mail/FWD?%s>Forwarding</a></td>
++<td><a href=/Mail/Wel?%s>Welcome Msgs & Prompts</a></td>
++<td><a href=/Mail/HK?%s>Housekeeping</a></td>
++<td><a href=/Mail/WP?%s>WP Update</a></td>
++<td><a href=/>Node Menu</a></td></tr></table>
++<br>
++<div id="outer">
++ <div id="sidebar"></div>
++ <div id="main"></div> 
++</div> 
++
++
+diff --git a/HTML/WP.txt b/HTML/WP.txt
+new file mode 100644
+index 0000000..da6f455
+--- /dev/null
++++ b/HTML/WP.txt
+@@ -0,0 +1,120 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/WP.txt -->
++<!-- Version 1 13/3/2014 -->
++<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
++<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head>
++<link rel="stylesheet" href="/m6vpn.css">
++<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
++<style type="text/css"> 
++
++#main {width:500px;height:480px;position:absolute;left:105px;font-family: monospace;border:2px solid;}
++#sidebar{position: absolute;left: 0px;width: 97px;height: 480px;font-family: monospace;border:2px solid;overflow: auto;}
++</style>
++
++<title>Edit WP</title>
++
++<script type="text/javascript"> 
++ 
++var Details
++var Sidebar
++var fromleft;
++
++function initialize()
++{	
++	var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0];
++	x=w.innerWidth||e.clientWidth||g.clientWidth;	y=w.innerHeight||e.clientHeight||g.clientHeight;
++	fromleft = (x / 2) - 300;
++	Sidebar = document.getElementById("sidebar"); 
++	Sidebar.style.left = fromleft + "px";
++	Details = document.getElementById("main"); 
++	Details.innerHTML = "waiting for data..."; 
++	Details.style.left = fromleft + 105 + "px";
++	GetData();
++}
++
++function save(form)
++{
++	var msg
++	msg = form.Name.value + "|" + form.Home1.value+ "|" + form.Home2.value+ "|" + form.QTH1.value+ "|" + form.QTH2.value+ "|" + form.ZIP1.value + "|" + form.ZIP2.value +"|"
++	var fn = "WPSave?%s";
++	post(fn, msg);
++}
++
++function del(form)
++{
++	var msg
++	msg = form.Name.value + "|" + form.Home1.value+ "|" + form.Home2.value+ "|" + form.QTH1.value+ "|" + form.QTH2.value+ "|" + form.ZIP1.value + "|" + form.ZIP2.value +"|"
++	var fn = "WPSave?%s";
++	post(fn, "Delete");
++}
++
++function post(url, data)
++{
++	if (window.XMLHttpRequest){request=new XMLHttpRequest();}else{request=new ActiveXObject("Microsoft.XMLHTTP");}
++	request.onreadystatechange = function()
++	{if (request.readyState == 4){Details.innerHTML = request.responseText;}}
++	request.open("POST", url, true);request.send(data);
++}
++function GetDetails(call)
++{
++	var fn = "WPDetails?%s";
++	post(fn, call);
++}
++function GetData()
++{
++	if (window.XMLHttpRequest){request=new XMLHttpRequest();}else{request=new ActiveXObject("Microsoft.XMLHTTP");}
++ 
++	request.onreadystatechange = function()
++	{
++		if (request.readyState == 4)
++		{
++			var text = request.responseText;
++			var lines = text.split("|");
++			var i = 0;
++			
++	 	    var infoArea = document.getElementById("sidebar"); 
++		    var strInfo = '<table>';
++ 						
++			while(i < lines.length - 1)
++			{	
++				var clink = '<a href=javascript:GetDetails("' + lines[i] + '")>' + lines[i] + '</a>';	
++				var tableRow = '<tr><td>' + clink + '</td></tr>\n';	 
++				strInfo += tableRow;			
++				i=i+1;
++			}
++			infoArea.innerHTML = strInfo + "</table>";
++			GetDetails(lines[0]);
++		}
++	}
++	request.open("GET","WPInfo.txt?%s",true);										   
++	request.send();
++}
++ 
++</script>
++<script src="/m6vpn-ui.js"></script>
++</head><body background=/background.jpg onload="initialize()">
++<h3 align="center">BPQ32 BBS %s</h3>
++
++<span align="center">
++<table align="center" bgcolor="white" border="1" cellpadding="2">
++  <tbody>
++    <tr>
++      <td><a href="/Mail/Status?%s">Status</a></td>
++      <td><a href="/Mail/Conf?%s">Configuration</a></td>
++      <td><a href="/Mail/Users?%s">Users</a></td>
++      <td><a href="/Mail/Msgs?%s">Messages</a></td>
++      <td><a href="/Mail/FWD?%s">Forwarding</a></td>
++      <td><a href="/Mail/Wel?%s">Welcome Msgs &amp; Prompts</a></td>
++	<td><a href="/Mail/HK?%s">Housekeeping</a></td>
++	<td><a href="/Mail/WP?%s">WP Update</a></td>
++      <td><a href="/">Node Menu</a></td>
++    </tr>
++  </tbody>
++</table>
++<br>
++<div style="text-align: center;"><font size="+1"><span style="font-family: monospace; font-weight: bold;">White Pages</span></font></div>
++<br>
++<div style="font-family: monospace;" id="sidebar" align="center"> </div>
++<div style="font-family: monospace;" id="main" align="center"> </div>
++</span>
++</body></html>
+\ No newline at end of file
+diff --git a/HTML/WebMailMsg.txt b/HTML/WebMailMsg.txt
+new file mode 100644
+index 0000000..f113728
+--- /dev/null
++++ b/HTML/WebMailMsg.txt
+@@ -0,0 +1,55 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/WebMailMsg.txt -->
++<!-- Version 4 27/10/2018 -->
++<!DOCTYPE html> 
++<html> 
++<head>
++<link rel="stylesheet" href="/m6vpn.css">
++<meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
++<style type="text/css">
++pre {margin-left: 4px;margin-right: 4px;white-space: pre-wrap} 
++#main{width:700px;position:absolute;left:0px;border:2px solid;background-color: #ffffff;}
++</style>
++<script>
++var Main;
++var fromleft;
++var txt;
++function initialize(mainoffset)
++{
++	var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0];
++	x=w.innerWidth; //||e.clientWidth||g.clientWidth;
++	y=w.innerHeight; //||e.clientHeight||g.clientHeight; 
++	Main = document.getElementById("main");
++	txt =  document.getElementById("txt");
++	w = x;	
++	if (w > 920) {w = 920;}
++ 	fromleft = (x / 2) - (x - 150)/2;
++	if (fromleft < 0) {fromleft = 0;}
++	Main.style.left = fromleft + "px";
++	Main.style.width = x - 150 + "px";
++	Main.style.height = y - mainoffset + "px";
++	txt.style.left = fromleft + "px";
++	txt.style.width = x - 150 + "px";
++	txt.style.height = y - mainoffset + "px";	
++}
++function Reply(Num, Key)
++{
++var param = "toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,titlebar=yes,toobar=yes";
++window.open("/WebMail/Reply/" + Num + "?" + Key,"_self",param);
++}
++</script>
++<title>WebMail</title> 
++<script src="/m6vpn-ui.js"></script>
++</head>
++<body background=/background.jpg onload="initialize(125)" onresize="initialize(125)">
++<h3 align=center> %s Webmail Interface - User %s - Message %d</h3>
++<table align=center border=1 cellpadding=2 bgcolor=white><tr>
++<td><a href="#" onclick="Reply('%d' ,'%s'); return false;">Reply</a></td>
++<td><a href=/WebMail/WMDel/%d?%s>Kill Message</a></td>
++%s
++<td><a href=/WebMail/WMSame?%s>Back to List</a></td>
++</tr></table>
++<br>
++<div align=center id="main">
++<%s id="txt" style="overflow:auto;" align=left>%s</%s>
++</div> 
+\ No newline at end of file
+diff --git a/HTML/WebMailPage.txt b/HTML/WebMailPage.txt
+new file mode 100644
+index 0000000..0befe4f
+--- /dev/null
++++ b/HTML/WebMailPage.txt
+@@ -0,0 +1,35 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/WebMailPage.txt -->
++<!-- Version 6 8/11/2018 -->
++<!DOCTYPE html> 
++<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
++<head>
++<link rel="stylesheet" href="/m6vpn.css">
++<meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
++<style type="text/css">
++pre {margin-left: 4px;white-space: pre} 
++#main{width:700px;position:absolute;left:0px;border:2px solid;background-color: #ffffff;}
++</style>
++<script src="/WebMail/webscript.js"></script>
++<title>WebMail</title> 
++
++<script src="/m6vpn-ui.js"></script>
++</head>
++<body background=/background.jpg onload="initialize(120)" onresize="initialize(120)">
++<h3 align=center> %s Webmail Interface - User %s - Message List</h3>
++<table align=center border=1 cellpadding=2 bgcolor=white><tr>
++
++<td><a href=/WebMail/WMB?%s>Bulls</a></td>
++<td><a href=/WebMail/WMP?%s>Personal</a></td>
++<td><a href=/WebMail/WMT?%s>NTS</a></td>
++<td><a href=/WebMail/WMALL?%s>All Types</a></td>
++<td><a href=/WebMail/WMMine?%s>Mine</a></td>
++<td><a href="#" onclick="newmsg('%s'); return false;">Send Message</a></td>
++<td><a href=/WebMail/WMLogout?%s>Logout</a></td>
++<td><a href=/>Node Menu</a></td></tr></table>
++<br>
++<div align=left id="main" style="overflow:scroll;">
++<pre align=left>%s</pre>
++</div> 
++
++
+diff --git a/HTML/background.jpg b/HTML/background.jpg
+new file mode 100644
+index 0000000000000000000000000000000000000000..28ddf26c22b52305791c601832c812b7a9eafb1d
+GIT binary patch
+literal 30792
+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
+a#TRZmp#K0HJrr-*VGZV_WxB#>zyH~5k9PY2
+
+literal 0
+HcmV?d00001
+
+diff --git a/HTML/favicon.ico b/HTML/favicon.ico
+new file mode 100644
+index 0000000000000000000000000000000000000000..a57a91c59bd54e8495e9660264d515bf0313a242
+GIT binary patch
+literal 766
+zcmc(bF%kkH3`PGsb~IMjlpbS`mLt*Aa2#)ek1#ue>x|A?82BMSpOEZI3oFKpn%z&*
+zmGcH7Sizz*UNW@zW{4<e{lF6fQz-?Z`c|zi0<4z8<>Qv5Fjgy1uceSCJ%!AE+ArK2
+z4gH)C?WRF!x#PRh=PTTwN(RpV3r*Z~4?WpGZIC?ikslwWzyDI-r})}4`Csh;*C<;s
+
+literal 0
+HcmV?d00001
+
+diff --git a/HTML/index.html b/HTML/index.html
+new file mode 100644
+index 0000000..242f85f
+--- /dev/null
++++ b/HTML/index.html
+@@ -0,0 +1,27 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/index.html -->
++<!DOCTYPE html>
++<html lang="en">
++<head>
++<meta charset="UTF-8">
++<meta name="viewport" content="width=device-width, initial-scale=1.0">
++<title>BPQ32 Node ##MY_CALLSIGN##</title>
++<link rel="stylesheet" href="/m6vpn.css">
++<script src="/m6vpn-ui.js"></script>
++</head>
++<body>
++<main class="m6vpn-entry">
++<section class="m6vpn-shell">
++<header>
++<p class="m6vpn-kicker">AX.25 packet node</p>
++<h1>BPQ32 Node ##MY_CALLSIGN##</h1>
++<p>Operator console for M6VPN-7 packet services and APRS views</p>
++</header>
++<nav class="m6vpn-grid" aria-label="BPQ32 node navigation">
++<a class="m6vpn-link" href="/NodeMenu.html"><strong>Node Pages</strong><span>Routes, links, ports, users, stats, and terminal access</span></a>
++<a class="m6vpn-link" href="/aprs/allrf.html"><strong>APRS Pages</strong><span>RF APRS traffic and packet station data</span></a>
++</nav>
++</section>
++</main>
++</body>
++</html>
+diff --git a/HTML/index.htmlx b/HTML/index.htmlx
+new file mode 100644
+index 0000000..a130873
+--- /dev/null
++++ b/HTML/index.htmlx
+@@ -0,0 +1,27 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/index.htmlx -->
++<!DOCTYPE html>
++<html lang="en">
++<head>
++<meta charset="UTF-8">
++<meta name="viewport" content="width=device-width, initial-scale=1.0">
++<title>%s's BPQ32 Web Server</title>
++<link rel="stylesheet" href="/m6vpn.css">
++<script src="/m6vpn-ui.js"></script>
++</head>
++<body>
++<main class="m6vpn-entry">
++<section class="m6vpn-shell">
++<header>
++<h1>M6VPN-7 BPQ32</h1>
++<p>AX.25 packet node, BBS, APRS, and WebMail console</p>
++</header>
++<nav class="m6vpn-grid">
++<a class="m6vpn-link" href="/Node/NodeMenu.html"><strong>Node Pages</strong><span>Routes, ports, users, and node status</span></a>
++<a class="m6vpn-link" href="/aprs/all.html"><strong>APRS Pages</strong><span>Local APRS map and heard data</span></a>
++<a class="m6vpn-link" href="/WebMail/MailEntry"><strong>WebMail</strong><span>M6VPN-1 BBS mail interface</span></a>
++</nav>
++</section>
++</main>
++</body>
++</html>
+diff --git a/HTML/indexnoaprs.html b/HTML/indexnoaprs.html
+new file mode 100644
+index 0000000..d4bdef8
+--- /dev/null
++++ b/HTML/indexnoaprs.html
+@@ -0,0 +1,26 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/indexnoaprs.html -->
++<!DOCTYPE html>
++<html lang="en">
++<head>
++<meta charset="UTF-8">
++<meta name="viewport" content="width=device-width, initial-scale=1.0">
++<title>BPQ32 Node ##MY_CALLSIGN##</title>
++<link rel="stylesheet" href="/m6vpn.css">
++<script src="/m6vpn-ui.js"></script>
++</head>
++<body>
++<main class="m6vpn-entry">
++<section class="m6vpn-shell">
++<header>
++<p class="m6vpn-kicker">AX.25 packet node</p>
++<h1>BPQ32 Node ##MY_CALLSIGN##</h1>
++<p>Operator console for M6VPN-7 packet services</p>
++</header>
++<nav class="m6vpn-grid" aria-label="BPQ32 node navigation">
++<a class="m6vpn-link" href="/NodeMenu.html"><strong>Node Pages</strong><span>Routes, links, ports, users, stats, and terminal access</span></a>
++</nav>
++</section>
++</main>
++</body>
++</html>
+diff --git a/HTML/indexnoaprs.htmlx b/HTML/indexnoaprs.htmlx
+new file mode 100644
+index 0000000..d4e0c4b
+--- /dev/null
++++ b/HTML/indexnoaprs.htmlx
+@@ -0,0 +1,26 @@
++<!-- M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) -->
++<!-- M6VPN-7/pi/linbpq/HTML/indexnoaprs.htmlx -->
++<!DOCTYPE html>
++<html lang="en">
++<head>
++<meta charset="UTF-8">
++<meta name="viewport" content="width=device-width, initial-scale=1.0">
++<title>%s's BPQ32 Web Server</title>
++<link rel="stylesheet" href="/m6vpn.css">
++<script src="/m6vpn-ui.js"></script>
++</head>
++<body>
++<main class="m6vpn-entry">
++<section class="m6vpn-shell">
++<header>
++<h1>M6VPN-7 BPQ32</h1>
++<p>AX.25 packet node and M6VPN-1 BBS console</p>
++</header>
++<nav class="m6vpn-grid">
++<a class="m6vpn-link" href="/Node/NodeMenu.html"><strong>Node Pages</strong><span>Routes, ports, users, and node status</span></a>
++<a class="m6vpn-link" href="/WebMail/MailEntry"><strong>WebMail</strong><span>M6VPN-1 BBS mail interface</span></a>
++</nav>
++</section>
++</main>
++</body>
++</html>
+diff --git a/HTML/m6vpn-ui.js b/HTML/m6vpn-ui.js
+new file mode 100644
+index 0000000..1e07b29
+--- /dev/null
++++ b/HTML/m6vpn-ui.js
+@@ -0,0 +1,29 @@
++// M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com)
++// M6VPN-7/pi/linbpq/HTML/m6vpn-ui.js
++
++(function () {
++	function ready(fn) {
++		if (document.readyState === 'loading') {
++			document.addEventListener('DOMContentLoaded', fn);
++		} else {
++			fn();
++		}
++	}
++
++	function tagNavigationTables() {
++		var tables = document.getElementsByTagName('table');
++		var i;
++
++		for (i = 0; i < tables.length; i += 1) {
++			if (tables[i].getElementsByTagName('a').length >= 2) {
++				tables[i].className = (tables[i].className ? tables[i].className + ' ' : '') + 'bpq-nav';
++				return;
++			}
++		}
++	}
++
++	ready(function () {
++		document.body.className = (document.body.className ? document.body.className + ' ' : '') + 'm6vpn-ready';
++		tagNavigationTables();
++	});
++}());
+diff --git a/HTML/m6vpn.css b/HTML/m6vpn.css
+new file mode 100644
+index 0000000..c98ecd6
+--- /dev/null
++++ b/HTML/m6vpn.css
+@@ -0,0 +1,466 @@
++/* M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com) */
++/* M6VPN-7/pi/linbpq/HTML/m6vpn.css */
++
++:root {
++	--bg: #050807;
++	--panel: #0b1210;
++	--panel-2: #101a17;
++	--line: #21483d;
++	--line-hot: #39ff88;
++	--text: #d9ffe8;
++	--muted: #86a898;
++	--green: #39ff88;
++	--amber: #ffc857;
++	--cyan: #78dce8;
++	--red: #ff6b6b;
++	--shadow: rgba(0, 0, 0, 0.55);
++	--mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", "Liberation Mono", "DejaVu Sans Mono", Menlo, Consolas, monospace;
++}
++
++* {
++	box-sizing: border-box;
++}
++
++html {
++	min-height: 100%;
++	background: var(--bg);
++	color: var(--text);
++	color-scheme: dark;
++}
++
++body {
++	min-height: 100vh;
++	margin: 0;
++	padding: 18px;
++	background:
++		linear-gradient(rgba(5, 8, 7, 0.92), rgba(5, 8, 7, 0.98)),
++		repeating-linear-gradient(0deg, rgba(57, 255, 136, 0.035), rgba(57, 255, 136, 0.035) 1px, transparent 1px, transparent 4px),
++		#050807 !important;
++	color: var(--text);
++	font-family: var(--mono);
++	font-size: 14px;
++	line-height: 1.45;
++}
++
++body,
++body font,
++body center,
++body form,
++body label,
++body div,
++body p,
++body span,
++body td,
++body th {
++	color: var(--text) !important;
++}
++
++body[background],
++body[style*="background-image"],
++body[style*="background:"] {
++	background:
++		linear-gradient(rgba(5, 8, 7, 0.92), rgba(5, 8, 7, 0.98)),
++		repeating-linear-gradient(0deg, rgba(57, 255, 136, 0.035), rgba(57, 255, 136, 0.035) 1px, transparent 1px, transparent 4px),
++		#050807 !important;
++}
++
++body::before {
++	display: block;
++	max-width: 1120px;
++	margin: 0 auto 14px;
++	padding: 8px 12px;
++	border: 1px solid var(--line);
++	background: linear-gradient(90deg, rgba(57, 255, 136, 0.14), rgba(120, 220, 232, 0.08));
++	color: var(--green);
++	content: "M6VPN-7 // BPQ32 // 144.9375 MHz AX.25";
++	font-weight: 700;
++	letter-spacing: 0;
++	text-transform: uppercase;
++	box-shadow: 0 10px 30px var(--shadow);
++}
++
++h1,
++h2,
++h3 {
++	margin: 8px 0 14px;
++	color: var(--green);
++	font-family: var(--mono);
++	font-weight: 700;
++	letter-spacing: 0;
++	text-shadow: 0 0 12px rgba(57, 255, 136, 0.22);
++}
++
++h3[align="center"],
++div[style*="text-align: center"] > font,
++div[style*="text-align: center"] span[style*="font-weight: bold"] {
++	color: var(--green);
++}
++
++a {
++	color: var(--cyan);
++	text-decoration: none;
++}
++
++a:hover,
++a:focus {
++	color: var(--amber);
++	text-decoration: underline;
++}
++
++table {
++	border-collapse: collapse;
++	border-color: var(--line) !important;
++	background: rgba(11, 18, 16, 0.94) !important;
++	color: var(--text) !important;
++	box-shadow: 0 10px 28px var(--shadow);
++}
++
++table[align="center"],
++table[bgcolor="white"],
++table[bgcolor="#ffffff"],
++table[bgcolor="#FFFFFF"],
++table[bgcolor="#ffffcc"],
++table[bgcolor="#FFFFCC"],
++.bpq-nav {
++	max-width: 100%;
++	border: 1px solid var(--line) !important;
++	background: rgba(11, 18, 16, 0.96) !important;
++}
++
++table[style*="background-color: white"],
++table[style*="background-color: #ffffff"],
++table[style*="background-color: #FFFFFF"],
++table[style*="background-color: #ffffcc"],
++table[style*="background-color: #FFFFCC"],
++td[style*="background-color: white"],
++td[style*="background-color: #ffffff"],
++td[style*="background-color: #FFFFFF"],
++td[style*="background-color: #ffffcc"],
++td[style*="background-color: #FFFFCC"],
++div[style*="background-color: white"],
++div[style*="background-color: #ffffff"],
++div[style*="background-color: #FFFFFF"],
++span[style*="background-color: white"],
++span[style*="background-color: #ffffff"],
++span[style*="background-color: #FFFFFF"] {
++	background-color: rgba(11, 18, 16, 0.94) !important;
++}
++
++td,
++th {
++	border-color: rgba(57, 255, 136, 0.22) !important;
++	color: var(--text) !important;
++	padding: 5px 7px;
++	vertical-align: top;
++}
++
++th {
++	color: var(--amber) !important;
++	font-weight: 700;
++	text-transform: uppercase;
++}
++
++tr:hover > td {
++	background: rgba(57, 255, 136, 0.045);
++}
++
++body > table:first-of-type,
++body > span > table:first-of-type,
++.bpq-nav {
++	margin: 0 auto 18px;
++}
++
++body > table:first-of-type td,
++body > span > table:first-of-type td,
++.bpq-nav td {
++	border: 0 !important;
++}
++
++body > table:first-of-type a,
++body > span > table:first-of-type a,
++.bpq-nav a,
++#cssmenu a {
++	display: block;
++	padding: 7px 10px;
++	border: 1px solid rgba(57, 255, 136, 0.22);
++	background: rgba(16, 26, 23, 0.92);
++	color: var(--green);
++	font-weight: 700;
++	text-transform: uppercase;
++}
++
++body > table:first-of-type a:hover,
++body > span > table:first-of-type a:hover,
++.bpq-nav a:hover,
++#cssmenu a:hover {
++	border-color: var(--amber);
++	background: rgba(255, 200, 87, 0.12);
++	color: var(--amber);
++	text-decoration: none;
++}
++
++#main,
++#outer,
++#sidebar,
++#left,
++#common,
++#streams,
++#users,
++#links,
++#sel {
++	border-color: var(--line) !important;
++	background: rgba(11, 18, 16, 0.88) !important;
++	color: var(--text);
++	box-shadow: 0 12px 32px var(--shadow);
++}
++
++#main,
++#outer {
++	border-radius: 6px;
++}
++
++#sidebar,
++#left,
++#common,
++#streams,
++#users,
++#links,
++#sel {
++	border-radius: 4px;
++}
++
++#main {
++	padding: 10px;
++}
++
++pre,
++textarea,
++input,
++select,
++button,
++iframe {
++	font-family: var(--mono);
++	font-size: 13px;
++}
++
++pre {
++	margin: 0;
++	color: var(--text);
++	white-space: pre-wrap;
++}
++
++input,
++textarea,
++select {
++	max-width: 100%;
++	border: 1px solid rgba(57, 255, 136, 0.35);
++	border-radius: 4px;
++	background: #07100d !important;
++	color: var(--text) !important;
++	outline: none;
++}
++
++input::placeholder,
++textarea::placeholder {
++	color: var(--muted);
++	opacity: 1;
++}
++
++input {
++	min-height: 25px;
++	padding: 3px 6px;
++}
++
++textarea {
++	padding: 6px;
++	line-height: 1.35;
++}
++
++input[type="checkbox"],
++input[type="radio"] {
++	min-height: auto;
++	accent-color: var(--green);
++}
++
++input[type="submit"],
++input[type="button"],
++button {
++	border: 1px solid var(--line-hot);
++	border-radius: 4px;
++	background: rgba(57, 255, 136, 0.12) !important;
++	color: var(--green) !important;
++	cursor: pointer;
++	font-weight: 700;
++	text-transform: uppercase;
++}
++
++input[type="submit"]:hover,
++input[type="button"]:hover,
++button:hover {
++	border-color: var(--amber);
++	background: rgba(255, 200, 87, 0.12) !important;
++	color: var(--amber) !important;
++}
++
++input:focus,
++textarea:focus,
++select:focus {
++	border-color: var(--amber);
++	box-shadow: 0 0 0 2px rgba(255, 200, 87, 0.16);
++}
++
++#cssmenu {
++	z-index: 10;
++}
++
++#cssmenu ul {
++	border: 1px solid var(--line);
++	background: rgba(11, 18, 16, 0.96) !important;
++}
++
++#cssmenu ul ul {
++	border: 1px solid var(--line);
++	background: rgba(11, 18, 16, 0.98) !important;
++}
++
++#cssmenu .active a,
++#cssmenu li:hover > a {
++	background: rgba(255, 200, 87, 0.12) !important;
++	color: var(--amber) !important;
++}
++
++.m6vpn-entry {
++	display: grid;
++	min-height: calc(100vh - 36px);
++	place-items: center;
++}
++
++.m6vpn-shell {
++	width: min(760px, 100%);
++	border: 1px solid var(--line);
++	border-radius: 6px;
++	background: rgba(11, 18, 16, 0.94);
++	box-shadow: 0 18px 44px var(--shadow);
++}
++
++.m6vpn-shell header {
++	padding: 18px 20px 10px;
++	border-bottom: 1px solid var(--line);
++}
++
++.m6vpn-shell h1 {
++	margin: 0;
++	font-size: 24px;
++}
++
++.m6vpn-shell p {
++	margin: 6px 0 0;
++	color: var(--muted);
++}
++
++.m6vpn-kicker {
++	margin: 0 0 8px !important;
++	color: var(--amber) !important;
++	font-size: 12px;
++	font-weight: 700;
++	text-transform: uppercase;
++}
++
++.m6vpn-node {
++	display: grid;
++	min-height: calc(100vh - 36px);
++	place-items: start center;
++}
++
++.m6vpn-node-shell {
++	width: min(980px, 100%);
++}
++
++.m6vpn-status {
++	display: flex;
++	flex-wrap: wrap;
++	gap: 8px;
++	padding: 12px 18px 0;
++}
++
++.m6vpn-status span {
++	padding: 5px 8px;
++	border: 1px solid rgba(57, 255, 136, 0.25);
++	border-radius: 4px;
++	background: rgba(5, 8, 7, 0.8);
++	color: var(--amber);
++	font-size: 12px;
++	font-weight: 700;
++}
++
++.m6vpn-grid {
++	display: grid;
++	grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
++	gap: 10px;
++	padding: 18px;
++}
++
++.m6vpn-node-grid {
++	grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
++}
++
++.m6vpn-link {
++	display: block;
++	min-height: 88px;
++	padding: 14px;
++	border: 1px solid var(--line);
++	border-radius: 6px;
++	background: rgba(16, 26, 23, 0.92);
++	color: var(--text);
++}
++
++.m6vpn-link strong {
++	display: block;
++	margin-bottom: 8px;
++	color: var(--green);
++	text-transform: uppercase;
++}
++
++.m6vpn-link span {
++	color: var(--muted);
++}
++
++.m6vpn-link:hover {
++	border-color: var(--amber);
++	color: var(--text);
++	text-decoration: none;
++}
++
++.m6vpn-link:hover strong {
++	color: var(--amber);
++}
++
++@media (max-width: 760px) {
++	body {
++		padding: 10px;
++		font-size: 13px;
++	}
++
++	body::before {
++		margin-bottom: 10px;
++		font-size: 12px;
++	}
++
++	table {
++		display: block;
++		max-width: 100%;
++		overflow-x: auto;
++	}
++
++	#main,
++	#outer,
++	#sidebar,
++	#left,
++	#common,
++	#streams,
++	#users,
++	#links,
++	#sel {
++		max-width: calc(100vw - 20px);
++	}
++}
+diff --git a/HTML/robots.txt b/HTML/robots.txt
+new file mode 100644
+index 0000000..70c2374
+--- /dev/null
++++ b/HTML/robots.txt
+@@ -0,0 +1,2 @@
++User-agent: *
++Disallow: /
+diff --git a/HTML/webscript.js b/HTML/webscript.js
+new file mode 100644
+index 0000000..e1f473b
+--- /dev/null
++++ b/HTML/webscript.js
+@@ -0,0 +1,72 @@
++// M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com)
++// M6VPN-7/pi/linbpq/HTML/webscript.js
++// Version 2 17/10/2018
++var Main
++var fromleft;
++
++function addM6VPNScript(src)
++{
++	var scripts = document.getElementsByTagName('script');
++	var script;
++	var i;
++
++	for (i = 0; i < scripts.length; i += 1) {
++		if (scripts[i].getAttribute('src') === src) {return;}
++	}
++
++	script = document.createElement('script');
++	script.src = src;
++	document.head.appendChild(script);
++}
++
++function addM6VPNStyle(href)
++{
++	var links = document.getElementsByTagName('link');
++	var link;
++	var i;
++
++	for (i = 0; i < links.length; i += 1) {
++		if (links[i].getAttribute('href') === href) {return;}
++	}
++
++	link = document.createElement('link');
++	link.rel = 'stylesheet';
++	link.href = href;
++	document.head.appendChild(link);
++}
++
++function loadM6VPNAssets()
++{
++	if (!document.head) {return;}
++
++	addM6VPNStyle('/m6vpn.css');
++	addM6VPNScript('/m6vpn-ui.js');
++}
++
++loadM6VPNAssets();
++
++function initialize(mainoffset)
++{
++	var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0];
++	x=w.innerWidth||e.clientWidth||g.clientWidth;
++	y=w.innerHeight||e.clientHeight||g.clientHeight;
++	Main = document.getElementById("main");
++	if (!Main) {return;}
++	w = x;
++	if (w > 920) {w = 920;}
++	fromleft = (x / 2) - (x - 150)/2;
++	if (fromleft < 0) {fromleft = 0;}
++	Main.style.left = fromleft + "px";
++	Main.style.width = x - 150 + "px";
++	Main.style.height = y - mainoffset + "px";
++}
++function newmsg(Key)
++{
++var param = "toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,titlebar=yes,toobar=yes";
++window.open("/WebMail/NewMsg?" + Key,"_self",param);
++}
++function Reply(Num, Key)
++{
++var param = "toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,titlebar=yes,toobar=yes";
++window.open("/WebMail/Reply/" + Num + "?" + Key,"_self",param);
++}
