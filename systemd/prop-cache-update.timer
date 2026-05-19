@@ -1,3 +1,5 @@
+# M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com)
+# M6VPN-7/systemd/prop-cache-update.timer
 [Unit]
 Description=Update cached PROP data every 30 minutes
 

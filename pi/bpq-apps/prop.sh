@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# M6VPN-7 - Developed by dgm (dgm@tuta.com)
+# M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com)
 # M6VPN-7/pi/bpq-apps/prop.sh
 set -u
 

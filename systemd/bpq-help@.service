@@ -1,4 +1,4 @@
-# M6VPN-7 - Developed by dgm (dgm@tuta.com)
+# M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com)
 # M6VPN-7/systemd/bpq-help@.service
 [Unit]
 Description=LinBPQ HELP application

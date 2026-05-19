@@ -1,4 +1,6 @@
 #!/usr/bin/perl -w
+# M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com)
+# M6VPN-7/pi/bpq-apps/sysinfo.pl
 #
 # Copyright (c) 2002-2005 David Rudie
 # All rights reserved.

@@ -1,3 +1,5 @@
+# M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com)
+# M6VPN-7/systemd/direwolf-ic2350.service
 [Unit]
 Description=Dire Wolf IC-2350 AX.25 modem in tmux
 After=sound.target multi-user.target

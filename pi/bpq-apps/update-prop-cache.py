@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# M6VPN-7 - Developed by dgm (dgm@tuta.com)
+# M6VPN-7 - Developed by M6VPN (M6VPN@tuta.com)
 # M6VPN-7/pi/bpq-apps/update-prop-cache.py
 import json
 import os
