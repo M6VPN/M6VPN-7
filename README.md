@@ -8,7 +8,7 @@ This repo holds configuration files, tools, and BBS doors/applications for the M
 BPQ applications (external) are configured first in linbpq/bpq32.cfg:
 
 ```
-  CMDPORT 63030 63031 63032 63033
+  CMDPORT 63030 63031 63032 63033 63034
 ```
 
 Corresponding to applications configured with `HOST #`:
@@ -20,6 +20,7 @@ APPLICATION 3,WX,C 10 HOST 0 S
 APPLICATION 4,ZORK,C 10 HOST 1 S
 APPLICATION 5,STAT,C 10 HOST 2 S
 APPLICATION 6,PROP,C 10 HOST 3 S
+APPLICATION 7,HELP,C 10 HOST 4 S
 ```
 
 Then systemd files are created for the sockets and services, e.g. `bpq-wx.socket` and `bpq-wx@.service` for port 63030 (WX).
@@ -31,6 +32,7 @@ Then systemd files are created for the sockets and services, e.g. `bpq-wx.socket
 
 - .				/home/pi on live system
 - bpq-apps/			Applications / 'doors' for the BPQ BBS
+- bpq-apps/help.sh		RF-friendly command help menu
 - bpq-apps/prop.sh		Propagation data from NOAA/SWPC
 - bpq-apps/stat.sh		System info / statistics
 - bpq-apps/sysinfo.pl		A terminal-based sysinfo script (unused by stat.sh)
@@ -46,6 +48,8 @@ Then systemd files are created for the sockets and services, e.g. `bpq-wx.socket
 - .
 - bpq-prop@.service
 - bpq-prop.socket
+- bpq-help@.service
+- bpq-help.socket
 - bpq-stat@.service
 - bpq-stat.socket
 - bpq-wx@.service
@@ -56,4 +60,3 @@ Then systemd files are created for the sockets and services, e.g. `bpq-wx.socket
 - linbpq.service
 - prop-cache-update.service
 - prop-cache-update.timer
-

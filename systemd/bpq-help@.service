@@ -1,0 +1,12 @@
+# M6VPN-7 - Developed by dgm (dgm@tuta.com)
+# M6VPN-7/systemd/bpq-help@.service
+[Unit]
+Description=LinBPQ HELP application
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/bpq-apps
+ExecStart=/home/pi/bpq-apps/help.sh
+StandardInput=socket
+StandardOutput=socket
+StandardError=journal

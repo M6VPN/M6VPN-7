@@ -1,23 +1,26 @@
 #!/usr/bin/env bash
+# M6VPN-7 - Developed by dgm (dgm@tuta.com)
+# M6VPN-7/pi/bpq-apps/wx.sh
 set -euo pipefail
 
-# LinBPQ normally sends caller callsign as first line.
-read -r CALL || CALL="UNKNOWN"
-CALL="$(printf '%s' "$CALL" | tr -cd 'A-Za-z0-9-')"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=pi/bpq-apps/common.sh
+source "$SCRIPT_DIR/common.sh"
 
-#printf "\r\nM6VPN-7 WX 144.9375 MHz - Newcastle / IO94EX\r\n"
-#printf "Caller: %s\r\n" "$CALL"
-#printf "Generated: %s UTC\r\n\r\n" "$(date -u '+%Y-%m-%d %H:%M')"
+CALL="$(read_caller)"
+WX="$(curl -fsS --max-time 8 'https://wttr.in/Newcastle-upon-Tyne?format=3' 2>/dev/null | LC_ALL=C tr -cd '\11\12\15\40-\176' | sed 's/[[:space:]][[:space:]]*/ /g' || true)"
 
-# RF-friendly one-line weather. Change location if desired.
-WX="$(curl -fsS --max-time 8 'https://wttr.in/Newcastle-upon-Tyne?format=3' 2>/dev/null || true)"
+crlf ""
+crlf "M6VPN-7 WX"
+crlf "Caller: $CALL"
+crlf ""
 
 if [ -n "$WX" ]; then
-    printf "%s\r\n\r\n" "$WX"
+	crlf "$WX"
 else
-    printf "WX source unavailable.\r\n\r\n"
+	crlf "WX source unavailable."
 fi
 
-# printf "Station: M6VPN-7 node / M6VPN-1 BBS\r\n"
-# printf "Freq: 144.9375 MHz FM 1200bd AX.25\r\n"
-printf "\r\n73.\r\n"
+crlf ""
+crlf "73 de M6VPN"
+crlf ""

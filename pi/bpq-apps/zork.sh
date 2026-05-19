@@ -1,29 +1,42 @@
 #!/usr/bin/env bash
+# M6VPN-7 - Developed by dgm (dgm@tuta.com)
+# M6VPN-7/pi/bpq-apps/zork.sh
 set -euo pipefail
 
-read -r CALL || CALL="UNKNOWN"
-CALL="$(printf '%s' "$CALL" | tr -cd 'A-Za-z0-9-')"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=pi/bpq-apps/common.sh
+source "$SCRIPT_DIR/common.sh"
 
 GAME="/home/pi/zork/zork1.z5"
+CALL="$(read_caller)"
+INTERPRETER=""
 
-printf "\r\nM6VPN ZORK gateway\r\n"
-printf "Caller: %s\r\n" "$CALL"
-printf "Commands usually include: LOOK, N, S, E, W, TAKE, INVENTORY, QUIT\r\n"
-printf "Keep sessions short: this is 1200 baud packet.\r\n\r\n"
+crlf ""
+crlf "M6VPN ZORK gateway"
+crlf "Caller: $CALL"
+crlf "Commands: LOOK N S E W TAKE INVENTORY QUIT"
+crlf "Keep sessions short: 1200 baud packet."
+crlf ""
 
 if [ ! -f "$GAME" ]; then
-    printf "Zork game file not found:\r\n%s\r\n\r\n" "$GAME"
-    printf "Install a legitimate Z-machine .z3/.z5/.dat game file and try again.\r\n"
-    exit 0
+	crlf "Zork game file not found:"
+	crlf "$GAME"
+	crlf ""
+	crlf "Install a legitimate Z-machine game file."
+	exit 0
 fi
 
-exec /usr/games/dfrotz "$GAME"
+if command -v dfrotz >/dev/null 2>&1; then
+	INTERPRETER="$(command -v dfrotz)"
+elif command -v frotz >/dev/null 2>&1; then
+	INTERPRETER="$(command -v frotz)"
+elif [ -x /usr/games/dfrotz ]; then
+	INTERPRETER="/usr/games/dfrotz"
+fi
 
-#if command -v dfrotz >/dev/null 2>&1; then
-#    exec dfrotz "$GAME"
-#elif command -v frotz >/dev/null 2>&1; then
-#    exec frotz "$GAME"
-#else
-#    printf "No frotz/dfrotz interpreter found.\r\n"
-#    exit 1
-#fi
+if [ -z "$INTERPRETER" ]; then
+	crlf "No frotz or dfrotz interpreter found."
+	exit 1
+fi
+
+exec "$INTERPRETER" "$GAME"
