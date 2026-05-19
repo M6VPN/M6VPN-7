@@ -2954,3 +2954,1591 @@ index 0000000..e1f473b
 +var param = "toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,titlebar=yes,toobar=yes";
 +window.open("/WebMail/Reply/" + Num + "?" + Key,"_self",param);
 +}
+diff --git a/6pack.c b/6pack.c
+index 5557827..c91ffc0 100644
+--- a/6pack.c
++++ b/6pack.c
+@@ -1348,7 +1348,7 @@ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ 		"function ScrollOutput()\r\n"
+ 		"{var textarea = document.getElementById('textarea');"
+ 		"textarea.scrollTop = textarea.scrollHeight;}</script>"
+-		"</head><title>VARA Status</title></head><body id=Text onload=\"ScrollOutput()\">"
++		"<head><title>VARA Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body id=Text onload=\"ScrollOutput()\">"
+ 		"<h2><form method=post target=\"POPUPW\" onsubmit=\"POPUPW = window.open('about:blank','POPUPW',"
+ 		"'width=440,height=150');\" action=ARDOPAbort?%d>SIXPACK Status"
+ 		"<input name=Save value=\"Abort Session\" type=submit style=\"position: absolute; right: 20;\"></form></h2>",
+diff --git a/APRSCode.c b/APRSCode.c
+index 5f93809..d57eb1e 100644
+--- a/APRSCode.c
++++ b/APRSCode.c
+@@ -7238,9 +7238,9 @@ VOID APRSSendMessageFile(struct APRSConnectionInfo * sockptr, char * FN)
+ 
+ char WebHeader[] = "<HTML><HEAD><meta http-equiv=\"expires\" content=\"-1\">"
+ 	"<meta http-equiv=\"pragma\" content=\"no-cache\">"
+-	"<TITLE>APRS Messaging</TITLE></HEAD>"
+-	"<BODY alink=\"#008000\" bgcolor=\"#F5F5DC\" link=\"#0000FF\" vlink=\"#000080\"  background=/background.jpg>"
+-	"<table  align=center border=2 cellpadding=2 cellspacing=2 bgcolor=white><tr>"
++	"<TITLE>APRS Messaging</TITLE><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></HEAD>"
++	"<BODY>"
++	"<table  align=center border=2 cellpadding=2 cellspacing=2 ><tr>"
+ 	"<td align=center><a href=/aprs.html>APRS Map</a></td>"
+ 	"<td align=center><a href=/aprs/msgs>Received Messages</a></td>"
+ 	"<td align=center><a href=/aprs/txmsgs>Sent Messages</a></td>"
+@@ -7253,9 +7253,9 @@ char WebHeader[] = "<HTML><HEAD><meta http-equiv=\"expires\" content=\"-1\">"
+ 
+ char WebTXHeader[] = "<HTML><HEAD><meta http-equiv=\"expires\" content=\"-1\">"
+ 	"<meta http-equiv=\"pragma\" content=\"no-cache\">"
+-	"<TITLE>APRS Messaging</TITLE></HEAD>"
+-	"<BODY alink=\"#008000\" bgcolor=\"#F5F5DC\" link=\"#0000FF\" vlink=\"#000080\"  background=/background.jpg>"
+-	"<table align=center border=2 cellpadding=2 cellspacing=2 bgcolor=white><tr>"
++	"<TITLE>APRS Messaging</TITLE><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></HEAD>"
++	"<BODY>"
++	"<table align=center border=2 cellpadding=2 cellspacing=2 ><tr>"
+ 	"<td align=center><a href=/aprs.html>APRS Map</a></td>"
+ 	"<td align=center><a href=/aprs/msgs>Received Messages</a></td>"
+ 	"<td align=center><a href=/aprs/txmsgs>Sent Messages</a></td>"
+@@ -7275,18 +7275,18 @@ char WebTXLine[] = "<tr bgcolor=\"#ffcccc\">"
+ 
+ char WebTrailer[] = "</table></BODY></HTML>";
+ 
+-char SendMsgPage[] = "<html><head><title>BPQ32 APRS Messaging</title></head><body background=\"/background.jpg\">"
++char SendMsgPage[] = "<html><head><title>BPQ32 APRS Messaging</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body>"
+ 	"<center><h2>APRS Message Input</h1>"
+ 	"<form method=post action=/APRS/Msgs/SendMsg>"
+-	"<table align=center  bgcolor=white>"
++	"<table align=center  >"
+ 	"<tr><td>To</td><td><input type=text name=call tabindex=1 size=10 maxlength=12 value=\"%s\"/></td></tr>" 
+ 	"<tr><td>Message</td><td><input type=text name=message tabindex=2 size=80 maxlength=100 /></td></tr></table>"  
+ 	"<p align=center><input type=submit value=Submit /><input type=submit value=Cancel name=Cancel /></form>";
+ 
+-char APRSIndexPage[] = "<html><head><title>BPQ32 Web Server APRS Pages</title></head>"
+-	"<body background=/background.jpg><P align=center>"
++char APRSIndexPage[] = "<html><head><title>BPQ32 Web Server APRS Pages</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>"
++	"<body ><P align=center>"
+ 	"<h2 align=center>BPQ32 APRS Server</h2><P align=center>"
+-	"<table border=2 cellpadding=2 cellspacing=2 bgcolor=white><tr>"
++	"<table border=2 cellpadding=2 cellspacing=2 ><tr>"
+ 	"<td align=center><a href=/aprs.html>APRS Map</a></td>"
+ 	"<td align=center><a href=/aprs/msgs>Received Messages</a></td>"
+ 	"<td align=center><a href=/aprs/txmsgs>Sent Messages</a></td>"
+diff --git a/APRSStdPages.c b/APRSStdPages.c
+index 456e8ba..821c6c5 100644
+--- a/APRSStdPages.c
++++ b/APRSStdPages.c
+@@ -539,9 +539,9 @@ char * get_info_call()
+ 		"<meta http-equiv=\"expires\" content=\"0\"> \r\n"
+ 		"<meta http-equiv=\"refresh\" content=\"300\">\r\n"
+ 		"<title>##MY_CALLSIGN##'s BPQ32 Web Server</title>\r\n"
+-		"</head>\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 
+-		"<body background=\"Images/clouds.jpg\" bgcolor=\"white\" text=\"black\">\r\n"
++		"<body>\r\n"
+ 
+ 		"<table\r\n"
+ 		"style=\"text-align: left; width: 900; margin-left: auto; margin-right: auto;\"\r\n"
+@@ -608,9 +608,9 @@ char * get_infomobile_call()
+ 		"<meta http-equiv=\"expires\" content=\"0\"> \r\n"
+ 		"<meta http-equiv=\"refresh\" content=\"300\">\r\n"
+ 		"<title>##MY_CALLSIGN##'s BPQ32 Web Server</title>\r\n"
+-		"</head>\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 
+-		"<body background=\"Images/clouds.jpg\" bgcolor=\"white\" text=\"black\">\r\n"
++		"<body>\r\n"
+ 
+ 		"<table\r\n"
+ 		"style=\"text-align: left; width: 900; margin-left: auto; margin-right: auto;\"\r\n"
+@@ -679,9 +679,9 @@ char * get_infoobj_call()
+ 		"<meta http-equiv=\"expires\" content=\"0\"> \r\n"
+ 		"<meta http-equiv=\"refresh\" content=\"300\">\r\n"
+ 		"<title>##MY_CALLSIGN##'s BPQ32 Web Server</title>\r\n"
+-		"</head>\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 
+-		"<body background=\"Images/clouds.jpg\" bgcolor=\"white\" text=\"black\">\r\n"
++		"<body>\r\n"
+ 
+ 		"<table\r\n"
+ 		"style=\"text-align: left; width: 900; margin-left: auto; margin-right: auto;\"\r\n"
+@@ -750,9 +750,9 @@ char * get_infowx_call()
+ 		"<meta http-equiv=\"expires\" content=\"0\"> \r\n"
+ 		"<meta http-equiv=\"refresh\" content=\"300\">\r\n"
+ 		"<title>##MY_CALLSIGN##'s BPQ32 Web Server</title>\r\n"
+-		"</head>\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 
+-		"<body background=\"Images/clouds.jpg\" bgcolor=\"white\" text=\"black\">\r\n"
++		"<body>\r\n"
+ 
+ 		"<table\r\n"
+ 		"style=\"text-align: left; width: 900; margin-left: auto; margin-right: auto;\"\r\n"
+@@ -799,7 +799,7 @@ char * get_infowx_call()
+ 		"Last heard ##LAST_HEARD## ago</font></p>\r\n"
+ 
+ 		"<p align=center><font size=+1>Weather Data</font></p>\r\n"
+-		"<table align=center border=2 bgcolor=white>\r\n"
++		"<table align=center border=2 >\r\n"
+ 		"<tr><td><b>Measurement</b></td><td><b>Imperial</b></td></tr>\r\n"
+ 		"<tr><td>Wind speed</td><td>##WIND_SPEED_MPH## mph</td></tr>\r\n"
+ 		"<tr><td>Wind gust</td><td>##WIND_GUST_MPH## mph</td></tr>\r\n"
+@@ -834,9 +834,9 @@ char * get_all()
+ 		"<meta http-equiv=\"expires\" content=\"0\"> \r\n"
+ 		"<meta http-equiv=\"refresh\" content=\"300\">\r\n"
+ 		"<title>##MY_CALLSIGN##'s BPQ32 Web Server</title>\r\n"
+-		"</head>\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 
+-		"<body background=\"Images/clouds.jpg\" bgcolor=\"white\" text=\"black\">\r\n"
++		"<body>\r\n"
+ 
+ 		"<table\r\n"
+ 		"style=\"text-align: left; width: 900; margin-left: auto; margin-right: auto;\"\r\n"
+@@ -871,7 +871,7 @@ char * get_all()
+ 		"<p align=center><font size=4>The following is a list of all the stations heard in the past ##EXPIRE_TIME## minutes,<BR>both on RF and on the internet.</font></p>"
+ 		"<p align=center><font size=4>There are ##TABLE_COUNT## callsigns in the list,<BR>click a callsign to get an information page for that station.</font></p>"
+ 
+-		"<table align=center border=3 cellpadding=3 bgcolor=\"#FFFFCC\">"
++		"<table align=center border=3 cellpadding=3>"
+ 		"<tr>##STATION_TABLE##</tr></table>\r\n"
+ 		"</td></tr></tbody></table>\r\n"
+ 		"</body></html>\r\n";
+@@ -891,9 +891,9 @@ char * get_mobileall()
+ 		"<meta http-equiv=\"expires\" content=\"0\"> \r\n"
+ 		"<meta http-equiv=\"refresh\" content=\"300\">\r\n"
+ 		"<title>##MY_CALLSIGN##'s BPQ32 Web Server</title>\r\n"
+-		"</head>\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 
+-		"<body background=\"Images/clouds.jpg\" bgcolor=\"white\" text=\"black\">\r\n"
++		"<body>\r\n"
+ 
+ 		"<table\r\n"
+ 		"style=\"text-align: left; width: 900; margin-left: auto; margin-right: auto;\"\r\n"
+@@ -928,7 +928,7 @@ char * get_mobileall()
+ 		"<p align=center><font size=4>The following is a list of all the mobile stations heard in the past ##EXPIRE_TIME## minutes,<BR>both on RF and on the internet.</font></p>"
+ 		"<p align=center><font size=4>There are ##TABLE_COUNT## callsigns in the list,<BR>click a callsign to get an information page for that station.</font></p>"
+ 
+-		"<table align=center border=3 cellpadding=3 bgcolor=\"#FFFFCC\">"
++		"<table align=center border=3 cellpadding=3>"
+ 		"<tr>##STATION_TABLE##</tr></table>\r\n"
+ 		"</td></tr></tbody></table>\r\n"
+ 		"</body></html>\r\n";
+@@ -948,9 +948,9 @@ char * get_obj()
+ 		"<meta http-equiv=\"expires\" content=\"0\"> \r\n"
+ 		"<meta http-equiv=\"refresh\" content=\"300\">\r\n"
+ 		"<title>##MY_CALLSIGN##'s BPQ32 Web Server</title>\r\n"
+-		"</head>\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 
+-		"<body background=\"Images/clouds.jpg\" bgcolor=\"white\" text=\"black\">\r\n"
++		"<body>\r\n"
+ 
+ 		"<table\r\n"
+ 		"style=\"text-align: left; width: 900; margin-left: auto; margin-right: auto;\"\r\n"
+@@ -985,7 +985,7 @@ char * get_obj()
+ 		"<p align=center><font size=4>The following is a list of all the objects heard in the past ##EXPIRE_TIME## minutes,<BR>both on RF and on the internet.</font></p>"
+ 		"<p align=center><font size=4>There are ##TABLE_COUNT## callsigns in the list,<BR>click a callsign to get an information page for that station.</font></p>"
+ 
+-		"<table align=center border=3 cellpadding=3 bgcolor=\"#FFFFCC\">"
++		"<table align=center border=3 cellpadding=3>"
+ 		"<tr>##STATION_TABLE##</tr></table>\r\n"
+ 		"</td></tr></tbody></table>\r\n"
+ 		"</body></html>\r\n";
+@@ -1006,9 +1006,9 @@ char * get_noinfo()
+ 		"<meta http-equiv=\"expires\" content=\"0\"> \r\n"
+ 		"<meta http-equiv=\"refresh\" content=\"300\">\r\n"
+ 		"<title>##MY_CALLSIGN##'s BPQ32 Web Server</title>\r\n"
+-		"</head>\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 
+-		"<body background=\"Images/clouds.jpg\" bgcolor=\"white\" text=\"black\">\r\n"
++		"<body>\r\n"
+ 
+ 		"<table\r\n"
+ 		"style=\"text-align: left; width: 900; margin-left: auto; margin-right: auto;\"\r\n"
+@@ -1053,9 +1053,9 @@ char * get_wxall()
+ 		"<meta http-equiv=\"expires\" content=\"0\"> \r\n"
+ 		"<meta http-equiv=\"refresh\" content=\"300\">\r\n"
+ 		"<title>##MY_CALLSIGN##'s BPQ32 Web Server</title>\r\n"
+-		"</head>\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 
+-		"<body background=\"Images/clouds.jpg\" bgcolor=\"white\" text=\"black\">\r\n"
++		"<body>\r\n"
+ 
+ 		"<table\r\n"
+ 		"style=\"text-align: left; width: 900; margin-left: auto; margin-right: auto;\"\r\n"
+@@ -1090,7 +1090,7 @@ char * get_wxall()
+ 		"<p align=center><font size=4>The following is a list of all the WX stations heard in the past ##EXPIRE_TIME## minutes,<BR>both on RF and on the internet.</font></p>"
+ 		"<p align=center><font size=4>There are ##TABLE_COUNT## callsigns in the list,<BR>click a callsign to get an information page for that station.</font></p>"
+ 
+-		"<table align=center border=3 cellpadding=3 bgcolor=\"#FFFFCC\">"
++		"<table align=center border=3 cellpadding=3>"
+ 		"<tr>##STATION_TABLE##</tr></table>\r\n"
+ 		"</td></tr></tbody></table>\r\n"
+ 		"</body></html>\r\n";
+@@ -1106,9 +1106,9 @@ char * get_info()
+ 		"<head>"
+ 		"<meta http-equiv=\"content-type\" content=\"text/html; charset=iso-8859-1\">"
+ 		"<title>##MY_CALLSIGN##'s BPQ32 Web Server</title>\r\n"
+-		"</head>\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 
+-		"<body background=\"Images/clouds.jpg\" bgcolor=\"white\" text=\"black\">\r\n"
++		"<body>\r\n"
+ 
+ 		"<table\r\n"
+ 		"style=\"text-align: left; width: 900; margin-left: auto; margin-right: auto;\"\r\n"
+@@ -1174,9 +1174,9 @@ char * get_allrf()
+ 		"<meta http-equiv=\"expires\" content=\"0\"> \r\n"
+ 		"<meta http-equiv=\"refresh\" content=\"300\">\r\n"
+ 		"<title>##MY_CALLSIGN##'s BPQ32 Web Server</title>\r\n"
+-		"</head>\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 
+-		"<body background=\"Images/clouds.jpg\" bgcolor=\"white\" text=\"black\">\r\n"
++		"<body>\r\n"
+ 
+ 		"<table\r\n"
+ 		"style=\"text-align: left; width: 900; margin-left: auto; margin-right: auto;\"\r\n"
+@@ -1220,7 +1220,7 @@ char * get_allrf()
+ 
+ 		"<p align=center><font size=4>There are ##TABLE_COUNT## callsigns in the list,<BR>click a callsign to get an information page for that station.</font></p>"
+ 
+-		"<table align=center cellpadding=3 border=3 bgcolor=\"#FFFFCC\">\r\n"
++		"<table align=center cellpadding=3 border=3>\r\n"
+ 		"<tr><td align=left><b>Callsign</b></td><td align=left><b>Symbol</b></td><td align=center><b>Location</b></td>\r\n"
+ 		"<td align=right><b>##MILES_KM##</b></td><td align=right><b>Bearing</b></td><td align=left><b>Last heard</b></td></tr>\r\n"
+ 		"##STATION_TABLE##</table>\r\n"
+@@ -1243,9 +1243,9 @@ char * get_mobilesrf()
+ 		"<meta http-equiv=\"expires\" content=\"0\"> \r\n"
+ 		"<meta http-equiv=\"refresh\" content=\"300\">\r\n"
+ 		"<title>##MY_CALLSIGN##'s BPQ32 Web Server</title>\r\n"
+-		"</head>\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 
+-		"<body background=\"Images/clouds.jpg\" bgcolor=\"white\" text=\"black\">\r\n"
++		"<body>\r\n"
+ 
+ 		"<table\r\n"
+ 		"style=\"text-align: left; width: 900; margin-left: auto; margin-right: auto;\"\r\n"
+@@ -1289,7 +1289,7 @@ char * get_mobilesrf()
+ 
+ 		"<p align=center><font size=4>There are ##TABLE_COUNT## callsigns in the list,<BR>click a callsign to get an information page for that station.</font></p>"
+ 
+-		"<table align=center cellpadding=3 border=3 bgcolor=\"#FFFFCC\">\r\n"
++		"<table align=center cellpadding=3 border=3>\r\n"
+ 		"<tr><td align=left><b>Callsign</b></td><td align=left><b>Symbol</b></td><td align=center><b>Location</b></td>\r\n"
+ 		"<td align=right><b>##MILES_KM##</b></td><td align=right><b>Bearing</b></td><td align=left><b>Last heard</b></td></tr>\r\n"
+ 		"##STATION_TABLE##</table>\r\n"
+@@ -1312,9 +1312,9 @@ char * get_objrf()
+ 		"<meta http-equiv=\"expires\" content=\"0\"> \r\n"
+ 		"<meta http-equiv=\"refresh\" content=\"300\">\r\n"
+ 		"<title>##MY_CALLSIGN##'s BPQ32 Web Server</title>\r\n"
+-		"</head>\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 
+-		"<body background=\"Images/clouds.jpg\" bgcolor=\"white\" text=\"black\">\r\n"
++		"<body>\r\n"
+ 
+ 		"<table\r\n"
+ 		"style=\"text-align: left; width: 900; margin-left: auto; margin-right: auto;\"\r\n"
+@@ -1358,7 +1358,7 @@ char * get_objrf()
+ 
+ 		"<p align=center><font size=4>There are ##TABLE_COUNT## callsigns in the list,<BR>click a callsign to get an information page for that station.</font></p>"
+ 
+-		"<table align=center cellpadding=3 border=3 bgcolor=\"#FFFFCC\">\r\n"
++		"<table align=center cellpadding=3 border=3>\r\n"
+ 		"<tr><td align=left><b>Callsign</b></td><td align=left><b>Symbol</b></td><td align=center><b>Location</b></td>\r\n"
+ 		"<td align=right><b>##MILES_KM##</b></td><td align=right><b>Bearing</b></td><td align=left><b>Last heard</b></td></tr>\r\n"
+ 		"##STATION_TABLE##</table>\r\n"
+@@ -1381,9 +1381,9 @@ char * get_wxrf()
+ 		"<meta http-equiv=\"expires\" content=\"0\"> \r\n"
+ 		"<meta http-equiv=\"refresh\" content=\"300\">\r\n"
+ 		"<title>##MY_CALLSIGN##'s BPQ32 Web Server</title>\r\n"
+-		"</head>\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 
+-		"<body background=\"Images/clouds.jpg\" bgcolor=\"white\" text=\"black\">\r\n"
++		"<body>\r\n"
+ 
+ 		"<table\r\n"
+ 		"style=\"text-align: left; width: 900; margin-left: auto; margin-right: auto;\"\r\n"
+@@ -1427,7 +1427,7 @@ char * get_wxrf()
+ 
+ 		"<p align=center><font size=4>There are ##TABLE_COUNT## callsigns in the list,<BR>click a callsign to get an information page for that station.</font></p>"
+ 
+-		"<table align=center cellpadding=3 border=3 bgcolor=\"#FFFFCC\">\r\n"
++		"<table align=center cellpadding=3 border=3>\r\n"
+ 		"<tr><td align=left><b>Callsign</b></td><td align=left><b>Symbol</b></td><td align=center><b>Location</b></td>\r\n"
+ 		"<td align=right><b>##MILES_KM##</b></td><td align=right><b>Bearing</b></td><td align=left><b>Last heard</b></td></tr>\r\n"
+ 		"##STATION_TABLE##</table>\r\n"
+@@ -3233,7 +3233,7 @@ char * get_portstats()
+ 		"\n"
+ 		"<head>\n"
+ 		"<script src=\"https://code.jquery.com/jquery-3.6.0.min.js\"> </script>\n"
+-		"</head>\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\n"
+ 		"\n"
+ 		"\n"
+ 		"<body>\n"
+@@ -3702,7 +3702,7 @@ char * get_aprs()
+ 		"function resize()\n"
+ 		"{}\n"
+ 		"</script>\n"
+-		"</head>\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\n"
+ 		"\n"
+ 		"<BODY onload=initialize() onresize='resize()'>\n"
+ 		"<div class=\"topnav\" id=menu>\n"
+diff --git a/ARDOPAX25.c b/ARDOPAX25.c
+index 9fe7e81..5b45b79 100644
+--- a/ARDOPAX25.c
++++ b/ARDOPAX25.c
+@@ -776,7 +776,7 @@ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ 		"function ScrollOutput()\r\n"
+ 		"{var textarea = document.getElementById('textarea');"
+ 		"textarea.scrollTop = textarea.scrollHeight;}</script>"
+-		"</head><title>ARDOP Status</title></head><body id=Text onload=\"ScrollOutput()\">"
++		"<head><title>ARDOP Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body id=Text onload=\"ScrollOutput()\">"
+ 		"<h2><form method=post action=ARDOPAbort?%d>ARDOP Status <input name=Save value=\"Abort Session\" type=submit style=\"position: absolute; right: 20;\"></form></h2>",
+ 		TNC->Port);
+ 
+diff --git a/BBSHTMLConfig.c b/BBSHTMLConfig.c
+index 4593cbd..c566641 100644
+--- a/BBSHTMLConfig.c
++++ b/BBSHTMLConfig.c
+@@ -134,11 +134,11 @@ static char BusyError[] = "<p align=center>Sorry, No sessions available - please
+ 
+ extern char WebMailSignon[];
+ 
+-char MailSignon[] = "<html><head><title>BPQ32 Mail Server Access</title></head><body background=\"/background.jpg\">"
++char MailSignon[] = "<html><head><title>BPQ32 Mail Server Access</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body>"
+ 	"<h3 align=center>BPQ32 Mail Server %s Access</h3>"
+ 	"<h3 align=center>Please enter Callsign and Password to access the BBS</h3>"
+ 	"<form method=post action=/Mail/Signon?Mail>"
+-	"<table align=center  bgcolor=white>"
++	"<table align=center  >"
+ 	"<tr><td>User</td><td><input type=text name=user tabindex=1 size=20 maxlength=50 /></td></tr>" 
+ 	"<tr><td>Password</td><td><input type=password name=password tabindex=2 size=20 maxlength=50 /></td></tr></table>"  
+ 	"<p align=center><input type=submit class='btn' value=Submit /><input type=submit class='btn' value=Cancel name=Cancel /></form>";
+@@ -149,9 +149,9 @@ char MailPage[] = "<html><head><title>%s's BBS Web Server</title>"
+ 	"input.btn:active {background:black;color:white;} "
+ 	"submit.btn:active {background:black;color:white;} "
+ 	"</style>"
+-	"</head>"
+-	"<body background=\"/background.jpg\"><h3 align=center>BPQ32 BBS %s</h3><P>"
+-	"<P align=center><table border=1 cellpadding=2 bgcolor=white><tr>"
++	"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>"
++	"<body><h3 align=center>BPQ32 BBS %s</h3><P>"
++	"<P align=center><table border=1 cellpadding=2 ><tr>"
+ 	"<td><a href=/Mail/Status?%s>Status</a></td>"
+ 	"<td><a href=/Mail/Conf?%s>Configuration</a></td>"
+ 	"<td><a href=/Mail/Users?%s>Users</a></td>"
+@@ -170,9 +170,9 @@ char RefreshMainPage[] = "<html><head>"
+ 	"input.btn:active {background:black;color:white;} "
+ 	"submit.btn:active {background:black;color:white;} "
+ 	"</style>"
+-	"<title>%s's BBS Web Server</title></head>"
+-	"<body background=\"/background.jpg\"><h3 align=center>BPQ32 BBS %s</h3><P>"
+-	"<P align=center><table border=1 cellpadding=2 bgcolor=white><tr>"
++	"<title>%s's BBS Web Server</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>"
++	"<body><h3 align=center>BPQ32 BBS %s</h3><P>"
++	"<P align=center><table border=1 cellpadding=2 ><tr>"
+ 	"<td><a href=/Mail/Status?%s>Status</a></td>"
+ 	"<td><a href=/Mail/Conf?%s>Configuration</a></td>"
+ 	"<td><a href=/Mail/Users?%s>Users</a></td>"
+@@ -285,7 +285,7 @@ char FWDUpdate[] =
+ 
+ static char MailDetailPage[] = 
+ "<html><head><meta content=\"text/html; charset=ISO-8859-1\" http-equiv=\"content-type\">"
+-"<title>MsgEdit</title></head><body><h4>Message %d</h4>"
++"<title>MsgEdit</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body><h4>Message %d</h4>"
+ "<form style=\"font-family: monospace;\" method=post action=/Mail/Msg?%s name=Msgs>"
+ "From&nbsp; <input style=\"font-family: monospace;\" size=10 name=From value=%s> Sent&nbsp;&nbsp;&nbsp;"
+ "&nbsp; &nbsp; &nbsp; <input readonly=readonly size=12 name=Sent value=\"%s\">&nbsp;"
+@@ -343,7 +343,7 @@ char Welcome[] = "<form style=\"font-family: monospace; text-align: center;\""
+ "<input name=Save value=Save type=submit class='btn'> <inputcname=Cancel value=Cancel type=submit class='btn'></form>";
+ 
+ static char MsgEditPage[] = "<html><head><meta content=\"text/html; charset=ISO-8859-1\" http-equiv=\"content-type\">"
+-"<title></title></head><body>"
++"<title></title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body>"
+ "<form style=\"font-family: monospace;  text-align: center;\"method=post action=EMSave?%s>"
+ "<textarea cols=90 rows=33 name=Msg>%s</textarea><br><br>"
+ "<input name=Save value=Save type=submit class='btn'><input name=Cancel value=Cancel type=submit class='btn'><br></form>";
+@@ -369,7 +369,7 @@ static char WPDetail[] = "<form style=\"font-family: monospace;\" method=post ac
+ "<input name=Cancel value=Cancel type=submit class='btn'></form>";
+ 
+ 
+-static char LostSession[] = "<html><body>"
++static char LostSession[] = "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body>"
+ "<form style=\"font-family: monospace; text-align: center;\" method=post action=/Mail/Lost?%s>"
+ "Sorry, Session had been lost<br><br>&nbsp;&nbsp;&nbsp;&nbsp;"
+ "<input name=Submit value=Restart type=submit class='btn'> <input type=submit class='btn' value=Exit name=Cancel><br></form>";
+@@ -472,7 +472,7 @@ void ProcessMailHTTPMessage(struct HTTPConnectionInfo * Session, char * Method,
+ 		}
+ 		else
+ 		{
+-			*RLen = sprintf(Reply, "<html><script>window.location.href = '/Mail/Header?%s';</script>", Session->Key);
++			*RLen = sprintf(Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>window.location.href = '/Mail/Header?%s';</script>", Session->Key);
+ 		}
+ 		
+ 		GotFirstMessage = 1;
+@@ -2286,7 +2286,7 @@ VOID SaveMessageText(struct HTTPConnectionInfo * Session, char * MsgPtr, char *
+ 	{
+ 		if (strstr(input, "Cancel=Cancel"))
+ 		{
+-			*RLen = sprintf(Reply, "%s", "<html><script>window.close();</script></html>");
++			*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>window.close();</script></html>");
+ 			return;
+ 		}
+ 
+@@ -2350,7 +2350,7 @@ VOID SaveMessageText(struct HTTPConnectionInfo * Session, char * MsgPtr, char *
+ 
+ 			SaveMessageDatabase();
+ 
+-			*RLen = sprintf(Reply, "%s", "<html><script>alert(\"Message Saved\");window.close();</script></html>");
++			*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"Message Saved\");window.close();</script></html>");
+ 
+ 		}
+ 	}
+diff --git a/ChatHTMLConfig.c b/ChatHTMLConfig.c
+index 604db8f..7dc322c 100644
+--- a/ChatHTMLConfig.c
++++ b/ChatHTMLConfig.c
+@@ -122,19 +122,19 @@ static char CHKD[] = "checked=checked ";
+ static char sel[] = "selected";
+ 
+ 
+-char ChatSignon[] = "<html><head><title>BPQ32 Chat Server Access</title></head><body background=\"/background.jpg\">"
++char ChatSignon[] = "<html><head><title>BPQ32 Chat Server Access</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body>"
+ 	"<h3 align=center>BPQ32 Chat Server %s Access</h3>"
+ 	"<h3 align=center>Please enter Callsign and Password to access the Chat Server</h3>"
+ 	"<form method=post action=/Chat/Signon?Chat>"
+-	"<table align=center  bgcolor=white>"
++	"<table align=center  >"
+ 	"<tr><td>User</td><td><input type=text name=user tabindex=1 size=20 maxlength=50 /></td></tr>" 
+ 	"<tr><td>Password</td><td><input type=password name=password tabindex=2 size=20 maxlength=50 /></td></tr></table>"  
+ 	"<p align=center><input type=submit value=Submit /><input type=submit value=Cancel name=Cancel /></form>";
+ 
+ 
+-char ChatPage[] = "<html><head><title>%s's Chat Server</title></head>"
+-	"<body background=\"/background.jpg\"><h3 align=center>BPQ32 Chat Node %s</h3><P>"
+-	"<P align=center><table border=1 cellpadding=2 bgcolor=white><tr>"
++char ChatPage[] = "<html><head><title>%s's Chat Server</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>"
++	"<body><h3 align=center>BPQ32 Chat Node %s</h3><P>"
++	"<P align=center><table border=1 cellpadding=2 ><tr>"
+ 	"<td><a href=/Chat/ChatStatus?%s>Status</a></td>"
+ 	"<td><a href=/Chat/ChatConf?%s>Configuration</a></td>"
+ 	"<td><a href=/>Node Menu</a></td>"
+@@ -142,7 +142,7 @@ char ChatPage[] = "<html><head><title>%s's Chat Server</title></head>"
+ 
+ 
+ 
+-static char LostSession[] = "<html><body>"
++static char LostSession[] = "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body>"
+ "<form style=\"font-family: monospace; text-align: center;\" method=post action=/Chat/Lost?%s>"
+ "Sorry, Session had been lost<br><br>&nbsp;&nbsp;&nbsp;&nbsp;"
+ "<input name=Submit value=Restart type=submit> <input type=submit value=Exit name=Cancel><br></form>";
+diff --git a/Dragon.c b/Dragon.c
+index 9160356..8db10ef 100644
+--- a/Dragon.c
++++ b/Dragon.c
+@@ -610,7 +610,7 @@ ok:
+ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ {
+ 	int Len = sprintf(Buff, "<html><meta http-equiv=expires content=0><meta http-equiv=refresh content=15>"
+-	"<head><title>SCS Pactor Status</title></head><body><h3>SCS Pactor Status</h3>");
++	"<head><title>SCS Pactor Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body><h3>SCS Pactor Status</h3>");
+ 
+ 	Len += sprintf(&Buff[Len], "<table style=\"text-align: left; width: 480px; font-family: monospace; align=center \" border=1 cellpadding=2 cellspacing=2>");
+ 
+diff --git a/FLDigi.c b/FLDigi.c
+index d0ec34c..97d4e11 100644
+--- a/FLDigi.c
++++ b/FLDigi.c
+@@ -1118,7 +1118,7 @@ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ 		"function ScrollOutput()\r\n"
+ 		"{var textarea = document.getElementById('textarea');"
+ 		"textarea.scrollTop = textarea.scrollHeight;}</script>"
+-		"</head><title>FLDigi Status</title></head><body id=Text onload=\"ScrollOutput()\">"
++		"<head><title>FLDigi Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body id=Text onload=\"ScrollOutput()\">"
+ 		"<h2>FLDIGI Status</h2>");
+ 
+ 
+diff --git a/FLDigi64.c b/FLDigi64.c
+index 4ca0a8d..a112b62 100644
+--- a/FLDigi64.c
++++ b/FLDigi64.c
+@@ -1038,7 +1038,7 @@ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ 		"function ScrollOutput()\r\n"
+ 		"{var textarea = document.getElementById('textarea');"
+ 		"textarea.scrollTop = textarea.scrollHeight;}</script>"
+-		"</head><title>FLDigi Status</title></head><body id=Text onload=\"ScrollOutput()\">"
++		"<head><title>FLDigi Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body id=Text onload=\"ScrollOutput()\">"
+ 		"<h2>FLDIGI Status</h2>");
+ 
+ 
+diff --git a/FreeDATA.c b/FreeDATA.c
+index 846de0f..fce8a11 100644
+--- a/FreeDATA.c
++++ b/FreeDATA.c
+@@ -1103,7 +1103,7 @@ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ 		"function ScrollOutput()\r\n"
+ 		"{var textarea = document.getElementById('textarea');"
+ 		"textarea.scrollTop = textarea.scrollHeight;}</script>"
+-		"</head><title>FreDATA Status</title></head><body id=Text onload=\"ScrollOutput()\">"
++		"<head><title>FreDATA Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body id=Text onload=\"ScrollOutput()\">"
+ 		"<h2><form method=post target=\"POPUPW\" onsubmit=\"POPUPW = window.open('about:blank','POPUPW',"
+ 		"'width=440,height=150');\" action=ARDOPAbort?%d>FreeData Status"
+ 		"<input name=Save value=\"Abort Session\" type=submit style=\"position: absolute; right: 20;\"></form></h2>",
+diff --git a/HALDriver.c b/HALDriver.c
+index 408ff97..ae274c7 100644
+--- a/HALDriver.c
++++ b/HALDriver.c
+@@ -444,7 +444,7 @@ static size_t ExtProc(int fn, int port , PDATAMESSAGE buff)
+ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ {
+ 	int Len = sprintf(Buff, "<html><meta http-equiv=expires content=0><meta http-equiv=refresh content=15>"
+-	"<head><title>HAL Status</title></head><body><h3>HAL Status</h3>");
++	"<head><title>HAL Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body><h3>HAL Status</h3>");
+ 
+ 	Len += sprintf(&Buff[Len], "<table style=\"text-align: left; width: 480px; font-family: monospace; align=center \" border=1 cellpadding=2 cellspacing=2>");
+ 
+diff --git a/HALDriver64.c b/HALDriver64.c
+index 7c60f9f..87af37c 100644
+--- a/HALDriver64.c
++++ b/HALDriver64.c
+@@ -447,7 +447,7 @@ static size_t ExtProc(int fn, int port , PDATAMESSAGE buff)
+ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ {
+ 	int Len = sprintf(Buff, "<html><meta http-equiv=expires content=0><meta http-equiv=refresh content=15>"
+-	"<head><title>HAL Status</title></head><body><h3>HAL Status</h3>");
++	"<head><title>HAL Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body><h3>HAL Status</h3>");
+ 
+ 	Len += sprintf(&Buff[Len], "<table style=\"text-align: left; width: 480px; font-family: monospace; align=center \" border=1 cellpadding=2 cellspacing=2>");
+ 
+diff --git a/HSMODEM.c b/HSMODEM.c
+index 7b44895..830a89c 100644
+--- a/HSMODEM.c
++++ b/HSMODEM.c
+@@ -883,7 +883,7 @@ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ 		"function ScrollOutput()\r\n"
+ 		"{var textarea = document.getElementById('textarea');"
+ 		"textarea.scrollTop = textarea.scrollHeight;}</script>"
+-		"</head><title>VARA Status</title></head><body id=Text onload=\"ScrollOutput()\">"
++		"<head><title>VARA Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body id=Text onload=\"ScrollOutput()\">"
+ 		"<h2><form method=post target=\"POPUPW\" onsubmit=\"POPUPW = window.open('about:blank','POPUPW',"
+ 		"'width=440,height=150');\" action=ARDOPAbort?%d>HSMODEM Status"
+ 		"<input name=Save value=\"Abort Session\" type=submit style=\"position: absolute; right: 20;\"></form></h2>",
+diff --git a/HTTPcode.c b/HTTPcode.c
+index 2d4415c..f0098bc 100644
+--- a/HTTPcode.c
++++ b/HTTPcode.c
+@@ -130,13 +130,13 @@ char Mycall[10];
+ char MAILPipeFileName[] = "\\\\.\\pipe\\BPQMAILWebPipe";
+ char CHATPipeFileName[] = "\\\\.\\pipe\\BPQCHATWebPipe";
+ 
+-char Index[] = "<html><head><title>%s's BPQ32 Web Server</title></head><body><P align=center>"
+-"<table border=2 cellpadding=2 cellspacing=2 bgcolor=white>"
++char Index[] = "<html><head><title>%s's BPQ32 Web Server</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body><P align=center>"
++"<table border=2 cellpadding=2 cellspacing=2 >"
+ "<tr><td align=center><a href=/Node/NodeMenu.html>Node Pages</a></td>"
+ "<td align=center><a href=/aprs>APRS Pages</a></td></tr></table></body></html>";
+ 
+ char IndexNoAPRS[] = "<meta http-equiv=\"refresh\" content=\"0;url=/Node/NodeIndex.html\">"
+-"<html><head></head><body></body></html>";
++"<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body></body></html>";
+ 
+ //char APRSBit[] = "<td><a href=../aprs>APRS Pages</a></td>";
+ 
+@@ -146,7 +146,7 @@ char IndexNoAPRS[] = "<meta http-equiv=\"refresh\" content=\"0;url=/Node/NodeInd
+ 
+ char Tail[] = "</body></html>";
+ 
+-char RouteHddr[] = "<h2 align=center>Routes</h2><table align=center border=2 style=font-family:monospace bgcolor=white>"
++char RouteHddr[] = "<h2 align=center>Routes</h2><table align=center border=2 style=font-family:monospace >"
+ "<tr><th>Port</th><th>Call</th><th>Quality</th><th>Node Count</th><th>Frame Count</th><th>Retries</th><th>Percent</th><th>Maxframe</th>"
+ "<th>Frack</th><th>Last Heard</th><th>Queued</th><th>Rem Qual</th><th>SRTT</th><th>Rem SRTT</th></tr>";
+ 
+@@ -157,32 +157,32 @@ char RouteLineINP3[] = "<tr><td>%s%d</td><td>%s%s</td><td>%d</td><td>%d</td><td>
+ "<td>%02d:%02d</td><td>%d</td><td>%d</td><td>%4.2fs</td><td>%4.2fs</td></tr>";
+ 
+ char xNodeHddr[] = "<align=center><form align=center method=get action=/Node/Nodes.html>"
+-"<table align=center  bgcolor=white>"
++"<table align=center  >"
+ "<tr><td><input type=submit class='btn' name=a value=\"Nodes Sorted by Alias\"></td><td>"
+ "<input type=submit class='btn' name=c value=\"Nodes Sorted by Call\"></td><td>"
+ "<input type=submit class='btn' name=t value=\"Nodes with traffic\"></td></tr></form></table>"
+-"<h2 align=center>Nodes %s</h2><table style=font-family:monospace align=center border=2 bgcolor=white><tr>";
++"<h2 align=center>Nodes %s</h2><table style=font-family:monospace align=center border=2 ><tr>";
+ 
+ char NodeHddr[] = "<center><form method=get action=/Node/Nodes.html>"
+ "<input type=submit class='btn' name=a value=\"Nodes Sorted by Alias\">"
+ "<input type=submit class='btn' name=c value=\"Nodes Sorted by Call\">"
+ "<input type=submit class='btn' name=t value=\"Nodes with traffic\"></form></center>"
+-"<h2 align=center>Nodes %s</h2><table style=font-family:monospace align=center border=2 bgcolor=white><tr>";
++"<h2 align=center>Nodes %s</h2><table style=font-family:monospace align=center border=2 ><tr>";
+ 
+ char NodeLine[] = "<td><a href=NodeDetail?%s>%s:%s</td>";
+ 
+ 
+-char StatsHddr[] = "<h2 align=center>Node Stats</h2><table align=center cellpadding=2 bgcolor=white>"
++char StatsHddr[] = "<h2 align=center>Node Stats</h2><table align=center cellpadding=2 >"
+ "<col width=250 /><col width=80 /><col width=80 /><col width=80 /><col width=80 /><col width=80 />";
+ 
+-char PortStatsHddr[] = "<h2 align=center>Stats for Port %d</h2><table align=center border=2 cellpadding=2 bgcolor=white>";
++char PortStatsHddr[] = "<h2 align=center>Stats for Port %d</h2><table align=center border=2 cellpadding=2 >";
+ 
+ char PortStatsLine[] = "<tr><td> %s </td><td> %d </td></tr>";
+ 
+ 
+-char Beacons[] = "<h2 align=center>Beacon Configuration for Port %d</h2><h3 align=center>You need to be signed in to save changes</h3><table align=center border=2 cellpadding=2 bgcolor=white>"
++char Beacons[] = "<h2 align=center>Beacon Configuration for Port %d</h2><h3 align=center>You need to be signed in to save changes</h3><table align=center border=2 cellpadding=2 >"
+ "<form method=post action=BeaconAction>"
+-"<table align=center  bgcolor=white>"
++"<table align=center  >"
+ "<tr><td>Send Interval (Minutes)</td><td><input type=text name=Every tabindex=1 size=5 value=%d></td></tr>" 
+ "<tr><td>To</td><td><input name=Dest style=\"text-transform:uppercase;\" tabindex=2 size=5 value=%s></td></tr>"  
+ "<tr><td>Path</td><td><input type=text name=Path style=\"text-transform:uppercase;\" size=50 maxlength=50 value=%s></td></tr>"
+@@ -195,20 +195,20 @@ char Beacons[] = "<h2 align=center>Beacon Configuration for Port %d</h2><h3 alig
+ "</form>";
+ 
+ 
+-char LinkHddr[] = "<h2 align=center>Links</h2><table align=center border=2 bgcolor=white>"
++char LinkHddr[] = "<h2 align=center>Links</h2><table align=center border=2 >"
+ "<tr><th>Far Call</th><th>Our Call</th><th>Port</th><th>ax.25 state</th><th>Link Type</th><th>ax.25 Version</th></tr>";
+ 
+ char LinkLine[] = "<tr><td>%s</td><td>%s</td><td>%d</td><td>%s</td><td>%s</td><td align=center >%d</td></tr>";
+ 
+-char UserHddr[] = "<h2 align=center>Sessions</h2><table align=center border=2 cellpadding=2 bgcolor=white>";
++char UserHddr[] = "<h2 align=center>Sessions</h2><table align=center border=2 cellpadding=2 >";
+ 
+ char UserLine[] = "<tr><td>%s</td><td>%s</td><td>%s</td></tr>";
+ 
+-char TermSignon[] = "<html><head><title>BPQ32 Node %s Terminal Access</title></head><body background=\"/background.jpg\">"
++char TermSignon[] = "<html><head><title>BPQ32 Node %s Terminal Access</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body>"
+ "<h2 align=center>BPQ32 Node %s Terminal Access</h2>"
+ "<h3 align=center>Please enter username and password to access the node</h3>"
+ "<form method=post action=TermSignon>"
+-"<table align=center  bgcolor=white>"
++"<table align=center  >"
+ "<tr><td>User</td><td><input type=text name=user tabindex=1 size=20 maxlength=50 /></td></tr>" 
+ "<tr><td>Password</td><td><input type=password name=password tabindex=2 size=20 maxlength=50 /></td></tr></table>"  
+ "<p align=center><input type=submit class='btn' value=Submit><input type=submit class='btn' value=Cancel name=Cancel>"
+@@ -219,11 +219,11 @@ char PassError[] = "<p align=center>Sorry, User or Password is invalid - please
+ 
+ char BusyError[] = "<p align=center>Sorry, No sessions available - please try later</p>";
+ 
+-char LostSession[] = "<html><body>Sorry, Session had been lost - refresh page to sign in again";
+-char NoSessions[] = "<html><body>Sorry, No Sessions available - refresh page to try again";
++char LostSession[] = "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body>Sorry, Session had been lost - refresh page to sign in again";
++char NoSessions[] = "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body>Sorry, No Sessions available - refresh page to try again";
+ 
+ char TermPage[] = "<!DOCTYPE html><html><meta http-equiv=Content-Type content='text/html; charset=UTF-8' />"
+-"<head><title>BPQ32 Node %s</title></head>"
++"<head><title>BPQ32 Node %s</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>"
+ "<script>function resize(){"
+ "var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0];"
+ "x=w.innerWidth;"
+@@ -246,7 +246,7 @@ char TermOutput[] = "<!DOCTYPE html><html><head>"
+ "<script type=\"text/javascript\">\r\n"
+ "function ScrollOutput()\r\n"
+ "{window.scrollBy(0,document.body.scrollHeight)}</script>"
+-"</head><body id=Text>"
++"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body id=Text>"
+ "<div style=\"font-family:monospace;%s>\"";
+ 
+ 
+@@ -255,7 +255,7 @@ char TermOutput[] = "<!DOCTYPE html><html><head>"
+ char TermOutputTail[] = "</div><script type=\"text/javascript\">\r\nsetTimeout(ScrollOutput, 1)</script></body></html>";
+ 
+ /*
+-char InputLine[] = "<html><head></head><body onload='resize()' onresize='resize()'>"
++char InputLine[] = "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body onload='resize()' onresize='resize()'>"
+ "<form name=inputform method=post action=/TermInput?%s>"
+ "<script>document.inputform.input.focus();"
+ "function resize(){"
+@@ -265,7 +265,7 @@ char InputLine[] = "<html><head></head><body onload='resize()' onresize='resize(
+ "inp.style.width =  x + 'px';}</script>"
+ "<input id=inp type=text width=100%% name=input /></form>";
+ */
+-char InputLine[] = "<!DOCTYPE html><html><head></head><body onload='resize()' onresize='resize()'>"
++char InputLine[] = "<!DOCTYPE html><html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body onload='resize()' onresize='resize()'>"
+ "<form name=inputform method=post action=/TermInput?%s>"
+ "<input style=\"font-family:monospace;%s>\" id=inp type=text text width=100%% name=input />"
+ "<script>document.inputform.input.focus();"
+@@ -275,44 +275,44 @@ char InputLine[] = "<!DOCTYPE html><html><head></head><body onload='resize()' on
+ "var inp=document.getElementById('inp');"
+ "inp.style.width=x-20+'px';}</script></form>";
+ 
+-static char NodeSignon[] = "<html><head><title>BPQ32 Node SYSOP Access</title></head><body background=\"/background.jpg\">"
++static char NodeSignon[] = "<html><head><title>BPQ32 Node SYSOP Access</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body>"
+ "<h3 align=center>BPQ32 Node %s SYSOP Access</h3>"
+ "<h3 align=center>This page sets Cookies. Don't continue if you object to this</h3>"
+ "<h3 align=center>Please enter Callsign and Password to access the Node</h3>"
+ "<form method=post action=/Node/Signon?Node>"
+-"<table align=center  bgcolor=white>"
++"<table align=center  >"
+ "<tr><td>User</td><td><input type=text name=user tabindex=1 size=20 maxlength=50 /></td></tr>" 
+ "<tr><td>Password</td><td><input type=password name=password tabindex=2 size=20 maxlength=50 /></td></tr></table>"  
+ "<p align=center><input type=submit class='btn' value=Submit /><input type=submit class='btn' value=Cancel name=Cancel /></form>";
+ 
+ 
+-static char MailSignon[] = "<html><head><title>BPQ32 Mail Server Access</title></head><body background=\"/background.jpg\">"
++static char MailSignon[] = "<html><head><title>BPQ32 Mail Server Access</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body>"
+ "<h3 align=center>BPQ32 Mail Server %s Access</h3>"
+ "<h3 align=center>Please enter Callsign and Password to access the BBS</h3>"
+ "<form method=post action=/Mail/Signon?Mail>"
+-"<table align=center  bgcolor=white>"
++"<table align=center  >"
+ "<tr><td>User</td><td><input type=text name=user tabindex=1 size=20 maxlength=50 /></td></tr>" 
+ "<tr><td>Password</td><td><input type=password name=password tabindex=2 size=20 maxlength=50 /></td></tr></table>"  
+ "<p align=center><input type=submit class='btn' value=Submit /><input type=submit class='btn' value=Cancel name=Cancel /></form>";
+ 
+-static char ChatSignon[] = "<html><head><title>BPQ32 Chat Server Access</title></head><body background=\"/background.jpg\">"
++static char ChatSignon[] = "<html><head><title>BPQ32 Chat Server Access</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body>"
+ "<h3 align=center>BPQ32 Chat Server %s Access</h3>"
+ "<h3 align=center>Please enter Callsign and Password to access the Chat Server</h3>"
+ "<form method=post action=/Chat/Signon?Chat>"
+-"<table align=center  bgcolor=white>"
++"<table align=center  >"
+ "<tr><td>User</td><td><input type=text name=user tabindex=1 size=20 maxlength=50 /></td></tr>" 
+ "<tr><td>Password</td><td><input type=password name=password tabindex=2 size=20 maxlength=50 /></td></tr></table>"  
+ "<p align=center><input type=submit class='btn' value=Submit /><input type=submit class='btn' value=Cancel name=Cancel /></form>";
+ 
+ 
+-static char MailLostSession[] = "<html><body>"
++static char MailLostSession[] = "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body>"
+ "<form style=\"font-family: monospace; text-align: center;\" method=post action=/Mail/Lost?%s>"
+ "Sorry, Session had been lost<br><br>&nbsp;&nbsp;&nbsp;&nbsp;"
+ "<input name=Submit value=Restart type=submit class='btn'> <input type=submit class='btn' value=Exit name=Cancel><br></form>";
+ 
+ 
+ static char ConfigEditPage[] = "<html><head><meta content=\"text/html; charset=ISO-8859-1\" http-equiv=\"content-type\">"
+-"<title>Edit Config</title></head><body background=/background.jpg>"
++"<title>Edit Config</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body >"
+ "<form style=\"font-family: monospace;  text-align: center;\"method=post action=CFGSave?%s>"
+ "<textarea cols=100 rows=25 name=Msg>%s</textarea><br><br>"
+ "<input name=Save value=Save type=submit class='btn'><input name=Cancel value=Cancel type=submit class='btn'><br></form>";
+@@ -1373,9 +1373,9 @@ int SetupNodeMenu(char * Buff, int LOCAL)
+ 
+ 	char NodeMenuLine[] = "dev_win(\"/Node/Port?%d\",%d,%d,%d,%d);";
+ 
+-	char NodeMenuRest[] = "}</script></head>"
+-		"<body id=body background=\"/background.jpg\"><h1 align=center>BPQ32 Node %s</h1><P>"
+-		"<P align=center><table border=1 cellpadding=2 bgcolor=white><tr>"
++	char NodeMenuRest[] = "}</script><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>"
++		"<body id=body><h1 align=center>BPQ32 Node %s</h1><P>"
++		"<P align=center><table border=1 cellpadding=2 ><tr>"
+ 		"<td><a href=/Node/Routes.html>Routes</a></td>"
+ 		"<td><a href=/Node/Nodes.html>Nodes</a></td>"
+ 		"<td><a href=/Node/Ports.html>Ports</a></td>"
+@@ -1462,7 +1462,7 @@ VOID SaveConfigFile(SOCKET sock , char * MsgPtr, char * Rest, int LOCAL)
+ 		if (strstr(input, "Cancel=Cancel"))
+ 		{
+ 			ReplyLen = SetupNodeMenu(Reply, LOCAL);
+-			//			ReplyLen = sprintf(Reply, "%s", "<html><script>window.close();</script></html>");
++			//			ReplyLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>window.close();</script></html>");
+ 			HeaderLen = sprintf(Header, "HTTP/1.1 200 OK\r\nContent-Length: %d\r\nContent-Type: text/html\r\n\r\n", ReplyLen + (int)strlen(Tail));
+ 			send(sock, Header, HeaderLen, 0);
+ 			send(sock, Reply, ReplyLen, 0);
+@@ -1565,7 +1565,7 @@ VOID SaveConfigFile(SOCKET sock , char * MsgPtr, char * Rest, int LOCAL)
+ 				STAT.st_size, MsgLen);
+ 		}
+ 
+-		ReplyLen = sprintf(Reply, "<html><script>alert(\"%s\");window.close();</script></html>", Mess);
++		ReplyLen = sprintf(Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"%s\");window.close();</script></html>", Mess);
+ 		HeaderLen = sprintf(Header, "HTTP/1.1 200 OK\r\nContent-Length: %d\r\nContent-Type: text/html\r\n\r\n", ReplyLen);
+ 		send(sock, Header, HeaderLen, 0);
+ 		send(sock, Reply, ReplyLen, 0);
+@@ -1637,7 +1637,7 @@ int InnerProcessHTTPMessage(struct ConnectionInfo * conn)
+ 	int Len;
+ 	char * WebSock = 0;
+ 
+-	char PortsHddr[] = "<h2 align=center>Ports</h2><table align=center border=2 bgcolor=white>"
++	char PortsHddr[] = "<h2 align=center>Ports</h2><table align=center border=2 >"
+ 		"<tr><th>Port</th><th>Driver</th><th>ID</th><th>Beacons</th><th>Driver Window</th><th>Stats Graph</th></tr>";
+ 
+ //	char PortLine[] = "<tr><td>%d</td><td><a href=PortStats?%d&%s>&nbsp;%s</a></td><td>%s</td></tr>";
+@@ -2688,7 +2688,7 @@ doHeader:
+ 						ReplyLen = TNC->WebWindowProc(TNC, _REPLYBUFFER, LOCAL);
+ 
+ 
+-					ReplyLen = sprintf(Reply, "<html><script>alert(\"%s\");window.close();</script></html>", "Ok");
++					ReplyLen = sprintf(Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"%s\");window.close();</script></html>", "Ok");
+ 					HeaderLen = sprintf(Header, "HTTP/1.1 200 OK\r\nContent-Length: %d\r\nContent-Type: text/html\r\n\r\n", ReplyLen + (int)strlen(Tail));
+ 					send(sock, Header, HeaderLen, 0);
+ 					send(sock, Reply, ReplyLen, 0);
+@@ -2997,7 +2997,7 @@ doHeader:
+ 			{
+ 				char Test[] =
+ 					"<html><meta http-equiv=expires content=0>\r\n"
+-					"<head><title>Rigcontrol</title></head>\r\n"
++					"<head><title>Rigcontrol</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 					"<script type = \"text/javascript\">\r\n"
+ 					"var ws;"
+ 					"function WebSocketTest()"
+@@ -3045,7 +3045,7 @@ doHeader:
+ 					"  ws.send(p);"
+ 					"}" 
+ 					"</script>\r\n"
+-					"</head>\r\n"
++					"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 					"<body height: 600px; onload=WebSocketTest()>\r\n"
+ 					"<div id = 'div'>Waiting for data...</div>\r\n"
+ 					"</body></html>\r\n";
+@@ -3053,8 +3053,8 @@ doHeader:
+ 		
+ 				char NoRigCtl[] =
+ 					"<html><meta http-equiv=expires content=0>\r\n"
+-					"<head><title>Rigcontrol</title></head>\r\n"
+-					"</head>\r\n"
++					"<head><title>Rigcontrol</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
++					"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 					"<body height: 600px>\r\n"
+ 					"<div id = 'div'>RigControl Not Configured...</div>\r\n"
+ 					"</body></html>\r\n";
+@@ -3068,15 +3068,15 @@ doHeader:
+ 			else if (_stricmp(NodeURL, "/Node/ShowLog.html") == 0)
+ 			{
+ 				char ShowLogPage[] =
+-					"<html><script>"
++					"<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>"
+ 					"function myResize() {"
+ 					" var h = document.getElementById('outer').clientHeight;"
+ 					" var offsets = document.getElementById('log').getBoundingClientRect();"
+ 					" document.getElementById('log').style.height = h - offsets.top;}"
+ 					"</script>"
+ 					"<head><meta content=\"text/html; charset=ISO-8859-1\" http-equiv=\"content-type\">"
+-					"<title>Log Display</title></head>"
+-					"<body style=\"margin: 4;\" background=/background.jpg onload='myResize()' onresize='myResize()'>"
++					"<title>Log Display</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>"
++					"<body style=\"margin: 4;\"  onload='myResize()' onresize='myResize()'>"
+ 					"<div id=outer style=\"width: 100%%; height: 100%%;\">"
+ 					"<form id = form><input name=input value=Back type=submit class='btn'>"
+ //					"<form id = doDate><input type=date value=Date name='date'><input type='submit'>"
+@@ -3569,8 +3569,7 @@ doHeader:
+ 				ReplyLen += sprintf(&_REPLYBUFFER[ReplyLen],
+ 					"<h3 align=center>Info for Node %s:%s</h3><p style=font-family:monospace align=center>", Alias, Context);
+ 
+-				ReplyLen += sprintf(&_REPLYBUFFER[ReplyLen], "<table border=1 bgcolor=white><tr><td>Frames</td><td>RTT</td><td>BPQ?</td><td>Hops</td></tr>");	
+-
++				ReplyLen += sprintf(&_REPLYBUFFER[ReplyLen], "<table border=1><tr><td>Frames</td><td>RTT</td><td>BPQ?</td><td>Hops</td></tr>");
+ 				ReplyLen += sprintf(&_REPLYBUFFER[ReplyLen], "<tr><td align=center>%d</td><td align=center>%d</td><td align=center>%c</td><td align=center>%.0d</td></tr></table>",
+ 					Dest->DEST_COUNT, Dest->DEST_RTT /16,
+ 					(Dest->DEST_STATE & 0x40)? 'B':' ', (Dest->DEST_STATE & 63));
+@@ -3578,7 +3577,7 @@ doHeader:
+ 				ReplyLen += sprintf(&_REPLYBUFFER[ReplyLen], "<h3 align=center>Neighbours</h3>");
+ 
+ 				ReplyLen += sprintf(&_REPLYBUFFER[ReplyLen], 
+-					"<table border=1 style=font-family:monospace align=center bgcolor=white>"
++					"<table border=1 style=font-family:monospace align=center >"
+ 					"<tr><td> </td><td> Qual </td><td> Obs </td><td> Port </td><td> Call </td></tr>");	
+ 
+ 				NRRoute = &Dest->NRROUTE[0];
+@@ -4270,7 +4269,7 @@ int StatusProc(char * Buff)
+ 	int AppNumber;
+ 	int OneBits;
+ 	int Len = sprintf(Buff, "<html><meta http-equiv=expires content=0><meta http-equiv=refresh content=15>"
+-		"<head><title>Stream Status</title></head><body>");
++		"<head><title>Stream Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body>");
+ 
+ 	Len += sprintf(&Buff[Len], "<table style=\"text-align: left; font-family: monospace; align=center \" border=1 cellpadding=1 cellspacing=0>");
+ 	Len += sprintf(&Buff[Len], "<tr><th>&nbsp;&nbsp;&nbsp;</th><th>&nbsp;RX&nbsp;&nbsp;</th><th>&nbsp;TX&nbsp;&nbsp;</th>");
+@@ -4697,7 +4696,7 @@ int BuildRigCtlPage(char * _REPLYBUFFER)
+ 	char Page[] =
+ 		"<html><meta http-equiv=expires content=0>\r\n"
+ 		//					"<meta http-equiv=refresh content=5>\r\n"
+-		"<head><title>Rigcontrol</title></head>\r\n"
++		"<head><title>Rigcontrol</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 		"<style type=text/css>form{margin:0px; padding:0px; display:inline;}</style>"
+ 		"<body height: 580px;><h3>Rigcontrol</h3>\r\n"
+ 		"<table style=\"text-align: left; width: 580px; font-family: monospace; align=center \" border=1 cellpadding=2 cellspacing=2><tr>\r\n"
+diff --git a/KAMPactor.c b/KAMPactor.c
+index 239b183..fc54214 100644
+--- a/KAMPactor.c
++++ b/KAMPactor.c
+@@ -544,7 +544,7 @@ VOID KAMReleasePort(struct TNCINFO * TNC)
+ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ {
+ 	int Len = sprintf(Buff, "<html><meta http-equiv=expires content=0><meta http-equiv=refresh content=15>"
+-	"<head><title>KAM Pactor Status</title></head><body><h3>KAM Pactor Status</h3>");
++	"<head><title>KAM Pactor Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body><h3>KAM Pactor Status</h3>");
+ 
+ 	Len += sprintf(&Buff[Len], "<table style=\"text-align: left; width: 480px; font-family: monospace; align=center \" border=1 cellpadding=2 cellspacing=2>");
+ 
+diff --git a/KISSHF.c b/KISSHF.c
+index 59fd3ec..7fba614 100644
+--- a/KISSHF.c
++++ b/KISSHF.c
+@@ -751,7 +751,7 @@ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ 		"function ScrollOutput()\r\n"
+ 		"{var textarea = document.getElementById('textarea');"
+ 		"textarea.scrollTop = textarea.scrollHeight;}</script>"
+-		"</head><title>KISSHF Status</title></head><body id=Text onload=\"ScrollOutput()\">"
++		"<head><title>KISSHF Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body id=Text onload=\"ScrollOutput()\">"
+ 		"<h2><form method=post target=\"POPUPW\" onsubmit=\"POPUPW = window.open('about:blank','POPUPW',"
+ 		"'width=440,height=50');\" action=ARDOPAbort?%d>KISSHF Status"
+ 		"<input name=Save value=\"Abort Session\" type=submit style=\"position: absolute; right: 20;\"></form></h2>",
+diff --git a/NodeMapTest.c b/NodeMapTest.c
+index 7b0b735..fcd2c33 100644
+--- a/NodeMapTest.c
++++ b/NodeMapTest.c
+@@ -1637,7 +1637,7 @@ void UpdateHeardData(struct NodeData * HeardBy, struct NodeData * Heard, char *
+ static char *month[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+ 
+ char reportHeader[] = 
+-		"<html><body><h1>Chat Configuration Report</h1>"
++		"<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body><h1>Chat Configuration Report</h1>"
+ 		"This lists the status of all known Chat nodes. This includes all nodes sending"
+ 		" reports and all nodes which a reporting node is configured to link to. "
+ 		"The latter may not exist if there is a configuration error. Stations that have no configured"
+diff --git a/SCSPactor.c b/SCSPactor.c
+index 5a6de7a..0064a29 100644
+--- a/SCSPactor.c
++++ b/SCSPactor.c
+@@ -798,7 +798,7 @@ int DoScanLine(struct TNCINFO * TNC, char * Buff, int Len)
+ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ {
+ 	int Len = sprintf(Buff, "<html><meta http-equiv=expires content=0><meta http-equiv=refresh content=15>"
+-	"<head><title>SCS Pactor Status</title></head><body><h3>SCS Pactor Status</h3>");
++	"<head><title>SCS Pactor Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body><h3>SCS Pactor Status</h3>");
+ 
+ 	Len += sprintf(&Buff[Len], "<table style=\"text-align: left; width: 480px; font-family: monospace; align=center \" border=1 cellpadding=2 cellspacing=2>");
+ 
+diff --git a/SCSTracker.c b/SCSTracker.c
+index 41d26a9..eefe2ff 100644
+--- a/SCSTracker.c
++++ b/SCSTracker.c
+@@ -613,7 +613,7 @@ int TrkWebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ 	}
+ 
+ 	Len = sprintf(Buff, "<html><meta http-equiv=expires content=0><meta http-equiv=refresh content=%d>"
+-	"<head><title>SCSTracker Status</title></head><body><h2>SCSTracker Status</h2>", Interval);
++	"<head><title>SCSTracker Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body><h2>SCSTracker Status</h2>", Interval);
+ 
+ 	Len += sprintf(&Buff[Len], "<table style=\"text-align: left; width: 480px; font-family: monospace; align=center \" border=1 cellpadding=2 cellspacing=2>");
+ 
+diff --git a/TelnetV6.c b/TelnetV6.c
+index abe5878..e302c96 100644
+--- a/TelnetV6.c
++++ b/TelnetV6.c
+@@ -1313,7 +1313,7 @@ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ 	}
+ 
+ 	Len = sprintf(Buff, "<html><meta http-equiv=expires content=0><meta http-equiv=refresh content=15>"
+-	"<head><title>Telnet Status</title></head><body><b>Telnet Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%s</b>", CMSStatus);
++	"<head><title>Telnet Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body><b>Telnet Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%s</b>", CMSStatus);
+ 
+ 	Len += sprintf(&Buff[Len], "<table style=\"text-align: left; width: 250px; font-family: monospace; align=center \" border=1 cellpadding=2 cellspacing=2>");
+ 
+diff --git a/UIARQ.c b/UIARQ.c
+index dca1431..460a5e4 100644
+--- a/UIARQ.c
++++ b/UIARQ.c
+@@ -392,7 +392,7 @@ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ 		"function ScrollOutput()\r\n"
+ 		"{var textarea = document.getElementById('textarea');"
+ 		"textarea.scrollTop = textarea.scrollHeight;}</script>"
+-		"</head><title>FLDigi Status</title></head><body id=Text onload=\"ScrollOutput()\">"
++		"<head><title>FLDigi Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body id=Text onload=\"ScrollOutput()\">"
+ 		"<h2>FLDIGI Status</h2>");
+ 
+ 	Len += sprintf(&Buff[Len], "<table style=\"text-align: left; width: 500px; font-family: monospace; align=center \" border=1 cellpadding=2 cellspacing=2>");
+diff --git a/UZ7HODrv.c b/UZ7HODrv.c
+index 42e1fc3..80a7e39 100644
+--- a/UZ7HODrv.c
++++ b/UZ7HODrv.c
+@@ -1327,7 +1327,7 @@ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ 		"function Refresh( )\n"
+ 		"{location.reload()}\n"
+ 		"</script>"
+-		"</head><title>UZ7HO Status</title></head><body id=Text onload=\"ScrollOutput()\">"
++		"<head><title>UZ7HO Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body id=Text onload=\"ScrollOutput()\">"
+ 		"<h2><form method=post target=\"POPUPW\" onsubmit=\"POPUPW = window.open('about:blank','POPUPW',"
+ 		"'width=440,height=150');\" action=ARDOPAbort?%d>UZ7HO Status"
+ 		"<input name=Save value=\"Abort Session\" type=submit style=\"position: absolute; right: 10;top:10;\"></form></h2>",
+diff --git a/V4.c b/V4.c
+index d9815af..3bf3fc9 100644
+--- a/V4.c
++++ b/V4.c
+@@ -926,7 +926,7 @@ static int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ 		"function ScrollOutput()\r\n"
+ 		"{var textarea = document.getElementById('textarea');"
+ 		"textarea.scrollTop = textarea.scrollHeight;}</script>"
+-		"</head><title>V4 Status</title></head><body id=Text onload=\"ScrollOutput()\">"
++		"<head><title>V4 Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body id=Text onload=\"ScrollOutput()\">"
+ 		"<h2>V4 Status</h2>");
+ 
+ 	Len += sprintf(&Buff[Len], "<table style=\"text-align: left; width: 500px; font-family: monospace; align=center \" border=1 cellpadding=2 cellspacing=2>");
+diff --git a/VARA.c b/VARA.c
+index f913fe8..2d896c2 100644
+--- a/VARA.c
++++ b/VARA.c
+@@ -1037,7 +1037,7 @@ char WebProcTemplate[] = "<html><meta http-equiv=expires content=0><meta http-eq
+ 		"req.open('POST', 'PortAction?%d', true);\r\n"
+ 		"req.send(data);alert(data + ' Sent');}\r\n"
+ 		"</script>"
+-		"</head><title>%s</title></head><body id=Text onload=\"ScrollOutput()\">"
++		"<head><title>%s</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body id=Text onload=\"ScrollOutput()\">"
+ 		"<span class='dropdown'>"
+ 		"<button class='dropbtn'>Actions</button><span style=\"margin-left:120px;font-size:16px\"><b>%s</b></span>"
+ 		"<div class='dropdown-content'>"
+@@ -1064,7 +1064,7 @@ char WebProcTemplate[] = "<html><meta http-equiv=expires content=0>"
+ 		"function Refresh( )\n"
+ 		"{location.reload()}\n"
+ 		"</script>\r\n"
+-		"</head><title>%s</title></head><body id=Text onload=\"ScrollOutput()\">\r\n"
++		"<head><title>%s</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body id=Text onload=\"ScrollOutput()\">\r\n"
+ 		"<h2 style=\"margin-bottom: 0.2em; text-align:center\">%s</h2>";
+ 
+ char Menubit[] = "<span class='dropdown' style=\"position: absolute; left: 10;top: 12;\">"
+diff --git a/WebMail.c b/WebMail.c
+index f7ba786..8028501 100644
+--- a/WebMail.c
++++ b/WebMail.c
+@@ -124,11 +124,11 @@ static char BusyError[] = "<p align=center>Sorry, No sessions available - please
+ 
+ extern char MailSignon[];
+ 
+-char WebMailSignon[] = "<html><head><title>BPQ32 Mail Server Access</title></head><body background='/background.jpg'>"
++char WebMailSignon[] = "<html><head><title>BPQ32 Mail Server Access</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body>"
+ 	"<h3 align=center>BPQ32 Mail Server %s Access</h3>"
+ 	"<h3 align=center>Please enter Callsign and Password to access WebMail</h3>"
+ 	"<form method=post action=/WebMail/Signon>"
+-	"<table align=center  bgcolor=white>"
++	"<table align=center  >"
+ 	"<tr><td>User</td><td><input type=text name=user tabindex=1 size=20 maxlength=50 /></td></tr>" 
+ 	"<tr><td>Password</td><td><input type=password name=password tabindex=2 size=20 maxlength=50 /></td></tr></table>"  
+ 	"<p align=center><input type=submit class='btn' value=Submit /><input type=submit class='btn' value=Cancel name=Cancel /></form>";
+@@ -139,8 +139,8 @@ static char MsgInputPage[] = "<html><head><meta content=\"text/html; charset=UTF
+ 	"input.btn:active {background:black;color:white;} "
+ 	"submit.btn:active {background:black;color:white;} "
+ 	"</style>"
+-	"</head>"
+-	"<body background=/background.jpg onload='initialize(185)' onresize='initialize(185)'>"
++	"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>"
++	"<body  onload='initialize(185)' onresize='initialize(185)'>"
+ 	"<h3 align=center>Webmail Interface - Message Input Form</h3>"
+ 	"<form align=center id=myform style=\"font-family: monospace; \" method=post action=/WebMail/EMSave\?%s enctype=multipart/form-data>"
+ 	"<div style='text-align: center;'><div style='display: inline-block;'><span style='display:block; text-align: left;'>"
+@@ -160,8 +160,8 @@ static char MsgInputPage[] = "<html><head><meta content=\"text/html; charset=UTF
+ 	"<input name=Send value=Send type=submit class='btn'> <input name=Cancel value=Cancel type=submit class='btn'></div></form>";
+ 
+ static char CheckFormMsgPage[] = "<html><head><meta content=\"text/html; charset=UTF-8\" http-equiv=\"content-type\">"
+-	"<title></title><script src='/WebMail/webscript.js'></script></head>"
+-	"<body background=/background.jpg onload='initialize(210)' onresize='initialize(210)'>"
++	"<title></title><script src='/WebMail/webscript.js'></script><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>"
++	"<body  onload='initialize(210)' onresize='initialize(210)'>"
+ 	"<h3 align=center>Webmail Forms Interface - Check Message</h3>"
+ 	"<form align=center id=myform style=\"font-family: monospace; \"method=post action=/WebMail/FormMsgSave\?%s>"
+ 
+@@ -1700,7 +1700,7 @@ void ProcessWebMailMessage(struct HTTPConnectionInfo * Session, char * Key, BOOL
+ 
+ 				if (strstr(msg, "Cancel=Cancel"))
+ 				{
+-					*RLen = sprintf(Reply, "<html><script>window.location.href = '/';</script>");
++					*RLen = sprintf(Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>window.location.href = '/';</script>");
+ 					return;
+ 				}
+ 				// Webmail Gets Here with a dummy Session
+@@ -2035,11 +2035,11 @@ void ProcessWebMailMessage(struct HTTPConnectionInfo * Session, char * Key, BOOL
+ 
+ 			"</script>\r\n"
+ 			"<title>WebMail</title> \r\n"
+-			"</head>\r\n"
++			"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 
+-			"<body background=/background.jpg onload=Init() onresize=initialize(120)>\r\n"
++			"<body  onload=Init() onresize=initialize(120)>\r\n"
+ 			"<h3 align=center> %s Webmail Interface - User %s - Message List</h3>\r\n"
+-			"<table align=center border=1 cellpadding=2 bgcolor=white><tr>\r\n"
++			"<table align=center border=1 cellpadding=2 ><tr>\r\n"
+ 			"\r\n"
+ 			"<td><a href=/WebMail/WMB?%s>Bulls</a></td>\r\n"
+ 			"<td><a href=/WebMail/WMP?%s>Personal</a></td>\r\n"
+@@ -2273,7 +2273,7 @@ void ProcessWebMailMessage(struct HTTPConnectionInfo * Session, char * Key, BOOL
+ 
+ 		// No More
+ 
+-		*RLen = sprintf(Reply, "<html><script>alert(\"No More Messages\");window.location.href = '/Webmail/WebMail?%s';</script></html></script></html>", Session->Key);
++		*RLen = sprintf(Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"No More Messages\");window.location.href = '/Webmail/WebMail?%s';</script></html></script></html>", Session->Key);
+ 		return;
+ 
+ 	}
+@@ -2333,7 +2333,7 @@ void ProcessWebMailMessage(struct HTTPConnectionInfo * Session, char * Key, BOOL
+ 
+ 		// No More 
+ 
+-		*RLen = sprintf(Reply, "<html><script>alert(\"No More Messages\");window.location.href = '/Webmail/WebMail?%s';</script></html></script></html>", Session->Key);
++		*RLen = sprintf(Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"No More Messages\");window.location.href = '/Webmail/WebMail?%s';</script></html></script></html>", Session->Key);
+ 		return;
+ 
+ 	}
+@@ -2412,7 +2412,7 @@ void ProcessWebMailMessage(struct HTTPConnectionInfo * Session, char * Key, BOOL
+ 
+ 		char popuphddr[] = 
+ 			
+-			"<html><body align=center background='/background.jpg'>"
++			"<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body align=center>"
+ 			"<script>function myFunction() {var x = document.getElementById(\"mySelect\").value;"
+ 			"var Key = \"%s\";"
+ 			"var param = \"toolbar=yes,location=yes,directories=yes,status=yes,menubar,=scrollbars=yes,resizable=yes,titlebar=yes,toobar=yes\";"
+@@ -2514,7 +2514,7 @@ VOID SendTemplateSelectScreen(struct HTTPConnectionInfo * Session, char *Params,
+ 
+ 	char popuphddr[] = 
+ 			
+-		"<html><body align=center background='/background.jpg'>"
++		"<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body align=center>"
+ 		"<script>"
+ 		"function myFunction(val) {var x = document.getElementById(val).value;"
+ 		"var Key = \"%s\";"
+@@ -2524,7 +2524,7 @@ VOID SendTemplateSelectScreen(struct HTTPConnectionInfo * Session, char *Params,
+ 		"</script>"
+ 		"<p align=center>"
+ 		" Select Required Template Folder from List<br><br>"
+-		"<table border=1 cellpadding=2 bgcolor=white>"
++		"<table border=1 cellpadding=2 >"
+ 		"<tr>"
+ 		"<th>Standard Templates</th>"
+ 		"<th>Local Templates</th>"
+@@ -2677,7 +2677,7 @@ VOID SaveNewMessage(struct HTTPConnectionInfo * Session, char * MsgPtr, char * R
+ 		}
+ 		if (SaveInputValue(WebMail, Name, Value, ValLen) == FALSE)
+ 		{
+-			*RLen = sprintf(Reply, "<html><script>window.location.href = '/Webmail/WebMail?%s';</script>", Session->Key);
++			*RLen = sprintf(Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>window.location.href = '/Webmail/WebMail?%s';</script>", Session->Key);
+ 			return;
+ 		}
+ 	}
+@@ -2714,14 +2714,14 @@ VOID SaveNewMessage(struct HTTPConnectionInfo * Session, char * MsgPtr, char * R
+ 
+ 	if (WebMail->To[0] == 0)
+ 	{
+-		*RLen = sprintf(Reply, "%s", "<html><script>alert(\"To: Call missing!\");window.history.back();</script></html>");
++		*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"To: Call missing!\");window.history.back();</script></html>");
+ 		FreeWebMailFields(WebMail);		// We will reprocess message and attachments so reinitialise
+ 		return;
+ 	}
+ 
+ 	if (strlen(WebMail->To) > 255)
+ 	{
+-		*RLen = sprintf(Reply, "%s", "<html><script>alert(\"To: Call too long!\");window.history.back();</script></html>");
++		*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"To: Call too long!\");window.history.back();</script></html>");
+ 		FreeWebMailFields(WebMail);		// We will reprocess message and attachments so reinitialise
+ 		return;
+ 	}
+@@ -2733,7 +2733,7 @@ VOID SaveNewMessage(struct HTTPConnectionInfo * Session, char * MsgPtr, char * R
+ 		if (LookupBID(WebMail->BID))
+ 		{
+ 			// Duplicate bid
+-			*RLen = sprintf(Reply, "%s", "<html><script>alert(\"Duplicate BID\");window.history.back();</script></html>");
++			*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"Duplicate BID\");window.history.back();</script></html>");
+ 			FreeWebMailFields(WebMail);		// We will reprocess message and attachments so reinitialise
+ 			return;
+ 		}
+@@ -2743,14 +2743,14 @@ VOID SaveNewMessage(struct HTTPConnectionInfo * Session, char * MsgPtr, char * R
+ 	{
+ 		if (RefuseBulls)
+ 		{
+-			*RLen = sprintf(Reply, "%s", "<html><script>alert(\"This system doesn't allow sending Bulls\");window.history.back();script></html>");
++			*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"This system doesn't allow sending Bulls\");window.history.back();script></html>");
+ 			FreeWebMailFields(WebMail);		// We will reprocess message and attachments so reinitialise
+ 			return;
+ 		}
+ 
+ 		if (Session->User->flags & F_NOBULLS)
+ 		{
+-			*RLen = sprintf(Reply, "%s", "<html><script>alert(\"You are not allowed to send Bulls\");window.history.back();</script></html>");
++			*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"You are not allowed to send Bulls\");window.history.back();</script></html>");
+ 			FreeWebMailFields(WebMail);		// We will reprocess message and attachments so reinitialise
+ 			return;
+ 		}
+@@ -2810,7 +2810,7 @@ VOID SaveNewMessage(struct HTTPConnectionInfo * Session, char * MsgPtr, char * R
+ 						strcpy(Msg->to, "RMS");		// Routing will redirect it
+ 					else
+ 					{		
+-						*RLen = sprintf(Reply, "%s", "<html><script>alert(\"This system doesn't allow Sending to Internet Email\");window.close();</script></html>");
++						*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"This system doesn't allow Sending to Internet Email\");window.close();</script></html>");
+ 						FreeWebMailFields(WebMail);		// We will reprocess message and attachments so reinitialise
+ 						return;
+ 
+@@ -3129,7 +3129,7 @@ VOID GetPage(struct HTTPConnectionInfo * Session, char * NodeURL)
+ 
+ 	if (DirNo == -1)
+ 	{
+-		*WebMail->RLen = sprintf(WebMail->Reply, "<html><script>alert(\"No Page Selected. \");window.location.href = '/Webmail/NewMsg?%s';</script></html>", Session->Key);
++		*WebMail->RLen = sprintf(WebMail->Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"No Page Selected. \");window.location.href = '/Webmail/NewMsg?%s';</script></html>", Session->Key);
+ 		return;
+ 	}
+ 
+@@ -3819,7 +3819,7 @@ int DisplayWebForm(struct HTTPConnectionInfo * Session, struct MsgInfo * Msg, ch
+ 				"window.open(\"/WebMail/Reply/\" + Num + \"?\" + Key,\"_self\",param);"
+ 				"}</script>"
+ 				"<h3 align=center> %s Webmail Interface - User %s - Message %d</h3>"
+-				"<table align=center border=1 cellpadding=2 bgcolor=white><tr>"
++				"<table align=center border=1 cellpadding=2 ><tr>"
+ 				"<td><a href=\"#\" onclick=\"Reply('%d' ,'%s'); return false;\">Reply</a></td>"
+ 				"<td><a href=/WebMail/WMDel/%d?%s>Kill Message</a></td>"
+ 				"<td><a href=/WebMail/DisplayText?%s&%d>Display as Text</a></td>"
+@@ -4030,7 +4030,7 @@ VOID SaveTemplateMessage(struct HTTPConnectionInfo * Session, char * MsgPtr, cha
+ 	
+ 	if (strstr(input, "Cancel=Cancel"))
+ 	{
+-		*RLen = sprintf(Reply, "<html><script>window.location.href = '/Webmail/WebMail?%s';</script>", Session->Key);
++		*RLen = sprintf(Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>window.location.href = '/Webmail/WebMail?%s';</script>", Session->Key);
+ 		return;
+ 	}
+ 
+@@ -4038,7 +4038,7 @@ VOID SaveTemplateMessage(struct HTTPConnectionInfo * Session, char * MsgPtr, cha
+ 	{
+ 		// No template, so user must have used back button
+ 
+-		*RLen = sprintf(Reply, "<html><script>alert(\"Template missing. Was back Button used? \");window.location.href = '/Webmail/WebMail?%s';</script></html>", Session->Key);
++		*RLen = sprintf(Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"Template missing. Was back Button used? \");window.location.href = '/Webmail/WebMail?%s';</script></html>", Session->Key);
+ 		return;
+ 	}
+ 
+@@ -4110,7 +4110,7 @@ VOID SaveTemplateMessage(struct HTTPConnectionInfo * Session, char * MsgPtr, cha
+ 
+ 	if (HDest == NULL || HDest[0] == 0)
+ 	{
+-		*RLen = sprintf(Reply, "%s", "<html><script>alert(\"To: Call Missing\");window.history.back();</script></html>");
++		*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"To: Call Missing\");window.history.back();</script></html>");
+ 		return;
+ 	}
+ 
+@@ -4118,7 +4118,7 @@ VOID SaveTemplateMessage(struct HTTPConnectionInfo * Session, char * MsgPtr, cha
+ 
+ //	if (strlen(HDest) > 255)
+ //	{
+-//		*RLen = sprintf(Reply, "%s", "<html><script>alert(\"To: Call too long!\");window.history.back();</script></html>");
++//		*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"To: Call too long!\");window.history.back();</script></html>");
+ //		return;
+ //	}
+ 
+@@ -4127,7 +4127,7 @@ VOID SaveTemplateMessage(struct HTTPConnectionInfo * Session, char * MsgPtr, cha
+ 		if (LookupBID(BID))
+ 		{
+ 			// Duplicate bid
+-			*RLen = sprintf(Reply, "%s", "<html><script>alert(\"Duplicate BID\");window.history.back();</script></html>");
++			*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"Duplicate BID\");window.history.back();</script></html>");
+ 			return;
+ 		}
+ 	}
+@@ -4136,13 +4136,13 @@ VOID SaveTemplateMessage(struct HTTPConnectionInfo * Session, char * MsgPtr, cha
+ 	{
+ 		if (RefuseBulls)
+ 		{
+-			*RLen = sprintf(Reply, "%s", "<html><script>alert(\"This system doesn't allow sending Bulls\");window.history.back();script></html>");
++			*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"This system doesn't allow sending Bulls\");window.history.back();script></html>");
+ 			return;
+ 		}
+ 
+ 		if (Session->User->flags & F_NOBULLS)
+ 		{
+-			*RLen = sprintf(Reply, "%s", "<html><script>alert(\"You are not allowed to send Bulls\");window.history.back();</script></html>");
++			*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"You are not allowed to send Bulls\");window.history.back();</script></html>");
+ 			return;
+ 		}
+ 	}
+@@ -4224,7 +4224,7 @@ VOID SaveTemplateMessage(struct HTTPConnectionInfo * Session, char * MsgPtr, cha
+ 					}
+ 					else
+ 					{		
+-						*RLen = sprintf(Reply, "%s", "<html><script>alert(\"This system doesn't allow Sending to Internet Email\");window.close();</script></html>");
++						*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"This system doesn't allow Sending to Internet Email\");window.close();</script></html>");
+ 						return;
+ 
+ 					}
+@@ -4422,7 +4422,7 @@ VOID BuildMessageFromHTMLInput(struct HTTPConnectionInfo * Session, char * Reply
+ 
+ ///	if (strlen(HDest) > 255)
+ ///	{
+-//		*RLen = sprintf(Reply, "%s", "<html><script>alert(\"To: Call too long!\");</script></html>");
++//		*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"To: Call too long!\");</script></html>");
+ //		return;
+ //	}
+ 
+@@ -4473,7 +4473,7 @@ VOID BuildMessageFromHTMLInput(struct HTTPConnectionInfo * Session, char * Reply
+ 					strcpy(Msg->to, "RMS");		// Routing will redirect it
+ 				else
+ 				{		
+-					*RLen = sprintf(Reply, "%s", "<html><script>alert(\"This system doesn't allow Sending to Internet Email\");window.close();</script></html>");
++					*RLen = sprintf(Reply, "%s", "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"This system doesn't allow Sending to Internet Email\");window.close();</script></html>");
+ 					return;
+ 		
+ 				}
+@@ -4607,7 +4607,7 @@ VOID BuildMessageFromHTMLInput(struct HTTPConnectionInfo * Session, char * Reply
+ 	SaveMessageDatabase();
+ 	SaveBIDDatabase();
+ 
+-	*RLen = sprintf(Reply, "<html><script>alert(\"%s\");window.close();</script></html>", Prompt);
++	*RLen = sprintf(Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"%s\");window.close();</script></html>", Prompt);
+ 
+ 	return;
+ }
+@@ -4655,7 +4655,7 @@ void ProcessFormInput(struct HTTPConnectionInfo * Session, char * input, char *
+ 	{
+ 		// No template, so user must have used back button
+ 
+-		*RLen = sprintf(Reply, "<html><script>alert(\"Template missing. Was back Button used? \");window.location.href = '/Webmail/WebMail?%s';</script></html>", Session->Key);
++		*RLen = sprintf(Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"Template missing. Was back Button used? \");window.location.href = '/Webmail/WebMail?%s';</script></html>", Session->Key);
+ 		return;
+ 	}
+ 
+@@ -5512,7 +5512,7 @@ int ReplyToFormsMessage(struct HTTPConnectionInfo * Session, struct MsgInfo * Ms
+ 
+ 	// Missing template
+ 
+-		*WebMail->RLen = sprintf(WebMail->Reply, "<html><script>alert(\"Reply Template %s missing. Display as Text then Reply\");;window.history.back();</script></html>", WebMail->txtFileName);
++		*WebMail->RLen = sprintf(WebMail->Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"Reply Template %s missing. Display as Text then Reply\");;window.history.back();</script></html>", WebMail->txtFileName);
+ 		return *WebMail->RLen;
+ 
+ 
+@@ -5563,7 +5563,7 @@ reEnter:
+ 	{
+ 			// Missing HTML
+ 
+-		*WebMail->RLen = sprintf(WebMail->Reply, "<html><script>alert(\"Reply HTML %s missing. Display as Text then Reply\");;window.history.back();</script></html>", WebMail->InputHTMLName);
++		*WebMail->RLen = sprintf(WebMail->Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"Reply HTML %s missing. Display as Text then Reply\");;window.history.back();</script></html>", WebMail->InputHTMLName);
+ 		return *WebMail->RLen;
+ 	}
+ 
+@@ -5691,7 +5691,7 @@ BOOL DoSelectPrompt(struct HTTPConnectionInfo * Session, char * Select)
+ 
+ 	char popuphddr[] = 
+ 			
+-		"<html><body align=center background='/background.jpg'>"
++		"<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body align=center>"
+ 		"<script>"
+ 		"function myFunction() {var x = document.getElementById('Sel').value;"
+ 		"var Key = \"%s\";"
+@@ -5700,7 +5700,7 @@ BOOL DoSelectPrompt(struct HTTPConnectionInfo * Session, char * Select)
+ 		"}"
+ 		"</script>"
+ 		"<div align=center>%s<br><br>"
+-		"<table border=1 cellpadding=2 bgcolor=white>"
++		"<table border=1 cellpadding=2 >"
+ 		"<tr><td><select size=%d id='Sel' size=10 onclick=myFunction()>";
+ 	
+ 
+@@ -5797,7 +5797,7 @@ BOOL DoSelectPrompt(struct HTTPConnectionInfo * Session, char * Select)
+ 	return TRUE;
+ 
+ returnDuff:
+-	*WebMail->RLen = sprintf(WebMail->Reply, "<html><script>alert(\"Template <select> Corrupt.\");window.location.href = '/Webmail/WebMail?%s';</script></html>", Session->Key);
++	*WebMail->RLen = sprintf(WebMail->Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"Template <select> Corrupt.\");window.location.href = '/Webmail/WebMail?%s';</script></html>", Session->Key);
+ 	free(SelCopy);
+ 	return TRUE;
+ 
+@@ -5823,7 +5823,7 @@ VOID ProcessSelectResponse(struct HTTPConnectionInfo * Session, char * URLParams
+ 	{
+ 		// Missing template
+ 
+-		*WebMail->RLen = sprintf(WebMail->Reply, "<html><script>alert(\"Template missing. Was back Button used? \");window.location.href = '/Webmail/WebMail?%s';</script></html>", Session->Key);
++		*WebMail->RLen = sprintf(WebMail->Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"Template missing. Was back Button used? \");window.location.href = '/Webmail/WebMail?%s';</script></html>", Session->Key);
+ 		return;
+ 	}
+ 
+@@ -5831,7 +5831,7 @@ VOID ProcessSelectResponse(struct HTTPConnectionInfo * Session, char * URLParams
+ 
+ 	if (Select == 0)
+ 	{
+-		*WebMail->RLen = sprintf(WebMail->Reply, "<html><script>alert(\"Template Corrupt.\");window.location.href = '/Webmail/WebMail?%s';</script></html>", Session->Key);
++		*WebMail->RLen = sprintf(WebMail->Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"Template Corrupt.\");window.location.href = '/Webmail/WebMail?%s';</script></html>", Session->Key);
+ 		return;
+ 	}
+ 
+@@ -5840,7 +5840,7 @@ VOID ProcessSelectResponse(struct HTTPConnectionInfo * Session, char * URLParams
+ 
+ 	if (endptr == NULL)
+ 	{
+-		*WebMail->RLen = sprintf(WebMail->Reply, "<html><script>alert(\"Template Corrupt.\");window.location.href = '/Webmail/WebMail?%s';</script></html>", Session->Key);
++		*WebMail->RLen = sprintf(WebMail->Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>alert(\"Template Corrupt.\");window.location.href = '/Webmail/WebMail?%s';</script></html>", Session->Key);
+ 		return;
+ 	}
+ 
+@@ -6310,7 +6310,7 @@ VOID DownloadAttachments(struct HTTPConnectionInfo * Session, char * Reply, int
+ 		// User has gone back, then selected "No file Selected"
+ 		// Or no files
+ 
+-		*RLen = sprintf(Reply, "<html><script>window.history.back();</script></html>");
++		*RLen = sprintf(Reply, "<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><script>window.history.back();</script></html>");
+ 		return;
+ 	}
+ 
+@@ -6334,7 +6334,7 @@ VOID getAttachmentList(struct HTTPConnectionInfo * Session, char * Reply, int *
+ {
+ 	char popuphddr[] = 
+ 			
+-		"<html><body align=center background='/background.jpg'>"
++		"<html><head><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body align=center>"
+ 		"<script>"
+ 		"function myFunction() {var x = document.getElementById('Sel').value;"
+ 		"var Key = \"%s\";"
+@@ -6343,7 +6343,7 @@ VOID getAttachmentList(struct HTTPConnectionInfo * Session, char * Reply, int *
+ 		"}"
+ 		"</script>"
+ 		"<div align=center>Note files over 100K long can't be downloaded<br><br>"
+-		"<table border=1 cellpadding=2 bgcolor=white>"
++		"<table border=1 cellpadding=2 >"
+ 		"<tr><td><select size=%d id='Sel' size=10 onclick=myFunction()>";
+ 
+ 	char popup[10000];
+diff --git a/WinRPR.c b/WinRPR.c
+index 531f41e..7942512 100644
+--- a/WinRPR.c
++++ b/WinRPR.c
+@@ -744,7 +744,7 @@ int WebProc(struct TNCINFO * TNC, char * Buff, BOOL LOCAL)
+ 	}
+ 
+ 	Len = sprintf(Buff, "<html><meta http-equiv=expires content=0><meta http-equiv=refresh content=%d>"
+-	"<head><title>WinRPR Status</title></head><body><h2>WinRPR Status</h2>", Interval);
++	"<head><title>WinRPR Status</title><link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body><h2>WinRPR Status</h2>", Interval);
+ 
+ 	Len += sprintf(&Buff[Len], "<table style=\"text-align: left; width: 480px; font-family: monospace; align=center \" border=1 cellpadding=2 cellspacing=2>");
+ 
+diff --git a/templatedefs.c b/templatedefs.c
+index 2fa2e13..615165e 100644
+--- a/templatedefs.c
++++ b/templatedefs.c
+@@ -53,10 +53,10 @@ char * WebMailMsgtxt()
+ 
+ 		"</script>\r\n"
+ 		"<title>WebMail</title> "
+-		"</head>\r\n"
+-		"<body background=/background.jpg onload=initialize(125) onresize=initialize(125)>"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
++		"<body  onload=initialize(125) onresize=initialize(125)>"
+ 		"<h3 align=center> %s Webmail Interface - User %s - Message %d</h3>"
+-		"<table align=center border=1 cellpadding=2 bgcolor=white><tr>"
++		"<table align=center border=1 cellpadding=2 ><tr>"
+ 		"<td><a href=\"#\" onclick=\"Reply('%d' ,'%s'); return false;\">Reply</a></td>"
+ 		"<td><a href=/WebMail/WMDel/%d?%s>Kill Message</a></td>"
+ 		"%s"
+@@ -240,10 +240,10 @@ char * FwdPagetxt()
+ 		"}\r\n"
+ 
+ 		"  </script>\r\n"
+-		"</head><body onload=initialize() onresize=resize() style=\"background-image: url(/background.jpg);\">"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body onload=initialize() onresize=resize() style=\"background-image: url(/background.jpg);\">"
+ 		"<h3 align=center>BPQ32 BBS %s</h3>"
+ 
+-		"<table align=center bgcolor=white border=1 cellpadding=2>"
++		"<table align=center  border=1 cellpadding=2>"
+ 
+ 		"  <tbody>"
+ 		"    <tr>"
+@@ -387,10 +387,10 @@ char * WebMailPagetxt()
+ 		"<script src=\"/WebMail/webscript.js\"></script>\r\n"
+ 		"<title>WebMail</title> \r\n"
+ 		"\r\n"
+-		"</head>\r\n"
+-		"<body background=/background.jpg onload=\"initialize(120)\" onresize=\"initialize(120)\">\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
++		"<body  onload=\"initialize(120)\" onresize=\"initialize(120)\">\r\n"
+ 		"<h3 align=center> %s Webmail Interface - User %s - Message List</h3>\r\n"
+-		"<table align=center border=1 cellpadding=2 bgcolor=white><tr>\r\n"
++		"<table align=center border=1 cellpadding=2 ><tr>\r\n"
+ 		"\r\n"
+ 		"<td><a href=/WebMail/WMB?%s>Bulls</a></td>\r\n"
+ 		"<td><a href=/WebMail/WMP?%s>Personal</a></td>\r\n"
+@@ -442,10 +442,10 @@ char * MainConfigtxt()
+ 		"	Main.style.left = fromleft + \"px\";\r\n"
+ 		"}\r\n"
+ 		"</script>\r\n"
+-		"</head><body style=\"background-image: url(/background.jpg);\" onload=\"initialize()\" onresize=\"initialize()\">\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body style=\"background-image: url(/background.jpg);\" onload=\"initialize()\" onresize=\"initialize()\">\r\n"
+ 		"<h3 align=\"center\">BPQ32 BBS %s</h3>\r\n"
+ 		"\r\n"
+-		"<table align=\"center\" bgcolor=\"white\" border=\"1\" cellpadding=\"2\">\r\n"
++		"<table align=\"center\" border=\"1\" cellpadding=\"2\">\r\n"
+ 		"<tr>\r\n"
+ 		"      <td><a href=\"/Mail/Status?%s\">Status</a></td>\r\n"
+ 		"      <td><a href=\"/Mail/Conf?%s\">Configuration</a></td>\r\n"
+@@ -692,10 +692,10 @@ char * MsgPagetxt()
+ 		"}\r\n"
+ 		" \r\n"
+ 		"</script>\r\n"
+-		"</head>\r\n"
+-		"<body background=/background.jpg onload=\"initialize()\" onresize=\"resize()\">\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
++		"<body  onload=\"initialize()\" onresize=\"resize()\">\r\n"
+ 		"<h3 align=center>BPQ32 BBS %s</h3>\r\n"
+-		"<table align=\"center\" bgcolor=\"white\" border=\"1\" cellpadding=\"2\">\r\n"
++		"<table align=\"center\" border=\"1\" cellpadding=\"2\">\r\n"
+ 		"  <tbody>\r\n"
+ 		"    <tr>\r\n"
+ 		"      <td><a href=\"/Mail/Status?%s\">Status</a></td>\r\n"
+@@ -1054,10 +1054,10 @@ char * UserPagetxt()
+ 		"}\r\n"
+ 		" \r\n"
+ 		"</script>\r\n"
+-		"</head>\r\n"
+-		"<body background=/background.jpg onload=\"initialize()\" onresize=\"resize()\">\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
++		"<body  onload=\"initialize()\" onresize=\"resize()\">\r\n"
+ 		"<h3 align=center>BPQ32 BBS %s</h3>\r\n"
+-		"<table align=center border=1 cellpadding=2 bgcolor=white><tr>\r\n"
++		"<table align=center border=1 cellpadding=2 ><tr>\r\n"
+ 		"<td><a href=/Mail/Status?%s>Status</a></td>\r\n"
+ 		"<td><a href=/Mail/Conf?%s>Configuration</a></td>\r\n"
+ 		"<td><a href=/Mail/Users?%s>Users</a></td>\r\n"
+@@ -1111,10 +1111,10 @@ char * Housekeepingtxt()
+ 		"//	Main.style.width = (x - fromleft) + \"px\";\r\n"
+ 		"}\r\n"
+ 		"</script>\r\n"
+-		"</head>\r\n"
+-		"<body background=/background.jpg onload=\"initialize()\" onresize=\"initialize()\">\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
++		"<body  onload=\"initialize()\" onresize=\"initialize()\">\r\n"
+ 		"<h3 align=center>BPQ32 BBS %s</h3>\r\n"
+-		"<span align=center><table align=center border=1 cellpadding=2 bgcolor=white><tr>\r\n"
++		"<span align=center><table align=center border=1 cellpadding=2 ><tr>\r\n"
+ 		"<td><a href=/Mail/Status?%s>Status</a></td>\r\n"
+ 		"<td><a href=/Mail/Conf?%s>Configuration</a></td>\r\n"
+ 		"<td><a href=/Mail/Users?%s>Users</a></td>\r\n"
+@@ -1357,11 +1357,11 @@ char * WPtxt()
+ 		"}\r\n"
+ 		" \r\n"
+ 		"</script>\r\n"
+-		"</head><body background=/background.jpg onload=\"initialize()\">\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body  onload=\"initialize()\">\r\n"
+ 		"<h3 align=\"center\">BPQ32 BBS %s</h3>\r\n"
+ 		"\r\n"
+ 		"<span align=\"center\">\r\n"
+-		"<table align=\"center\" bgcolor=\"white\" border=\"1\" cellpadding=\"2\">\r\n"
++		"<table align=\"center\" border=\"1\" cellpadding=\"2\">\r\n"
+ 		"  <tbody>\r\n"
+ 		"    <tr>\r\n"
+ 		"      <td><a href=\"/Mail/Status?%s\">Status</a></td>\r\n"
+@@ -1426,11 +1426,11 @@ char * ChatConfigtxt()
+ 		" </script>\r\n"
+ 		"<title></title>\r\n"
+ 		"<title>ChatP</title>\r\n"
+-		"</head>\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head>\r\n"
+ 		"<body style=\"background-image: url(/background.jpg);\"\r\n"
+ 		"onload=\"initialize()\" onresize=\"initialize()\">\r\n"
+ 		"<h3 align=\"center\">BPQ32 Chat Node %s</h3>\r\n"
+-		"<table align=\"center\" bgcolor=\"white\" border=\"1\" cellpadding=\"2\">\r\n"
++		"<table align=\"center\" border=\"1\" cellpadding=\"2\">\r\n"
+ 		"<tr>\r\n"
+ 		"<td><a href=\"/Chat/ChatStatus?%s\">Status</a></td>\r\n"
+ 		"<td><a href=\"/Chat/ChatConf?%s\">Configuration</a></td>\r\n"
+@@ -1551,10 +1551,10 @@ char * ChatStatustxt()
+ 		"window.setInterval(condRefresh, 10000);\r\n"
+ 		"\r\n"
+ 		"</script>\r\n"
+-		"</head><body onload=\"initialize()\" onresize=\"initialize()\" style=\"background-image: url(/background.jpg);\">\r\n"
++		"<link rel=\"stylesheet\" href=\"/m6vpn.css\"><script src=\"/m6vpn-ui.js\"></script></head><body onload=\"initialize()\" onresize=\"initialize()\" style=\"background-image: url(/background.jpg);\">\r\n"
+ 		"<h3 align=\"center\">BPQ32 Chat Server %s</h3>\r\n"
+ 		"\r\n"
+-		"<table align=\"center\" bgcolor=\"white\" border=\"1\" cellpadding=\"2\">\r\n"
++		"<table align=\"center\" border=\"1\" cellpadding=\"2\">\r\n"
+ 		"\r\n"
+ 		"  <tbody>\r\n"
+ 		"    <tr>\r\n"

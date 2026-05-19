@@ -43,7 +43,7 @@ The repo holds Raspberry Pi home-directory files, LinBPQ and Dire Wolf configura
 | `pi/linbpq/bpq32.cfg`                 | LinBPQ configuration for M6VPN-7 and M6VPN-1               |
 | `pi/linbpq/HTML/`                     | Web BBS templates, shared CSS, JavaScript, and web assets  |
 | `systemd/`                            | Service, socket, and timer units for the live node         |
-| `patches/linbpq-html-design.patch`    | Patch that adds the M6VPN HTML design to an upstream tree  |
+| `patches/linbpq-html-design.patch`    | Patch that applies the M6VPN web design to LinBPQ source   |
 | `tools/linbpq-html-binary-patcher.py` | Binary patcher for hard-coded LinBPQ web HTML/CSS strings  |
 | `3rd/linbpq/`                         | Local upstream LinBPQ checkout *(ignored by this repo)*    |
 
@@ -116,7 +116,9 @@ Recent LinBPQ builds only use a few template files for the first page layout, an
 
 ## LinBPQ HTML Source Patch
 
-`patches/linbpq-html-design.patch` adds the complete `pi/linbpq/HTML/` design set to an upstream LinBPQ source checkout. This is useful when maintaining a fork of LinBPQ or when rebuilding LinBPQ with the M6VPN web assets included in the source tree.
+`patches/linbpq-html-design.patch` applies the M6VPN web design to an upstream LinBPQ source checkout. It adds the complete `pi/linbpq/HTML/` design set and patches LinBPQ C source files that emit hard-coded HTML so they load `/m6vpn.css` and `/m6vpn-ui.js`.
+
+This is useful when maintaining a fork of LinBPQ or when rebuilding LinBPQ with the M6VPN web design included in the source tree. The source changes cover BBS, WebMail, chat, APRS, node pages, and modem/status pages that render HTML directly from C strings.
 
 Apply it from the root of this repo:
 
@@ -139,7 +141,7 @@ Reverse it from `3rd/linbpq`:
 git apply --reverse ../../patches/linbpq-html-design.patch
 ```
 
-The patch includes binary assets, so keep it as a Git binary patch. Do not regenerate it with plain `diff -u`, because that will not preserve `background.jpg` or `favicon.ico`.
+The patch includes binary assets and source edits, so keep it as a Git binary patch. Do not regenerate it with plain `diff -u`, because that will not preserve `background.jpg` or `favicon.ico`.
 
 Regenerate the patch after changing `pi/linbpq/HTML/`:
 
@@ -148,6 +150,12 @@ mkdir -p 3rd/linbpq/HTML
 cp -a pi/linbpq/HTML/. 3rd/linbpq/HTML/
 git -C 3rd/linbpq add -N HTML
 git -C 3rd/linbpq diff --binary -- HTML > patches/linbpq-html-design.patch
+```
+
+If source files in `3rd/linbpq/` are also changed, append their diff to the same patch:
+
+```
+git -C 3rd/linbpq diff --binary -- '*.c' >> patches/linbpq-html-design.patch
 ```
 
 ## Compiled Binary HTML Patcher
