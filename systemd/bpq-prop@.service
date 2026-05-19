@@ -1,0 +1,10 @@
+[Unit]
+Description=LinBPQ PROP application
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/bpq-apps
+ExecStart=/home/pi/bpq-apps/prop.sh
+StandardInput=socket
+StandardOutput=socket
+StandardError=journal

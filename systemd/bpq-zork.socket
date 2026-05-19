@@ -1,0 +1,9 @@
+[Unit]
+Description=LinBPQ Zork application socket
+
+[Socket]
+ListenStream=127.0.0.1:63031
+Accept=yes
+
+[Install]
+WantedBy=sockets.target

@@ -1,0 +1,21 @@
+M6VPN-7 PROP - cached space weather
+-----------------------------------
+Updated: 2026-05-19 18:29 UTC
+
+Kp:       4.0  (unsettled/active)
+Kp time:  2026-05-19T15:00:00
+Bz:       0.7 nT
+Bt:       5.2 nT
+SW speed: 510 km/s
+Density:  1.3 p/cc
+
+HF: no major storm flag from Kp/Bz.
+2m: normal local line-of-sight conditions likely.
+
+Kp forecast, latest rows:
+  2026-05-21T18:00:00 Kp=2.33 predicted
+  2026-05-21T21:00:00 Kp=2.67 predicted
+  2026-05-22T00:00:00 Kp=2.33 predicted
+
+Source: NOAA/SWPC cached JSON data.
+73 de M6VPN

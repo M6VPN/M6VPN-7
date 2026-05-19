@@ -1,0 +1,10 @@
+[Unit]
+Description=LinBPQ Zork application
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/bpq-apps
+ExecStart=/home/pi/bpq-apps/zork.sh
+StandardInput=socket
+StandardOutput=socket
+StandardError=journal

@@ -1,0 +1,10 @@
+[Unit]
+Description=LinBPQ WX application
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/bpq-apps
+ExecStart=/home/pi/bpq-apps/wx.sh
+StandardInput=socket
+StandardOutput=socket
+StandardError=journal

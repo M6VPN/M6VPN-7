@@ -1,0 +1,10 @@
+[Unit]
+Description=LinBPQ STAT application
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/bpq-apps
+ExecStart=/home/pi/bpq-apps/stat.sh
+StandardInput=socket
+StandardOutput=socket
+StandardError=journal

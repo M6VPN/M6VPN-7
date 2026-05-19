@@ -1,0 +1,7 @@
+[Unit]
+Description=Update cached PROP data for LinBPQ
+
+[Service]
+Type=oneshot
+User=pi
+ExecStart=/home/pi/bpq-apps/update-prop-cache.py

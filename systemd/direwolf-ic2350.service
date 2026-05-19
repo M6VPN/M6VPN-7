@@ -1,0 +1,20 @@
+[Unit]
+Description=Dire Wolf IC-2350 AX.25 modem in tmux
+After=sound.target multi-user.target
+Wants=sound.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+SupplementaryGroups=audio dialout
+Environment=TERM=xterm-256color
+WorkingDirectory=/home/pi
+ExecStart=/usr/local/sbin/run-tmux-service direwolf /bin/bash -lc 'exec /usr/local/bin/direwolf -t 0 -q d -c /home/pi/direwolf.ic2350.conf >> /home/pi/direwolf.log 2>&1'
+ExecStop=/bin/sh -c '/usr/bin/tmux kill-session -t direwolf 2>/dev/null || true'
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

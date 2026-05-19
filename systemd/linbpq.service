@@ -1,0 +1,23 @@
+[Unit]
+Description=LinBPQ node and BBS in tmux
+After=network-online.target direwolf-ic2350.service
+Wants=network-online.target direwolf-ic2350.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+SupplementaryGroups=audio dialout
+Environment=TERM=xterm-256color
+WorkingDirectory=/home/pi/linbpq
+ExecStart=/home/pi/linbpq/linbpq
+ExecStop=/bin/bash -lc 'pkill -TERM -u pi -f "^/home/pi/linbpq/linbpq$" || true'
+ExecStopPost=/bin/bash -lc 'sleep 2; pkill -KILL -u pi -f "^/home/pi/linbpq/linbpq$" || true'
+Restart=always
+RestartSec=10
+KillMode=mixed
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target
