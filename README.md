@@ -12,6 +12,7 @@ The repo holds Raspberry Pi home-directory files, LinBPQ and Dire Wolf configura
 - [Install Script](#install-script)
 - [LinBPQ Web Design](#linbpq-web-design)
 - [LinBPQ Source Patch](#linbpq-source-patch)
+- [LinBPQ Security Fix Patch](#linbpq-security-fix-patch)
 - [Compiled Binary HTML Patcher](#compiled-binary-html-patcher)
 - [Systemd Units](#systemd-units)
 - [Notes](#notes)
@@ -45,6 +46,7 @@ The repo holds Raspberry Pi home-directory files, LinBPQ and Dire Wolf configura
 | `images/`                             | Screenshots used by project documentation                  |
 | `systemd/`                            | Service, socket, and timer units for the live node         |
 | `patches/linbpq-html-design.patch`    | Patch that applies the M6VPN web design to LinBPQ source   |
+| `patches/linbpq-security-fixes.patch` | Patch that applies LinBPQ HTTP/API security fixes          |
 | `tools/linbpq-html-binary-patcher.py` | Binary patcher for hard-coded LinBPQ web HTML/CSS strings  |
 | `3rd/linbpq/`                         | Local upstream LinBPQ checkout *(ignored by this repo)*    |
 
@@ -165,6 +167,39 @@ If source files in `3rd/linbpq/` are also changed, append their diff to the same
 
 ```
 git -C 3rd/linbpq diff --binary -- '*.c' >> patches/linbpq-html-design.patch
+```
+
+## LinBPQ Security Fix Patch
+
+[patches/linbpq-security-fixes.patch](patches/linbpq-security-fixes.patch) applies minimal fixes for confirmed high-impact LinBPQ HTTP, API, APRS, and websocket security issues.
+
+| Severity | Area                    | Fix                                                                      |
+|----------|-------------------------|--------------------------------------------------------------------------|
+| Critical | HTTP session cookies    | Cookie auth is only trusted when it resolves to a live session.          |
+| Critical | APRS message POST       | Direct APRS message POST requires local access or a valid session.       |
+| High     | RHP websocket           | RHP stream opens require an authenticated secure websocket session.       |
+| High     | Rig/RHP websocket auth  | Websocket control paths no longer trust cookie presence alone.           |
+| High     | Session and API tokens  | Session keys and API tokens use OS random bytes instead of weak values.  |
+| High     | Beacon form input       | Beacon form copies are bounded and invalid ports are rejected.           |
+
+Apply it from the root of this repo:
+
+```
+cd 3rd/linbpq
+git apply --check ../../patches/linbpq-security-fixes.patch
+git apply ../../patches/linbpq-security-fixes.patch
+```
+
+Regenerate the patch from the current local LinBPQ security-fix commit:
+
+```
+git -C 3rd/linbpq show --binary --pretty=format: HEAD -- HTTPcode.c TelnetV6.c APRSCode.c RHP.c nodeapi.c mailapi.c README.md > patches/linbpq-security-fixes.patch
+```
+
+If the fixes are uncommitted in `3rd/linbpq`, regenerate from the working tree instead:
+
+```
+git -C 3rd/linbpq diff --binary -- HTTPcode.c TelnetV6.c APRSCode.c RHP.c nodeapi.c mailapi.c README.md > patches/linbpq-security-fixes.patch
 ```
 
 ## Compiled Binary HTML Patcher
